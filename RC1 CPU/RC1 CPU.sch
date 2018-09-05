@@ -1264,8 +1264,6 @@ Wire Wire Line
 Wire Bus Line
 	3200 1575 5775 1575
 Wire Wire Line
-	5225 725  5225 775 
-Wire Wire Line
 	5500 1475 5500 1075
 Wire Wire Line
 	4225 1475 4225 1075
@@ -1276,7 +1274,7 @@ Wire Wire Line
 Wire Wire Line
 	4625 725  4625 775 
 Wire Wire Line
-	3425 725  4625 725 
+	3425 725  5200 725 
 Wire Wire Line
 	4425 775  4425 725 
 Connection ~ 4425 725 
@@ -1785,8 +1783,6 @@ Text Label 8375 4400 0    60   ~ 0
 D6
 Text Label 8375 4500 0    60   ~ 0
 D7
-Text Label 8375 4600 0    60   ~ 0
-A15
 Wire Wire Line
 	8350 3800 8750 3800
 Wire Wire Line
@@ -1836,15 +1832,366 @@ Wire Notes Line
 Wire Notes Line
 	5375 5000 5375 4300
 Wire Notes Line
-	6425 3450 9800 3450
-Wire Notes Line
-	9800 3450 9800 6025
-Wire Notes Line
-	9800 6025 3275 6025
-Wire Notes Line
 	3275 6025 3275 5000
 Wire Notes Line
 	6425 3450 6425 4300
 Wire Notes Line
 	6425 4300 5375 4300
+$Comp
+L HM62256BLP-7 U?
+U 1 1 5B93376A
+P 10600 4550
+F 0 "U?" H 10300 5450 50  0000 C CNN
+F 1 "HM62256BLP-7" V 10600 4550 50  0000 C CNN
+F 2 "DIP28" H 10600 4550 50  0001 C CIN
+F 3 "" H 10600 4550 50  0001 C CNN
+	1    10600 4550
+	1    0    0    -1  
+$EndComp
+Text Label 11125 3800 0    60   ~ 0
+D0
+Text Label 11125 3900 0    60   ~ 0
+D1
+Text Label 11125 4000 0    60   ~ 0
+D2
+Text Label 11125 4100 0    60   ~ 0
+D3
+Text Label 11125 4200 0    60   ~ 0
+D4
+Text Label 11125 4300 0    60   ~ 0
+D5
+Text Label 11125 4400 0    60   ~ 0
+D6
+Text Label 11125 4500 0    60   ~ 0
+D7
+Wire Wire Line
+	11100 3800 11500 3800
+Wire Wire Line
+	11100 3900 11500 3900
+Wire Wire Line
+	11100 4000 11500 4000
+Wire Wire Line
+	11100 4100 11500 4100
+Wire Wire Line
+	11100 4200 11500 4200
+Wire Wire Line
+	11100 4300 11500 4300
+Wire Wire Line
+	11100 4400 11500 4400
+Wire Wire Line
+	11100 4500 11500 4500
+Entry Wire Line
+	11500 3800 11600 3900
+Entry Wire Line
+	11500 3900 11600 4000
+Entry Wire Line
+	11500 4000 11600 4100
+Entry Wire Line
+	11500 4100 11600 4200
+Entry Wire Line
+	11500 4200 11600 4300
+Entry Wire Line
+	11500 4300 11600 4400
+Entry Wire Line
+	11500 4400 11600 4500
+Entry Wire Line
+	11500 4500 11600 4600
+Wire Bus Line
+	11600 3500 11600 4600
+Wire Wire Line
+	9775 3800 10100 3800
+Wire Wire Line
+	9775 3900 10100 3900
+Wire Wire Line
+	9775 4000 10100 4000
+Wire Wire Line
+	9775 4100 10100 4100
+Wire Wire Line
+	9775 4700 10100 4700
+Wire Wire Line
+	9775 4800 10100 4800
+Wire Wire Line
+	9775 4900 10100 4900
+Wire Wire Line
+	9775 5000 10100 5000
+Wire Wire Line
+	9775 4200 10100 4200
+Wire Wire Line
+	9775 4300 10100 4300
+Wire Wire Line
+	9775 4400 10100 4400
+Wire Wire Line
+	9775 4500 10100 4500
+Wire Wire Line
+	9775 4600 10100 4600
+Entry Wire Line
+	9675 3700 9775 3800
+Entry Wire Line
+	9675 3900 9775 4000
+Entry Wire Line
+	9675 3800 9775 3900
+Entry Wire Line
+	9675 4000 9775 4100
+Entry Wire Line
+	9675 4100 9775 4200
+Entry Wire Line
+	9675 4200 9775 4300
+Entry Wire Line
+	9675 4300 9775 4400
+Entry Wire Line
+	9675 4400 9775 4500
+Entry Wire Line
+	9675 4500 9775 4600
+Entry Wire Line
+	9675 4600 9775 4700
+Entry Wire Line
+	9675 4700 9775 4800
+Entry Wire Line
+	9675 4800 9775 4900
+Entry Wire Line
+	9675 4900 9775 5000
+Text Label 10075 3800 2    60   ~ 0
+A0
+Text Label 10075 3900 2    60   ~ 0
+A1
+Text Label 10075 4000 2    60   ~ 0
+A2
+Text Label 10075 4100 2    60   ~ 0
+A3
+Text Label 10075 4200 2    60   ~ 0
+A4
+Text Label 10075 4300 2    60   ~ 0
+A5
+Text Label 10075 4400 2    60   ~ 0
+A6
+Text Label 10075 4500 2    60   ~ 0
+A7
+Text Label 10075 4600 2    60   ~ 0
+A8
+Text Label 10075 4700 2    60   ~ 0
+A9
+Text Label 10075 4800 2    60   ~ 0
+A10
+Text Label 10075 4900 2    60   ~ 0
+A11
+Text Label 10075 5000 2    60   ~ 0
+A12
+Entry Wire Line
+	9575 4400 9675 4500
+Entry Wire Line
+	9575 4600 9675 4700
+Text Label 9550 4600 2    60   ~ 0
+A13
+Text Label 9550 4400 2    60   ~ 0
+A14
+Wire Bus Line
+	9675 3500 9675 4900
+Wire Bus Line
+	11600 3500 9675 3500
+Text Label 11875 5100 0    60   ~ 0
+K0
+Entry Wire Line
+	12050 5100 12150 5200
+$Comp
+L Jumper_NO_Small JP9
+U 1 1 5B936D34
+P 11500 5225
+F 0 "JP9" H 11700 5175 50  0000 C CNN
+F 1 "K4_RAM" H 11450 5175 50  0000 C CNN
+F 2 "" H 11500 5225 50  0001 C CNN
+F 3 "" H 11500 5225 50  0001 C CNN
+	1    11500 5225
+	1    0    0    -1  
+$EndComp
+Text Label 11875 5225 0    60   ~ 0
+K4
+Entry Wire Line
+	12050 5225 12150 5325
+$Comp
+L Jumper_NO_Small JP8
+U 1 1 5B936D3C
+P 11500 5350
+F 0 "JP8" H 11700 5300 50  0000 C CNN
+F 1 "K3_RAM" H 11450 5300 50  0000 C CNN
+F 2 "" H 11500 5350 50  0001 C CNN
+F 3 "" H 11500 5350 50  0001 C CNN
+	1    11500 5350
+	1    0    0    -1  
+$EndComp
+$Comp
+L Jumper_NO_Small JP7
+U 1 1 5B936D42
+P 11500 5475
+F 0 "JP7" H 11700 5425 50  0000 C CNN
+F 1 "K2_RAM" H 11450 5425 50  0000 C CNN
+F 2 "" H 11500 5475 50  0001 C CNN
+F 3 "" H 11500 5475 50  0001 C CNN
+	1    11500 5475
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	12050 5225 11600 5225
+Text Label 11875 5350 0    60   ~ 0
+K3
+Entry Wire Line
+	12050 5350 12150 5450
+Wire Wire Line
+	12050 5350 11600 5350
+Text Label 11875 5475 0    60   ~ 0
+K2
+Entry Wire Line
+	12050 5475 12150 5575
+Wire Wire Line
+	12050 5475 11600 5475
+$Comp
+L Jumper_NO_Small JP6
+U 1 1 5B9371A8
+P 11500 5600
+F 0 "JP6" H 11700 5550 50  0000 C CNN
+F 1 "K1_RAM" H 11450 5550 50  0000 C CNN
+F 2 "" H 11500 5600 50  0001 C CNN
+F 3 "" H 11500 5600 50  0001 C CNN
+	1    11500 5600
+	1    0    0    -1  
+$EndComp
+Text Label 11875 5600 0    60   ~ 0
+K1
+Entry Wire Line
+	12050 5600 12150 5700
+Wire Wire Line
+	12050 5600 11600 5600
+Wire Wire Line
+	11100 4650 11275 4650
+Wire Wire Line
+	11275 4650 11275 5600
+Wire Wire Line
+	11275 5100 12050 5100
+Wire Wire Line
+	11100 4900 11275 4900
+Connection ~ 11275 4900
+Wire Wire Line
+	11275 5225 11400 5225
+Connection ~ 11275 5100
+Wire Wire Line
+	11275 5350 11400 5350
+Connection ~ 11275 5225
+Wire Wire Line
+	11275 5475 11400 5475
+Connection ~ 11275 5350
+Wire Wire Line
+	11275 5600 11400 5600
+Connection ~ 11275 5475
+$Comp
+L 74LS00 U?
+U 1 1 5B93ABAB
+P 12600 4825
+F 0 "U?" H 12600 4875 50  0000 C CNN
+F 1 "74LS00" H 12600 4725 50  0000 C CNN
+F 2 "" H 12600 4825 50  0001 C CNN
+F 3 "" H 12600 4825 50  0001 C CNN
+	1    12600 4825
+	0    -1   -1   0   
+$EndComp
+Text Label 12700 5450 3    60   ~ 0
+CLK2
+Wire Wire Line
+	12700 5425 12700 5700
+Wire Wire Line
+	12500 5425 12500 5700
+Text Label 12500 5450 3    60   ~ 0
+~R/W
+Entry Wire Line
+	12500 5700 12600 5800
+Entry Wire Line
+	12700 5700 12800 5800
+Wire Bus Line
+	12150 5200 12150 5800
+Wire Bus Line
+	12150 5800 13000 5800
+$Comp
+L Jumper_NC_Dual JP?
+U 1 1 5B941998
+P 9400 5100
+F 0 "JP?" H 9450 5000 50  0000 L CNN
+F 1 "RAM_A13" H 9400 5200 50  0000 C BNN
+F 2 "" H 9400 5100 50  0001 C CNN
+F 3 "" H 9400 5100 50  0001 C CNN
+	1    9400 5100
+	0    -1   -1   0   
+$EndComp
+$Comp
+L Jumper_NC_Dual JP?
+U 1 1 5B941E34
+P 9100 5475
+F 0 "JP?" H 9150 5375 50  0000 L CNN
+F 1 "RAM_A14" H 9100 5575 50  0000 C BNN
+F 2 "" H 9100 5475 50  0001 C CNN
+F 3 "" H 9100 5475 50  0001 C CNN
+	1    9100 5475
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	9500 5100 10100 5100
+Wire Wire Line
+	9200 5475 9500 5475
+Wire Wire Line
+	9500 5475 9500 5200
+Wire Wire Line
+	9500 5200 10100 5200
+$Comp
+L GND #PWR?
+U 1 1 5B943B1A
+P 9400 5775
+F 0 "#PWR?" H 9400 5525 50  0001 C CNN
+F 1 "GND" H 9400 5625 50  0000 C CNN
+F 2 "" H 9400 5775 50  0001 C CNN
+F 3 "" H 9400 5775 50  0001 C CNN
+	1    9400 5775
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	9100 5725 9400 5725
+Wire Wire Line
+	9400 5350 9400 5775
+Connection ~ 9400 5725
+Wire Wire Line
+	9400 4850 9400 4600
+Wire Wire Line
+	9400 4600 9575 4600
+Wire Wire Line
+	9100 5225 9100 4400
+Wire Wire Line
+	9100 4400 9575 4400
+Wire Notes Line
+	8900 3450 8900 6025
+Wire Notes Line
+	8900 6025 3275 6025
+Wire Notes Line
+	8900 3450 6425 3450
+Wire Wire Line
+	11100 4750 12150 4750
+Wire Wire Line
+	12150 4750 12150 4225
+Wire Wire Line
+	12150 4225 12600 4225
+Wire Bus Line
+	11600 4075 13000 4075
+Wire Bus Line
+	13000 4075 13000 5800
+Text Label 11275 5050 0    60   ~ 0
+RAM_CS
+Text Label 11325 4750 0    60   ~ 0
+RAM_WE
+Wire Notes Line
+	8925 3450 13050 3450
+Wire Notes Line
+	13050 3450 13050 6025
+Wire Notes Line
+	13050 6025 8925 6025
+Wire Notes Line
+	8925 6025 8925 3450
+Connection ~ 4625 725 
+Wire Wire Line
+	5200 725  5200 775 
+Connection ~ 4825 725 
 $EndSCHEMATC
