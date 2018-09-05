@@ -410,12 +410,12 @@ $EndComp
 $Comp
 L VCC #PWR04
 U 1 1 5B8DB6D2
-P 1225 7450
-F 0 "#PWR04" H 1225 7300 50  0001 C CNN
-F 1 "VCC" H 1225 7600 50  0000 C CNN
-F 2 "" H 1225 7450 50  0001 C CNN
-F 3 "" H 1225 7450 50  0001 C CNN
-	1    1225 7450
+P 1400 7450
+F 0 "#PWR04" H 1400 7300 50  0001 C CNN
+F 1 "VCC" H 1400 7600 50  0000 C CNN
+F 2 "" H 1400 7450 50  0001 C CNN
+F 3 "" H 1400 7450 50  0001 C CNN
+	1    1400 7450
 	0    -1   -1   0   
 $EndComp
 $Comp
@@ -695,8 +695,8 @@ $Comp
 L Jumper_NO_Small JP4
 U 1 1 5B8FE448
 P 2800 4750
-F 0 "JP4" H 2700 4800 50  0000 C CNN
-F 1 "IRQ_EN_A" H 2810 4690 50  0000 C CNN
+F 0 "JP4" H 3400 4775 50  0000 C CNN
+F 1 "IRQ_EN_A" H 3400 4700 50  0000 C CNN
 F 2 "" H 2800 4750 50  0001 C CNN
 F 3 "" H 2800 4750 50  0001 C CNN
 	1    2800 4750
@@ -705,19 +705,19 @@ $EndComp
 $Comp
 L Jumper_NO_Small JP5
 U 1 1 5B8FE5F3
-P 2800 7050
-F 0 "JP5" H 2700 7100 50  0000 C CNN
-F 1 "IRQ_EN_B" H 2810 6990 50  0000 C CNN
-F 2 "" H 2800 7050 50  0001 C CNN
-F 3 "" H 2800 7050 50  0001 C CNN
-	1    2800 7050
-	1    0    0    -1  
+P 2775 7900
+F 0 "JP5" H 2675 7950 50  0000 C CNN
+F 1 "IRQ_EN_B" H 2785 7840 50  0000 C CNN
+F 2 "" H 2775 7900 50  0001 C CNN
+F 3 "" H 2775 7900 50  0001 C CNN
+	1    2775 7900
+	0    1    1    0   
 $EndComp
 Entry Wire Line
 	3100 4750 3200 4850
 Entry Wire Line
-	3100 7050 3200 7150
-Text Label 2925 7050 0    60   ~ 0
+	3100 8100 3200 8200
+Text Label 3075 8100 2    60   ~ 0
 ~IRQ
 Text Label 2925 4750 0    60   ~ 0
 ~IRQ
@@ -1750,15 +1750,13 @@ Wire Wire Line
 Wire Bus Line
 	900  850  900  2650
 Wire Bus Line
-	3200 950  3200 7150
+	3200 950  3200 8200
 Wire Bus Line
-	900  3250 900  3750
+	900  3250 900  4950
 Wire Bus Line
-	900  5550 900  6050
+	900  5550 900  7250
 Wire Wire Line
 	1225 1550 1400 1550
-Wire Wire Line
-	1225 7450 1400 7450
 Wire Wire Line
 	1225 5150 1400 5150
 Wire Wire Line
@@ -1853,7 +1851,7 @@ Wire Wire Line
 Wire Wire Line
 	2875 3450 2700 3450
 Wire Wire Line
-	3100 7050 2900 7050
+	2775 8100 3100 8100
 Wire Wire Line
 	3100 4750 2900 4750
 Wire Bus Line
@@ -2314,4 +2312,244 @@ Wire Notes Line
 	11025 500  11025 3425
 Wire Notes Line
 	11025 3425 9825 3425
+Wire Wire Line
+	2775 7700 2775 7800
+Wire Wire Line
+	2775 8100 2775 8000
+Connection ~ 2775 7700
+$Comp
+L Jumper_NO_Small JP10
+U 1 1 5B9620E3
+P 1400 7700
+F 0 "JP10" H 1300 7750 50  0000 C CNN
+F 1 "B_PB7_IRQ" H 1410 7640 50  0000 C CNN
+F 2 "" H 1400 7700 50  0001 C CNN
+F 3 "" H 1400 7700 50  0001 C CNN
+	1    1400 7700
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	2700 7050 3050 7050
+Wire Wire Line
+	1500 7700 3050 7700
+Entry Wire Line
+	900  3850 1000 3950
+Entry Wire Line
+	900  3950 1000 4050
+Entry Wire Line
+	900  4050 1000 4150
+Entry Wire Line
+	900  4150 1000 4250
+Entry Wire Line
+	900  4250 1000 4350
+Entry Wire Line
+	900  4350 1000 4450
+Wire Wire Line
+	1000 3950 1400 3950
+Wire Wire Line
+	1000 4050 1400 4050
+Wire Wire Line
+	1000 4150 1400 4150
+Wire Wire Line
+	1000 4250 1400 4250
+Wire Wire Line
+	1000 4350 1400 4350
+Wire Wire Line
+	1000 4450 1400 4450
+Entry Wire Line
+	900  4450 1000 4550
+Entry Wire Line
+	900  4550 1000 4650
+Entry Wire Line
+	900  4650 1000 4750
+Entry Wire Line
+	900  4750 1000 4850
+Entry Wire Line
+	900  4850 1000 4950
+Entry Wire Line
+	900  4950 1000 5050
+Wire Wire Line
+	1000 4550 1400 4550
+Wire Wire Line
+	1000 4650 1400 4650
+Wire Wire Line
+	1000 4750 1400 4750
+Wire Wire Line
+	1000 4850 1400 4850
+Wire Wire Line
+	1000 4950 1400 4950
+Wire Wire Line
+	1000 5050 1400 5050
+Entry Wire Line
+	900  6150 1000 6250
+Entry Wire Line
+	900  6250 1000 6350
+Entry Wire Line
+	900  6350 1000 6450
+Entry Wire Line
+	900  6450 1000 6550
+Entry Wire Line
+	900  6550 1000 6650
+Entry Wire Line
+	900  6650 1000 6750
+Wire Wire Line
+	1000 6250 1400 6250
+Wire Wire Line
+	1000 6350 1400 6350
+Wire Wire Line
+	1000 6450 1400 6450
+Wire Wire Line
+	1000 6550 1400 6550
+Wire Wire Line
+	1000 6650 1400 6650
+Wire Wire Line
+	1000 6750 1400 6750
+Entry Wire Line
+	900  6750 1000 6850
+Entry Wire Line
+	900  6850 1000 6950
+Entry Wire Line
+	900  7050 1000 7150
+Entry Wire Line
+	900  7150 1000 7250
+Entry Wire Line
+	900  7250 1000 7350
+Wire Wire Line
+	1000 6850 1400 6850
+Wire Wire Line
+	1000 6950 1400 6950
+Wire Wire Line
+	1000 7150 1400 7150
+Wire Wire Line
+	1000 7250 1400 7250
+Wire Wire Line
+	1000 7350 1400 7350
+Wire Wire Line
+	1300 7700 1075 7700
+Wire Wire Line
+	1075 7700 1075 7050
+Wire Wire Line
+	1075 7050 1400 7050
+Text Label 1375 3950 2    60   ~ 0
+A_PA0
+Text Label 1375 4050 2    60   ~ 0
+A_PA1
+Text Label 1375 4150 2    60   ~ 0
+A_PA2
+Text Label 1375 4250 2    60   ~ 0
+A_PA3
+Text Label 1375 4350 2    60   ~ 0
+A_PA4
+Text Label 1375 4450 2    60   ~ 0
+A_PA5
+Text Label 1375 4550 2    60   ~ 0
+A_PA6
+Text Label 1375 4650 2    60   ~ 0
+A_PA7
+Text Label 1375 4750 2    60   ~ 0
+A_PB7
+Text Label 1375 4850 2    60   ~ 0
+A_PB6
+Text Label 1375 4950 2    60   ~ 0
+A_PB5
+Text Label 1375 5050 2    60   ~ 0
+A_PB4
+Text Label 1375 6250 2    60   ~ 0
+B_PA0
+Text Label 1375 6350 2    60   ~ 0
+B_PA1
+Text Label 1375 6450 2    60   ~ 0
+B_PA2
+Text Label 1375 6550 2    60   ~ 0
+B_PA3
+Text Label 1375 6650 2    60   ~ 0
+B_PA4
+Text Label 1375 6750 2    60   ~ 0
+B_PA5
+Text Label 1375 6850 2    60   ~ 0
+B_PA6
+Text Label 1375 6950 2    60   ~ 0
+B_PA7
+Text Label 1375 7150 2    60   ~ 0
+B_PB6
+Text Label 1375 7250 2    60   ~ 0
+B_PB5
+Text Label 1375 7350 2    60   ~ 0
+B_PB4
+Text Label 1375 7050 2    60   ~ 0
+B_PB7
+Entry Wire Line
+	3100 7150 3200 7250
+Entry Wire Line
+	3100 7250 3200 7350
+Entry Wire Line
+	3100 7350 3200 7450
+Entry Wire Line
+	3100 7450 3200 7550
+Text Label 2725 7150 0    60   ~ 0
+B_PB0
+Text Label 2725 7250 0    60   ~ 0
+B_PB1
+Text Label 2725 7350 0    60   ~ 0
+B_PB2
+Text Label 2725 7450 0    60   ~ 0
+B_PB3
+Wire Wire Line
+	2700 7150 3100 7150
+Wire Wire Line
+	2700 7250 3100 7250
+Wire Wire Line
+	2700 7350 3100 7350
+Wire Wire Line
+	2700 7450 3100 7450
+Entry Wire Line
+	3100 4850 3200 4950
+Entry Wire Line
+	3100 4950 3200 5050
+Entry Wire Line
+	3100 5050 3200 5150
+Entry Wire Line
+	3100 5150 3200 5250
+Text Label 2725 4850 0    60   ~ 0
+A_PB0
+Text Label 2725 4950 0    60   ~ 0
+A_PB1
+Text Label 2725 5050 0    60   ~ 0
+A_PB2
+Text Label 2725 5150 0    60   ~ 0
+A_PB3
+Wire Wire Line
+	2700 4850 3100 4850
+Wire Wire Line
+	2700 4950 3100 4950
+Wire Wire Line
+	2700 5050 3100 5050
+Wire Wire Line
+	2700 5150 3100 5150
+Wire Wire Line
+	3050 7700 3050 7050
+Entry Wire Line
+	3100 5850 3200 5950
+Entry Wire Line
+	3100 5950 3200 6050
+Text Label 2725 5950 0    60   ~ 0
+K7
+Wire Wire Line
+	2700 5850 3100 5850
+Wire Wire Line
+	2700 5950 3100 5950
+Text Label 2725 5850 0    60   ~ 0
+K5
+Entry Wire Line
+	3100 3550 3200 3650
+Entry Wire Line
+	3100 3650 3200 3750
+Text Label 2725 3650 0    60   ~ 0
+K7
+Wire Wire Line
+	2700 3550 3100 3550
+Wire Wire Line
+	2700 3650 3100 3650
+Text Label 2725 3550 0    60   ~ 0
+K5
 $EndSCHEMATC
