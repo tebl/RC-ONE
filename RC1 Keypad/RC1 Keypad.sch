@@ -32,7 +32,7 @@ LIBS:atmel
 LIBS:contrib
 LIBS:valves
 LIBS:sw_keyboard
-LIBS:ZX Keyboard-cache
+LIBS:RC1 Keypad-cache
 EELAYER 25 0
 EELAYER END
 $Descr A4 11693 8268
@@ -405,28 +405,6 @@ Connection ~ 4325 4350
 Connection ~ 4775 4350
 Connection ~ 5225 4350
 $Comp
-L Mounting M2
-U 1 1 5D61DCEC
-P 11150 550
-F 0 "M2" H 11150 650 50  0001 C CNN
-F 1 "Mounting" H 11150 475 50  0001 C CNN
-F 2 "Mounting:1pin" H 11150 550 50  0001 C CNN
-F 3 "" H 11150 550 50  0001 C CNN
-	1    11150 550 
-	1    0    0    -1  
-$EndComp
-$Comp
-L Mounting M1
-U 1 1 5D61DCED
-P 11025 550
-F 0 "M1" H 11025 650 50  0001 C CNN
-F 1 "Mounting" H 11025 475 50  0001 C CNN
-F 2 "Mounting:1pin" H 11025 550 50  0001 C CNN
-F 3 "" H 11025 550 50  0001 C CNN
-	1    11025 550 
-	1    0    0    -1  
-$EndComp
-$Comp
 L SW_Keyboard SW13
 U 1 1 5D61DCC3
 P 4200 3475
@@ -502,7 +480,7 @@ U 1 1 5D62D132
 P 6375 2225
 F 0 "SW22" H 6375 2350 50  0000 C CNN
 F 1 "SST" H 6375 2175 50  0000 C CNN
-F 2 "" H 6375 2225 50  0001 C CNN
+F 2 "Buttons_Switches_THT:SW_DIP_x1_W7.62mm_Slide" H 6375 2225 50  0001 C CNN
 F 3 "" H 6375 2225 50  0001 C CNN
 	1    6375 2225
 	1    0    0    -1  
@@ -513,7 +491,7 @@ U 1 1 5D62D671
 P 5450 2525
 F 0 "J1" H 5500 2775 50  0000 C CNN
 F 1 "KB" H 5500 2175 50  0000 C CNN
-F 2 "" H 5450 2525 50  0001 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_2x08_Pitch2.54mm" H 5450 2525 50  0001 C CNN
 F 3 "" H 5450 2525 50  0001 C CNN
 	1    5450 2525
 	1    0    0    -1  
@@ -558,7 +536,7 @@ U 1 1 5D630229
 P 6275 2425
 F 0 "D1" H 6125 2475 50  0000 L CNN
 F 1 "PWR" H 6350 2475 50  0000 L CNN
-F 2 "" V 6275 2425 50  0001 C CNN
+F 2 "LEDs:LED_D5.0mm" V 6275 2425 50  0001 C CNN
 F 3 "" V 6275 2425 50  0001 C CNN
 	1    6275 2425
 	1    0    0    -1  
@@ -592,4 +570,6 @@ Wire Wire Line
 	6575 2225 6650 2225
 Wire Wire Line
 	6650 2225 6650 2325
+Text Notes 7350 7500 0    60   ~ 0
+RC-1 Hex keypad
 $EndSCHEMATC
