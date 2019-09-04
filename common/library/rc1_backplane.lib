@@ -41,7 +41,6 @@ T 0 100 -1300 60 0 0 0 D6 Normal 0 L C
 T 0 100 -1400 60 0 0 0 D7 Normal 0 L C
 T 0 100 -1500 60 0 0 0 DEN Normal 0 L C
 T 0 100 300 60 0 0 0 GND Normal 0 L C
-T 0 100 -1900 60 0 0 0 IO3 Normal 0 L C
 T 0 100 -1600 60 0 0 0 K0 Normal 0 L C
 T 0 100 -1700 60 0 0 0 K5 Normal 0 L C
 T 0 100 -1800 60 0 0 0 K7 Normal 0 L C
@@ -51,6 +50,7 @@ T 0 100 -400 60 0 0 0 "R/~W" Normal 0 L C
 T 0 100 -500 60 0 0 0 RDY Normal 0 L C
 T 0 100 0 60 0 0 0 RESET Normal 0 L C
 T 0 100 -600 60 0 0 0 SYNC Normal 0 L C
+T 0 100 -1900 60 0 0 0 TAPE Normal 0 L C
 T 0 100 200 60 0 0 0 VCC Normal 0 L C
 T 0 100 -200 60 0 0 0 "~IRQ" Normal 0 L C
 T 0 100 -300 60 0 0 0 "~NMI" Normal 0 L C

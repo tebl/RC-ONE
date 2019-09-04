@@ -1,4 +1,4 @@
-update=26/08/2019 23:53:09
+update=28/08/2019 00:11:03
 version=1
 last_client=kicad
 [pcbnew]
@@ -23,8 +23,6 @@ ModuleOutlineThickness=0.150000000000
 [cvpcb]
 version=1
 NetIExt=net
-[general]
-version=1
 [schematic_editor]
 version=1
 PageLayoutDescrFile=
@@ -73,3 +71,5 @@ LibName31=rc1_ui_port
 LibName32=mounting
 LibName33=65xx
 LibName34=C:/Program Files/KiCad/share/kicad/library/Oscillators
+[general]
+version=1

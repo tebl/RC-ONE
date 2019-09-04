@@ -415,12 +415,12 @@ F 3 "" H 4200 3675 50  0001 C CNN
 	1    4200 3475
 	1    0    0    -1  
 $EndComp
-Text Label 5775 2825 0    60   ~ 0
-ROW_0
-Text Label 5775 2925 0    60   ~ 0
-ROW_1
 Text Label 5775 3025 0    60   ~ 0
-ROW_2
+ROW0
+Text Label 5775 2925 0    60   ~ 0
+ROW1
+Text Label 5775 2825 0    60   ~ 0
+ROW2
 Wire Wire Line
 	2200 2225 5250 2225
 Wire Wire Line
@@ -430,21 +430,21 @@ Wire Wire Line
 Wire Wire Line
 	3550 2525 5250 2525
 Text Label 4950 2825 0    60   ~ 0
-2A0
+PA0
 Text Label 4950 2725 0    60   ~ 0
-2A1
+PA1
 Text Label 4950 2625 0    60   ~ 0
-2A2
+PA2
 Text Label 4950 2525 0    60   ~ 0
-2A3
+PA3
 Text Label 4950 2425 0    60   ~ 0
-2A4
+PA4
 Text Label 4950 2325 0    60   ~ 0
-2A5
+PA5
 Wire Wire Line
 	4000 2625 5250 2625
 Text Label 4950 2225 0    60   ~ 0
-2A6
+PA6
 $Comp
 L SW_Keyboard SW23
 U 1 1 5D62C343

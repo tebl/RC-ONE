@@ -19,6 +19,8 @@ DRAW
 T 0 -275 -950 60 0 0 0 GND Normal 0 L C
 T 0 -275 950 60 0 0 0 GND Normal 0 L C
 T 0 275 950 60 0 0 0 GND Normal 0 R C
+T 0 275 -750 60 0 0 0 IO3 Normal 0 R C
+T 0 -275 -750 60 0 0 0 K7 Normal 0 L C
 T 0 275 450 60 0 0 0 PA0 Normal 0 R C
 T 0 275 350 60 0 0 0 PA1 Normal 0 R C
 T 0 275 250 60 0 0 0 PA2 Normal 0 R C
@@ -37,7 +39,10 @@ T 0 -275 650 60 0 0 0 PB6 Normal 0 L C
 T 0 -275 550 60 0 0 0 PB7 Normal 0 L C
 T 0 -275 -850 60 0 0 0 RS Normal 0 L C
 T 0 275 -850 60 0 0 0 ST Normal 0 R C
+T 0 275 -650 60 0 0 0 SYNC Normal 0 R C
+T 0 275 50 60 0 0 0 TAPE Normal 0 R C
 T 0 275 -950 60 0 0 0 VCC Normal 0 R C
+T 0 -275 -650 60 0 0 0 "~NMI" Normal 0 L C
 S -325 -945 -275 -955 0 1 0 N
 S -325 -845 -275 -855 0 1 0 N
 S -325 -745 -275 -755 0 1 0 N
