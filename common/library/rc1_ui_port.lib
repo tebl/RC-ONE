@@ -37,7 +37,9 @@ T 0 -275 850 60 0 0 0 PB4 Normal 0 L C
 T 0 -275 750 60 0 0 0 PB5 Normal 0 L C
 T 0 -275 650 60 0 0 0 PB6 Normal 0 L C
 T 0 -275 550 60 0 0 0 PB7 Normal 0 L C
+T 0 -275 -550 60 0 0 0 PHI1 Normal 0 L C
 T 0 -275 -850 60 0 0 0 RS Normal 0 L C
+T 0 275 -550 60 0 0 0 SST Normal 0 R C
 T 0 275 -850 60 0 0 0 ST Normal 0 R C
 T 0 275 -650 60 0 0 0 SYNC Normal 0 R C
 T 0 275 50 60 0 0 0 TAPE Normal 0 R C

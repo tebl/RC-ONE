@@ -1085,7 +1085,6 @@ Text Label 1950 7150 2    60   ~ 0
 PA6
 Text Label 1950 7250 2    60   ~ 0
 PA7
-NoConn ~ 2925 6250
 NoConn ~ 2925 6350
 NoConn ~ 2925 6450
 NoConn ~ 2925 6550
@@ -2049,4 +2048,10 @@ F 3 "" H 2125 2475 50  0001 C CNN
 	1    2125 2475
 	-1   0    0    1   
 $EndComp
+Text GLabel 2400 5300 3    60   Output ~ 0
+SST_IN
+Text GLabel 3000 6250 2    60   Input ~ 0
+SST_IN
+Wire Wire Line
+	2925 6250 3000 6250
 $EndSCHEMATC

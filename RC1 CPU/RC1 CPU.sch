@@ -669,7 +669,6 @@ Text Label 3675 2025 0    60   ~ 0
 BE
 Text Label 2700 2000 0    60   ~ 0
 R/~W
-NoConn ~ 1375 1600
 $Comp
 L GND #PWR010
 U 1 1 5D653ECE
@@ -2218,7 +2217,6 @@ NoConn ~ 5650 9775
 NoConn ~ 5650 9675
 NoConn ~ 5650 9575
 NoConn ~ 5650 9475
-NoConn ~ 5650 9375
 $Comp
 L 74LS00 U9
 U 2 1 5D7159A9
@@ -2624,4 +2622,16 @@ Wire Wire Line
 	4675 9925 4675 9975
 Wire Wire Line
 	4675 9975 4700 9975
+Entry Wire Line
+	875  1500 975  1600
+Wire Wire Line
+	975  1600 1375 1600
+Text Label 1350 1600 2    60   ~ 0
+PHI1
+Text Label 5675 9375 0    60   ~ 0
+PHI1
+Entry Wire Line
+	5925 9375 6025 9475
+Wire Wire Line
+	5925 9375 5650 9375
 $EndSCHEMATC
