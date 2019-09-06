@@ -1,4 +1,4 @@
-update=26/08/2019 23:38:36
+update=06/09/2019 13:31:21
 version=1
 last_client=kicad
 [pcbnew]
@@ -63,3 +63,13 @@ LibName33=D:/owncloud/Documents/Projects/RC1/common/library/mounting
 LibName34=D:/owncloud/Documents/Projects/RC1/common/library/rc1_ui_port
 [general]
 version=1
+[schematic_editor]
+version=1
+PageLayoutDescrFile=
+PlotDirectoryName=export/
+SubpartIdSeparator=0
+SubpartFirstId=65
+NetFmtName=Pcbnew
+SpiceForceRefPrefix=0
+SpiceUseNetNumbers=0
+LabSize=60
