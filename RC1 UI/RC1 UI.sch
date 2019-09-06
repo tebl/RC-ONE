@@ -2054,4 +2054,8 @@ Text GLabel 2550 6325 2    60   Input ~ 0
 SST_IN
 Wire Wire Line
 	2475 6325 2550 6325
+Text Notes 12175 10925 0    60   ~ 0
+RC-ONE User Interface
+Text Notes 11825 10350 0    60   ~ 0
+RC-ONE User Interface module, slots into CPU board with the connector doubling as an\nexpansion port (not all signals are used). Includes keypad connector, output as well as a\nsecondary mode over serial (FTDI module). Plenty of space left over, in the future this\nwill hopefully be filled up by tape functionality or something to that effect.
 $EndSCHEMATC

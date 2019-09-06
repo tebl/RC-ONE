@@ -2634,4 +2634,8 @@ Entry Wire Line
 	5925 9375 6025 9475
 Wire Wire Line
 	5925 9375 5650 9375
+Text Notes 12175 10925 0    60   ~ 0
+RC-ONE CPU
+Text Notes 11825 10550 0    60   ~ 0
+RC-ONE CPU module, takes care of most central functions including CPU, RAM and ROM.\nThe two latter categories aren't used anywhere near capacity, mostly because today\nthose chips are the cheapest and easiest to get hold off without physically being larger.\nUser Interface module slots on top and takes care of keypad as well as I/O expected on\na KIM-1 computer. Most signals are available on backplane connector for adding any\nother modules and functionality to the RC-ONE computer.
 $EndSCHEMATC
