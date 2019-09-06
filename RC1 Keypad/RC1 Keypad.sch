@@ -32,6 +32,7 @@ LIBS:atmel
 LIBS:contrib
 LIBS:valves
 LIBS:sw_keyboard
+LIBS:mounting
 LIBS:RC1 Keypad-cache
 EELAYER 25 0
 EELAYER END
@@ -53,7 +54,7 @@ U 1 1 5D61DCC2
 P 4650 3475
 F 0 "SW16" H 4675 3575 50  0000 L CNN
 F 1 "5" H 4650 3425 50  0000 C CNN
-F 2 "Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB" H 4650 3675 50  0001 C CNN
+F 2 "Buttons_Switches_THT:SW_PUSH_6mm" H 4650 3675 50  0001 C CNN
 F 3 "" H 4650 3675 50  0001 C CNN
 	1    4650 3475
 	1    0    0    -1  
@@ -76,7 +77,7 @@ U 1 1 5D61DCC4
 P 3750 3475
 F 0 "SW10" H 3775 3575 50  0000 L CNN
 F 1 "3" H 3750 3425 50  0000 C CNN
-F 2 "Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB" H 3750 3675 50  0001 C CNN
+F 2 "Buttons_Switches_THT:SW_PUSH_6mm" H 3750 3675 50  0001 C CNN
 F 3 "" H 3750 3675 50  0001 C CNN
 	1    3750 3475
 	1    0    0    -1  
@@ -89,7 +90,7 @@ U 1 1 5D61DCC5
 P 3300 3475
 F 0 "SW7" H 3325 3575 50  0000 L CNN
 F 1 "2" H 3300 3425 50  0000 C CNN
-F 2 "Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB" H 3300 3675 50  0001 C CNN
+F 2 "Buttons_Switches_THT:SW_PUSH_6mm" H 3300 3675 50  0001 C CNN
 F 3 "" H 3300 3675 50  0001 C CNN
 	1    3300 3475
 	1    0    0    -1  
@@ -103,7 +104,7 @@ U 1 1 5D61DCC6
 P 2850 3475
 F 0 "SW4" H 2875 3575 50  0000 L CNN
 F 1 "1" H 2850 3425 50  0000 C CNN
-F 2 "Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB" H 2850 3675 50  0001 C CNN
+F 2 "Buttons_Switches_THT:SW_PUSH_6mm" H 2850 3675 50  0001 C CNN
 F 3 "" H 2850 3675 50  0001 C CNN
 	1    2850 3475
 	1    0    0    -1  
@@ -114,7 +115,7 @@ U 1 1 5D61DCC8
 P 3750 4175
 F 0 "SW12" H 3775 4275 50  0000 L CNN
 F 1 "DA" H 3750 4125 50  0000 C CNN
-F 2 "Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB" H 3750 4375 50  0001 C CNN
+F 2 "Buttons_Switches_THT:SW_PUSH_6mm" H 3750 4375 50  0001 C CNN
 F 3 "" H 3750 4375 50  0001 C CNN
 	1    3750 4175
 	1    0    0    -1  
@@ -137,7 +138,7 @@ U 1 1 5D61DCC9
 P 2400 4175
 F 0 "SW3" H 2425 4275 50  0000 L CNN
 F 1 "E" H 2400 4125 50  0000 C CNN
-F 2 "Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB" H 2400 4375 50  0001 C CNN
+F 2 "Buttons_Switches_THT:SW_PUSH_6mm" H 2400 4375 50  0001 C CNN
 F 3 "" H 2400 4375 50  0001 C CNN
 	1    2400 4175
 	1    0    0    -1  
@@ -152,7 +153,7 @@ U 1 1 5D61DCCD
 P 2850 4175
 F 0 "SW6" H 2875 4275 50  0000 L CNN
 F 1 "F" H 2850 4125 50  0000 C CNN
-F 2 "Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB" H 2850 4375 50  0001 C CNN
+F 2 "Buttons_Switches_THT:SW_PUSH_6mm" H 2850 4375 50  0001 C CNN
 F 3 "" H 2850 4375 50  0001 C CNN
 	1    2850 4175
 	1    0    0    -1  
@@ -175,7 +176,7 @@ U 1 1 5D61DCCE
 P 5100 3825
 F 0 "SW20" H 5125 3925 50  0000 L CNN
 F 1 "D" H 5100 3775 50  0000 C CNN
-F 2 "Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB" H 5100 4025 50  0001 C CNN
+F 2 "Buttons_Switches_THT:SW_PUSH_6mm" H 5100 4025 50  0001 C CNN
 F 3 "" H 5100 4025 50  0001 C CNN
 	1    5100 3825
 	1    0    0    -1  
@@ -190,7 +191,7 @@ U 1 1 5D61DCD0
 P 3750 3825
 F 0 "SW11" H 3775 3925 50  0000 L CNN
 F 1 "A" H 3750 3775 50  0000 C CNN
-F 2 "Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB" H 3750 4025 50  0001 C CNN
+F 2 "Buttons_Switches_THT:SW_PUSH_6mm" H 3750 4025 50  0001 C CNN
 F 3 "" H 3750 4025 50  0001 C CNN
 	1    3750 3825
 	1    0    0    -1  
@@ -201,7 +202,7 @@ U 1 1 5D61DCD1
 P 5100 3475
 F 0 "SW19" H 5125 3575 50  0000 L CNN
 F 1 "6" H 5100 3425 50  0000 C CNN
-F 2 "Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB" H 5100 3675 50  0001 C CNN
+F 2 "Buttons_Switches_THT:SW_PUSH_6mm" H 5100 3675 50  0001 C CNN
 F 3 "" H 5100 3675 50  0001 C CNN
 	1    5100 3475
 	1    0    0    -1  
@@ -212,7 +213,7 @@ U 1 1 5D61DCD2
 P 2400 3825
 F 0 "SW2" H 2425 3925 50  0000 L CNN
 F 1 "7" H 2400 3775 50  0000 C CNN
-F 2 "Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB" H 2400 4025 50  0001 C CNN
+F 2 "Buttons_Switches_THT:SW_PUSH_6mm" H 2400 4025 50  0001 C CNN
 F 3 "" H 2400 4025 50  0001 C CNN
 	1    2400 3825
 	1    0    0    -1  
@@ -235,7 +236,7 @@ U 1 1 5D61DCD3
 P 2850 3825
 F 0 "SW5" H 2875 3925 50  0000 L CNN
 F 1 "8" H 2850 3775 50  0000 C CNN
-F 2 "Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB" H 2850 4025 50  0001 C CNN
+F 2 "Buttons_Switches_THT:SW_PUSH_6mm" H 2850 4025 50  0001 C CNN
 F 3 "" H 2850 4025 50  0001 C CNN
 	1    2850 3825
 	1    0    0    -1  
@@ -248,7 +249,7 @@ U 1 1 5D61DCD4
 P 3300 3825
 F 0 "SW8" H 3325 3925 50  0000 L CNN
 F 1 "9" H 3300 3775 50  0000 C CNN
-F 2 "Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB" H 3300 4025 50  0001 C CNN
+F 2 "Buttons_Switches_THT:SW_PUSH_6mm" H 3300 4025 50  0001 C CNN
 F 3 "" H 3300 4025 50  0001 C CNN
 	1    3300 3825
 	1    0    0    -1  
@@ -261,7 +262,7 @@ U 1 1 5D61DCD5
 P 2400 3475
 F 0 "SW1" H 2425 3575 50  0000 L CNN
 F 1 "Ø" H 2400 3425 50  0000 C CNN
-F 2 "Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB" H 2400 3675 50  0001 C CNN
+F 2 "Buttons_Switches_THT:SW_PUSH_6mm" H 2400 3675 50  0001 C CNN
 F 3 "" H 2400 3675 50  0001 C CNN
 	1    2400 3475
 	1    0    0    -1  
@@ -272,7 +273,7 @@ U 1 1 5D61DCD7
 P 3300 4175
 F 0 "SW9" H 3325 4275 50  0000 L CNN
 F 1 "AD" H 3300 4125 50  0000 C CNN
-F 2 "Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB" H 3300 4375 50  0001 C CNN
+F 2 "Buttons_Switches_THT:SW_PUSH_6mm" H 3300 4375 50  0001 C CNN
 F 3 "" H 3300 4375 50  0001 C CNN
 	1    3300 4175
 	1    0    0    -1  
@@ -295,7 +296,7 @@ U 1 1 5D61DCD8
 P 4200 3825
 F 0 "SW14" H 4225 3925 50  0000 L CNN
 F 1 "B" H 4200 3775 50  0000 C CNN
-F 2 "Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB" H 4200 4025 50  0001 C CNN
+F 2 "Buttons_Switches_THT:SW_PUSH_6mm" H 4200 4025 50  0001 C CNN
 F 3 "" H 4200 4025 50  0001 C CNN
 	1    4200 3825
 	1    0    0    -1  
@@ -310,7 +311,7 @@ U 1 1 5D61DCDC
 P 4650 3825
 F 0 "SW17" H 4675 3925 50  0000 L CNN
 F 1 "C" H 4650 3775 50  0000 C CNN
-F 2 "Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB" H 4650 4025 50  0001 C CNN
+F 2 "Buttons_Switches_THT:SW_PUSH_6mm" H 4650 4025 50  0001 C CNN
 F 3 "" H 4650 4025 50  0001 C CNN
 	1    4650 3825
 	1    0    0    -1  
@@ -333,7 +334,7 @@ U 1 1 5D61DCDD
 P 4200 4175
 F 0 "SW15" H 4225 4275 50  0000 L CNN
 F 1 "+" H 4200 4125 50  0000 C CNN
-F 2 "Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB" H 4200 4375 50  0001 C CNN
+F 2 "Buttons_Switches_THT:SW_PUSH_6mm" H 4200 4375 50  0001 C CNN
 F 3 "" H 4200 4375 50  0001 C CNN
 	1    4200 4175
 	1    0    0    -1  
@@ -360,7 +361,7 @@ U 1 1 5D61DCE2
 P 4650 4175
 F 0 "SW18" H 4675 4275 50  0000 L CNN
 F 1 "GO" H 4650 4125 50  0000 C CNN
-F 2 "Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB" H 4650 4375 50  0001 C CNN
+F 2 "Buttons_Switches_THT:SW_PUSH_6mm" H 4650 4375 50  0001 C CNN
 F 3 "" H 4650 4375 50  0001 C CNN
 	1    4650 4175
 	1    0    0    -1  
@@ -375,7 +376,7 @@ U 1 1 5D61DCE7
 P 5100 4175
 F 0 "SW21" H 5125 4275 50  0000 L CNN
 F 1 "PC" H 5100 4125 50  0000 C CNN
-F 2 "Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB" H 5100 4375 50  0001 C CNN
+F 2 "Buttons_Switches_THT:SW_PUSH_6mm" H 5100 4375 50  0001 C CNN
 F 3 "" H 5100 4375 50  0001 C CNN
 	1    5100 4175
 	1    0    0    -1  
@@ -410,7 +411,7 @@ U 1 1 5D61DCC3
 P 4200 3475
 F 0 "SW13" H 4225 3575 50  0000 L CNN
 F 1 "4" H 4200 3425 50  0000 C CNN
-F 2 "Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB" H 4200 3675 50  0001 C CNN
+F 2 "Buttons_Switches_THT:SW_PUSH_6mm" H 4200 3675 50  0001 C CNN
 F 3 "" H 4200 3675 50  0001 C CNN
 	1    4200 3475
 	1    0    0    -1  
@@ -451,7 +452,7 @@ U 1 1 5D62C343
 P 6575 3550
 F 0 "SW23" H 6600 3650 50  0000 L CNN
 F 1 "RS" H 6575 3500 50  0000 C CNN
-F 2 "Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB" H 6575 3750 50  0001 C CNN
+F 2 "Buttons_Switches_THT:SW_PUSH_6mm" H 6575 3750 50  0001 C CNN
 F 3 "" H 6575 3750 50  0001 C CNN
 	1    6575 3550
 	1    0    0    -1  
@@ -464,7 +465,7 @@ U 1 1 5D62C65F
 P 6950 3550
 F 0 "SW24" H 6975 3650 50  0000 L CNN
 F 1 "ST" H 6950 3500 50  0000 C CNN
-F 2 "Button_Switch_Keyboard:SW_Cherry_MX_1.00u_PCB" H 6950 3750 50  0001 C CNN
+F 2 "Buttons_Switches_THT:SW_PUSH_6mm" H 6950 3750 50  0001 C CNN
 F 3 "" H 6950 3750 50  0001 C CNN
 	1    6950 3550
 	1    0    0    -1  
@@ -474,17 +475,6 @@ Wire Wire Line
 Wire Wire Line
 	6825 3375 6450 3375
 Connection ~ 6450 3375
-$Comp
-L SW_SPST SW22
-U 1 1 5D62D132
-P 6375 2225
-F 0 "SW22" H 6375 2350 50  0000 C CNN
-F 1 "SST" H 6375 2175 50  0000 C CNN
-F 2 "Buttons_Switches_THT:SW_DIP_x1_W7.62mm_Slide" H 6375 2225 50  0001 C CNN
-F 3 "" H 6375 2225 50  0001 C CNN
-	1    6375 2225
-	1    0    0    -1  
-$EndComp
 $Comp
 L Conn_02x08_Counter_Clockwise J1
 U 1 1 5D62D671
@@ -544,7 +534,7 @@ $EndComp
 Wire Wire Line
 	5750 2225 6175 2225
 Wire Wire Line
-	5750 2325 6650 2325
+	5750 2325 6725 2325
 Text Label 5775 2725 0    60   ~ 0
 VCC
 Wire Wire Line
@@ -566,10 +556,72 @@ Text Label 5775 2225 0    60   ~ 0
 SST_IN
 Text Label 5775 2325 0    60   ~ 0
 SST_OUT
-Wire Wire Line
-	6575 2225 6650 2225
-Wire Wire Line
-	6650 2225 6650 2325
 Text Notes 7350 7500 0    60   ~ 0
 RC-1 Hex keypad
+Text Notes 7000 6825 0    60   ~ 0
+The keypad module for the RC One computer, has the classic KIM-1 layout with a\ncustom connector. This is the standard version using cheap tactile momentary buttons\nand is smaller [and cheaper to make] compared to the MX version.
+$Comp
+L Mounting M4
+U 1 1 5D726697
+P 11150 550
+F 0 "M4" H 11150 650 50  0001 C CNN
+F 1 "Mounting" H 11150 475 50  0001 C CNN
+F 2 "Mounting:1pin" H 11150 550 50  0001 C CNN
+F 3 "" H 11150 550 50  0001 C CNN
+	1    11150 550 
+	1    0    0    -1  
+$EndComp
+$Comp
+L Mounting M3
+U 1 1 5D72672B
+P 11025 550
+F 0 "M3" H 11025 650 50  0001 C CNN
+F 1 "Mounting" H 11025 475 50  0001 C CNN
+F 2 "Mounting:1pin" H 11025 550 50  0001 C CNN
+F 3 "" H 11025 550 50  0001 C CNN
+	1    11025 550 
+	1    0    0    -1  
+$EndComp
+$Comp
+L Mounting M2
+U 1 1 5D726784
+P 10900 550
+F 0 "M2" H 10900 650 50  0001 C CNN
+F 1 "Mounting" H 10900 475 50  0001 C CNN
+F 2 "Mounting:1pin" H 10900 550 50  0001 C CNN
+F 3 "" H 10900 550 50  0001 C CNN
+	1    10900 550 
+	1    0    0    -1  
+$EndComp
+$Comp
+L Mounting M1
+U 1 1 5D7267DD
+P 10775 550
+F 0 "M1" H 10775 650 50  0001 C CNN
+F 1 "Mounting" H 10775 475 50  0001 C CNN
+F 2 "Mounting:1pin" H 10775 550 50  0001 C CNN
+F 3 "" H 10775 550 50  0001 C CNN
+	1    10775 550 
+	1    0    0    -1  
+$EndComp
+$Comp
+L SW_SPDT SW22
+U 1 1 5D726F83
+P 6450 2075
+F 0 "SW22" H 6450 2245 50  0000 C CNN
+F 1 "SST" H 6450 1875 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x03_Pitch2.54mm" H 6450 2075 50  0001 C CNN
+F 3 "" H 6450 2075 50  0001 C CNN
+	1    6450 2075
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6175 2225 6175 2075
+Wire Wire Line
+	6175 2075 6250 2075
+Wire Wire Line
+	6650 2175 6725 2175
+Wire Wire Line
+	6725 2175 6725 2325
+NoConn ~ 6650 1975
 $EndSCHEMATC

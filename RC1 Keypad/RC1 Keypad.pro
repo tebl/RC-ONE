@@ -1,4 +1,4 @@
-update=25/08/2019 16:46:37
+update=06/09/2019 15:29:09
 version=1
 last_client=kicad
 [pcbnew]
@@ -23,6 +23,8 @@ ModuleOutlineThickness=0.150000000000
 [cvpcb]
 version=1
 NetIExt=net
+[general]
+version=1
 [eeschema]
 version=1
 LibDir=
@@ -60,15 +62,14 @@ LibName30=atmel
 LibName31=contrib
 LibName32=valves
 LibName33=library/sw_keyboard
-[general]
-version=1
+LibName34=library/mounting
 [schematic_editor]
 version=1
 PageLayoutDescrFile=
 PlotDirectoryName=export/
 SubpartIdSeparator=0
 SubpartFirstId=65
-NetFmtName=
+NetFmtName=Pcbnew
 SpiceForceRefPrefix=0
 SpiceUseNetNumbers=0
 LabSize=60
