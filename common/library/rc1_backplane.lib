@@ -41,9 +41,9 @@ T 0 100 -1300 60 0 0 0 D6 Normal 0 L C
 T 0 100 -1400 60 0 0 0 D7 Normal 0 L C
 T 0 100 -1500 60 0 0 0 DEN Normal 0 L C
 T 0 100 300 60 0 0 0 GND Normal 0 L C
-T 0 100 -1600 60 0 0 0 K0 Normal 0 L C
-T 0 100 -1700 60 0 0 0 K5 Normal 0 L C
-T 0 100 -1800 60 0 0 0 K7 Normal 0 L C
+T 0 100 -1800 60 0 0 0 IO3 Normal 0 L C
+T 0 100 -1600 60 0 0 0 K0_EXT Normal 0 L C
+T 0 100 -1700 60 0 0 0 K7_EXT Normal 0 L C
 T 0 100 -100 60 0 0 0 PHI0 Normal 0 L C
 T 0 100 100 60 0 0 0 PHI2 Normal 0 L C
 T 0 100 -400 60 0 0 0 "R/~W" Normal 0 L C

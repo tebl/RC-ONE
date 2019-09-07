@@ -19,7 +19,6 @@ DRAW
 T 0 -275 -950 60 0 0 0 GND Normal 0 L C
 T 0 -275 950 60 0 0 0 GND Normal 0 L C
 T 0 275 950 60 0 0 0 GND Normal 0 R C
-T 0 275 -750 60 0 0 0 IO3 Normal 0 R C
 T 0 -275 -750 60 0 0 0 K7 Normal 0 L C
 T 0 275 450 60 0 0 0 PA0 Normal 0 R C
 T 0 275 350 60 0 0 0 PA1 Normal 0 R C
