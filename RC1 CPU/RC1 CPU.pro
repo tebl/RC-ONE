@@ -1,4 +1,4 @@
-update=07/09/2019 14:45:04
+update=13/09/2019 15:32:40
 version=1
 last_client=kicad
 [pcbnew]
@@ -61,6 +61,8 @@ LibName31=rc1_ui_port
 LibName32=mounting
 LibName33=65xx
 LibName34=C:/Program Files/KiCad/share/kicad/library/Oscillators
+[general]
+version=1
 [schematic_editor]
 version=1
 PageLayoutDescrFile=
@@ -71,5 +73,3 @@ NetFmtName=Pcbnew
 SpiceForceRefPrefix=0
 SpiceUseNetNumbers=0
 LabSize=60
-[general]
-version=1
