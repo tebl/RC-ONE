@@ -1,4 +1,4 @@
-update=13/09/2019 13:51:44
+update=16/09/2019 13:11:19
 version=1
 last_client=kicad
 [pcbnew]
@@ -62,3 +62,14 @@ LibName30=atmel
 LibName31=contrib
 LibName32=valves
 LibName33=D:/owncloud/Documents/Projects/RC1/common/library/rc1_backplane
+LibName34=65xx
+[schematic_editor]
+version=1
+PageLayoutDescrFile=
+PlotDirectoryName=export/
+SubpartIdSeparator=0
+SubpartFirstId=65
+NetFmtName=Pcbnew
+SpiceForceRefPrefix=0
+SpiceUseNetNumbers=0
+LabSize=60
