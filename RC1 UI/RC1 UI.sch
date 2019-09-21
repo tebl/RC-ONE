@@ -68,7 +68,7 @@ F 1 "2N3906" H 3975 2000 50  0000 L CNN
 F 2 "TO_SOT_Packages_THT:TO-92_Molded_Narrow" H 3975 1925 50  0001 L CIN
 F 3 "" H 3775 2000 50  0001 L CNN
 	1    3775 2000
-	1    0    0    -1  
+	1    0    0    1   
 $EndComp
 $Comp
 L R R2
@@ -140,7 +140,7 @@ F 1 "2N3906" H 5675 2000 50  0000 L CNN
 F 2 "TO_SOT_Packages_THT:TO-92_Molded_Narrow" H 5675 1925 50  0001 L CIN
 F 3 "" H 5475 2000 50  0001 L CNN
 	1    5475 2000
-	1    0    0    -1  
+	1    0    0    1   
 $EndComp
 $Comp
 L R R4
@@ -212,7 +212,7 @@ F 1 "2N3906" H 7375 2000 50  0000 L CNN
 F 2 "TO_SOT_Packages_THT:TO-92_Molded_Narrow" H 7375 1925 50  0001 L CIN
 F 3 "" H 7175 2000 50  0001 L CNN
 	1    7175 2000
-	1    0    0    -1  
+	1    0    0    1   
 $EndComp
 $Comp
 L R R6
@@ -284,7 +284,7 @@ F 1 "2N3906" H 9075 2000 50  0000 L CNN
 F 2 "TO_SOT_Packages_THT:TO-92_Molded_Narrow" H 9075 1925 50  0001 L CIN
 F 3 "" H 8875 2000 50  0001 L CNN
 	1    8875 2000
-	1    0    0    -1  
+	1    0    0    1   
 $EndComp
 $Comp
 L R R8
@@ -356,7 +356,7 @@ F 1 "2N3906" H 10800 2000 50  0000 L CNN
 F 2 "TO_SOT_Packages_THT:TO-92_Molded_Narrow" H 10800 1925 50  0001 L CIN
 F 3 "" H 10600 2000 50  0001 L CNN
 	1    10600 2000
-	1    0    0    -1  
+	1    0    0    1   
 $EndComp
 $Comp
 L R R10
@@ -428,7 +428,7 @@ F 1 "2N3906" H 12525 2000 50  0000 L CNN
 F 2 "TO_SOT_Packages_THT:TO-92_Molded_Narrow" H 12525 1925 50  0001 L CIN
 F 3 "" H 12325 2000 50  0001 L CNN
 	1    12325 2000
-	1    0    0    -1  
+	1    0    0    1   
 $EndComp
 $Comp
 L R R12
