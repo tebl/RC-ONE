@@ -152,7 +152,7 @@ F 3 "" H 10825 10550 50  0001 C CNN
 	-1   0    0    -1  
 $EndComp
 Text Notes 12175 10925 0    60   ~ 0
-RC-ONE 8K ExRAM
+RC-ONE Sound Interface
 NoConn ~ 14750 5275
 NoConn ~ 14750 7075
 NoConn ~ 14750 6875
