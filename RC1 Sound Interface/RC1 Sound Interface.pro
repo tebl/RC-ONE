@@ -1,4 +1,4 @@
-update=23/09/2019 21:05:33
+update=24/09/2019 13:59:15
 version=1
 last_client=kicad
 [pcbnew]
@@ -23,18 +23,6 @@ ModuleOutlineThickness=0.150000000000
 [cvpcb]
 version=1
 NetIExt=net
-[schematic_editor]
-version=1
-PageLayoutDescrFile=
-PlotDirectoryName=export/
-SubpartIdSeparator=0
-SubpartFirstId=65
-NetFmtName=Pcbnew
-SpiceForceRefPrefix=0
-SpiceUseNetNumbers=0
-LabSize=60
-[general]
-version=1
 [eeschema]
 version=1
 LibDir=../common/library
@@ -75,3 +63,15 @@ LibName33=C:/Program Files/KiCad/share/kicad/library/modules
 LibName34=D:/owncloud/Documents/Projects/RC1/common/library/rc1_backplane
 LibName35=mos_6581
 LibName36=trs_3.5mm
+[general]
+version=1
+[schematic_editor]
+version=1
+PageLayoutDescrFile=
+PlotDirectoryName=export/
+SubpartIdSeparator=0
+SubpartFirstId=65
+NetFmtName=Pcbnew
+SpiceForceRefPrefix=0
+SpiceUseNetNumbers=0
+LabSize=60
