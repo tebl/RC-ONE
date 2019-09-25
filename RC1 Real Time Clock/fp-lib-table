@@ -1,0 +1,4 @@
+(fp_lib_table
+  (lib (name TRS)(type KiCad)(uri $KIPRJMOD/../common/modules/TRS.pretty)(options "")(descr ""))
+  (lib (name Potentiometer)(type KiCad)(uri $KIPRJMOD/../common/modules/pot_vertical.pretty)(options "")(descr ""))
+)
