@@ -13,6 +13,7 @@
 # Autorouter files (exported from Pcbnew)
 .dsn
 
+documentation/simulation
 Resources/
 
 RC1 UI/export/RC1 UI.zip

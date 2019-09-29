@@ -1,0 +1,12 @@
+        F  C B  8 7  4 3  0
+$17C0   0001 0111 11       	IO2 RAM (64 bytes) 
+$1780   0001 0111 10       	IO2 RAM (64 bytes)
+$1740   0001 0111 01       	IO2 Register
+$1700   0001 0111 00       	IO3
+$1600   0001 0110 0000 0000     unused (256 addr.)
+$1500   0001 0101 0000 0000     unused (256 addr.)
+$1400	0001 0100 0000 0000 	unused (256 addr.)
+
+U7 dec.    c ba			c=A12, b=A11, a=A10
+\_ K5      1 01            
+U8 dec.        1c ba		1, c=A8, b=A7, a=A6
