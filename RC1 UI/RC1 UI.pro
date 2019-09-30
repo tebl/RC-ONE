@@ -1,4 +1,4 @@
-update=06/09/2019 19:31:58
+update=30/09/2019 16:48:30
 version=1
 last_client=kicad
 [pcbnew]
@@ -23,6 +23,18 @@ ModuleOutlineThickness=0.150000000000
 [cvpcb]
 version=1
 NetIExt=net
+[general]
+version=1
+[schematic_editor]
+version=1
+PageLayoutDescrFile=
+PlotDirectoryName=export/
+SubpartIdSeparator=0
+SubpartFirstId=65
+NetFmtName=Pcbnew
+SpiceForceRefPrefix=0
+SpiceUseNetNumbers=0
+LabSize=60
 [eeschema]
 version=1
 LibDir=../common/library
@@ -61,15 +73,4 @@ LibName31=contrib
 LibName32=valves
 LibName33=D:/owncloud/Documents/Projects/RC1/common/library/mounting
 LibName34=D:/owncloud/Documents/Projects/RC1/common/library/rc1_ui_port
-[schematic_editor]
-version=1
-PageLayoutDescrFile=
-PlotDirectoryName=export/
-SubpartIdSeparator=0
-SubpartFirstId=65
-NetFmtName=Pcbnew
-SpiceForceRefPrefix=0
-SpiceUseNetNumbers=0
-LabSize=60
-[general]
-version=1
+LibName35=rc1_keypad_port

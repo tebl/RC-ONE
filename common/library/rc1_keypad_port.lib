@@ -1,0 +1,52 @@
+EESchema-LIBRARY Version 2.3
+#encoding utf-8
+#
+# RC1_Keypad_Port
+#
+DEF RC1_Keypad_Port J 0 40 Y N 1 F N
+F0 "J" -275 400 50 H V C CNN
+F1 "RC1_Keypad_Port" 0 -800 50 H V C CNN
+F2 "" -50 0 50 H I C CNN
+F3 "" -50 0 50 H I C CNN
+$FPLIST
+ Connector*:*2x??x*mm*
+ Connector*:*2x???Pitch*
+$ENDFPLIST
+DRAW
+T 0 325 250 60 0 0 0 LED Normal 0 R C
+T 0 -325 -350 60 0 0 0 PA0 Normal 0 L C
+T 0 -325 -250 60 0 0 0 PA1 Normal 0 L C
+T 0 -325 -150 60 0 0 0 PA2 Normal 0 L C
+T 0 -325 -50 60 0 0 0 PA3 Normal 0 L C
+T 0 -325 50 60 0 0 0 PA4 Normal 0 L C
+T 0 -325 150 60 0 0 0 PA5 Normal 0 L C
+T 0 -325 250 60 0 0 0 PA6 Normal 0 L C
+T 0 325 -550 60 0 0 0 RESET Normal 0 R C
+T 0 -325 -450 60 0 0 0 ROW0 Normal 0 L C
+T 0 -325 -550 60 0 0 0 ROW1 Normal 0 L C
+T 0 -325 -650 60 0 0 0 ROW2 Normal 0 L C
+T 0 325 -50 60 0 0 0 SST1 Normal 0 R C
+T 0 325 -150 60 0 0 0 SST2 Normal 0 R C
+T 0 325 -650 60 0 0 0 STOP Normal 0 R C
+T 900 0 325 60 0 0 0 VCC Normal 0 R C
+S -325 350 325 -750 0 0 0 N
+X Pin_1 1 -475 250 150 R 50 50 1 1 P
+X Pin_2 2 -475 150 150 R 50 50 1 1 P
+X Pin_3 3 -475 50 150 R 50 50 1 1 P
+X Pin_4 4 -475 -50 150 R 50 50 1 1 P
+X Pin_5 5 -475 -150 150 R 50 50 1 1 P
+X Pin_6 6 -475 -250 150 R 50 50 1 1 P
+X Pin_7 7 -475 -350 150 R 50 50 1 1 P
+X Pin_8 8 -475 -450 150 R 50 50 1 1 P
+X Pin_9 9 -475 -550 150 R 50 50 1 1 P
+X Pin_10 10 -475 -650 150 R 50 50 1 1 P
+X Pin_11 11 0 450 100 D 50 50 1 1 P
+X Pin_12 12 475 -650 150 L 50 50 1 1 P
+X Pin_13 13 475 -550 150 L 50 50 1 1 P
+X Pin_14 14 475 250 150 L 50 50 1 1 P
+X Pin_15 15 475 -150 150 L 50 50 1 1 P
+X Pin_16 16 475 -50 150 L 50 50 1 1 P
+ENDDRAW
+ENDDEF
+#
+#End Library
