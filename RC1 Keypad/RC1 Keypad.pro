@@ -1,4 +1,4 @@
-update=22/09/2019 15:52:52
+update=30/09/2019 20:36:44
 version=1
 last_client=kicad
 [pcbnew]
@@ -61,6 +61,7 @@ LibName31=contrib
 LibName32=valves
 LibName33=library/sw_keyboard
 LibName34=library/mounting
+LibName35=D:/owncloud/Documents/Projects/RC1/common/library/rc1_keypad_port
 [schematic_editor]
 version=1
 PageLayoutDescrFile=
