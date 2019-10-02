@@ -987,7 +987,7 @@ L Conn_02x04_Odd_Even J5
 U 1 1 5D96B66A
 P 9700 1100
 F 0 "J5" H 9750 1300 50  0000 C CNN
-F 1 "RAM_SEL" H 9750 800 50  0000 C CNN
+F 1 "LOW RAM" H 9750 800 50  0000 C CNN
 F 2 "Pin_Headers:Pin_Header_Straight_2x04_Pitch2.54mm" H 9700 1100 50  0001 C CNN
 F 3 "" H 9700 1100 50  0001 C CNN
 	1    9700 1100
@@ -1710,4 +1710,12 @@ NoConn ~ 9325 9475
 NoConn ~ 14750 6375
 Text Notes 1375 10000 0    60   ~ 0
 U4 is optional if the second 6532 for application\npurposes is not needed, U6 is also only needed\nfor 6532 or with 5K LOW RAM enabled.
+Text Label 9300 1100 2    60   ~ 0
+RAM_2K
+Text Label 9300 800  2    60   ~ 0
+RAM_1K
+Text Label 9325 1550 3    60   ~ 0
+RAM_4K
+Text Label 9425 1550 3    60   ~ 0
+RAM_5K
 $EndSCHEMATC
