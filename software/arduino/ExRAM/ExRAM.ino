@@ -178,18 +178,19 @@ void print_max_memory() {
 }
 
 void print_memory_base() {
-  printHex16(memory_base);
+  print_address(memory_base);
   Serial.print(" - ");
-  printHex16(memory_base + 0x1FFF);
+  print_address(memory_base + 0x1FFF);
   Serial.println();
 }
 
-void printHex16(int number) {
+void print_address(int number) {
   char tmp[10];
   sprintf(tmp, "$%04X", number);
   Serial.print(tmp);
 }
 
+void base_8k0() { set_base(0x0000); }
 void base_8k1() { set_base(0x2000); }
 void base_8k2() { set_base(0x4000); }
 void base_8k3() { set_base(0x6000); }
@@ -231,12 +232,10 @@ void hex_dump() {
 
   for (int base = 0; base < memory_size; base += 16) {
     byte data[16];
+    int hi = ((memory_base + base) & 0xFF00) >> 8;
+    int lo = (memory_base + base) & 0x00FF;
 
-    int sum = 0x10;
-    sum += base >> 8;   // HI address
-    sum += base & 0xFF; // LO address
-    sum += 0x00;        // Record type
-
+    int sum = 0;
     for (int offset = 0; offset <= 15; offset += 1) {
       setAddress(base + offset);
       data[offset] = readByte();
@@ -245,14 +244,15 @@ void hex_dump() {
 
     int checksum = hex_checksum(
       0x10, 
-      base + memory_base,
+      hi,
+      lo,
       0x00,
       sum
     );
 
     char buf[80];
-    sprintf(buf, ":%02x%.4X%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x",
-            0x10, base + memory_base, 0x00,
+    sprintf(buf, ":%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X",
+            0x10, hi, lo, 0x00,
             data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7],
             data[8], data[9], data[10], data[11], data[12], data[13], data[14], data[15], checksum);
 
@@ -262,15 +262,12 @@ void hex_dump() {
   disable();
 }
 
-int hex_checksum(int byte_count, int address, int record_type, int data_sum) {
-  int hi = address >> 8;
-  int lo = address & 0xFF;
-
+int hex_checksum(int byte_count, int hi, int lo, int record_type, int data_sum) {
   int x = byte_count + hi + lo + record_type + data_sum;
+  x = x % 256;
   x = ~x;
-  x = x + B01;
+  x = x + 1;
   x = x & 0xFF;
-
   return x;
 }
 
