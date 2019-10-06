@@ -104,24 +104,36 @@ void writeByte(byte value, bool set_direction = false) {
   delay(10);
 }
 
-void setup() {
-  pinMode(SHIFT_DATA, OUTPUT);
-  pinMode(SHIFT_CLK, OUTPUT);
-  pinMode(SHIFT_LATCH, OUTPUT);
-  pinMode(EX_EN, OUTPUT);
-
-  Serial.begin(115200);
-  disable();
-  version();
-
-  pinMode(EX_A13, OUTPUT);
-  pinMode(EX_A14, OUTPUT);
-  bank0();
-  base_8k1();
+/*
+ * Handle serial commands, mainly just matches the name
+ * and if it does the supplied function is run. Recognized
+ * commands are echoed back to the user.
+ */
+bool handle_command(String command, String name, void (*function)()) {
+  if (command == name) {
+    echo_command(command);
+    (*function)();
+    return true;
+  }
+  return false;
 }
 
-void version() {
+void echo_command(String command) {
+  Serial.println("> "+ command);
+}
+
+void echo_unknown(String command) {
+  Serial.println("? " + command);
+}
+
+void print_version() {
   Serial.println("ExRAM 0.1");
+}
+
+void print_status() {
+  int val = digitalRead(EX_RESET);
+  if (val == 0) Serial.println("Host system offline.");
+  else Serial.println("Host system online");
 }
 
 void bank0() {
@@ -170,11 +182,13 @@ void memory_8k() {
 
 void set_memory(int num_bytes) {
   memory_size = num_bytes;
-  Serial.println(num_bytes);
+  Serial.print(num_bytes / 1024);
+  Serial.println("K");
 }
 
 void print_max_memory() {
-  Serial.println(MAX_MEMORY_SIZE);
+  Serial.print(MAX_MEMORY_SIZE / 1024);
+  Serial.println("K");
 }
 
 void print_memory_base() {
@@ -204,6 +218,10 @@ void set_base(int value){
   print_memory_base();
 }
 
+/*
+ * Dumps memory contents to the console, formatting it similarly to
+ * the hex dumps found in the book "The First Book of KIM".
+ */
 void dump() {
   enable();
   setRead();
@@ -217,7 +235,7 @@ void dump() {
     }
 
     char buf[80];
-    sprintf(buf, "$%.4X:  %02x %02x %02x %02x %02x %02x %02x %02x   %02x %02x %02x %02x %02x %02x %02x %02x",
+    sprintf(buf, "$%.4X- %02x %02x %02x %02x %02x %02x %02x %02x   %02x %02x %02x %02x %02x %02x %02x %02x",
             base + memory_base, data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7],
             data[8], data[9], data[10], data[11], data[12], data[13], data[14], data[15]);
 
@@ -227,6 +245,10 @@ void dump() {
   disable();
 }
 
+/*
+ * Dumps memory contents to serial console, formatting is set
+ * to standard Intel HEX with a 16 byte record length.
+ */
 void hex_dump() {
   enable();
 
@@ -271,17 +293,106 @@ int hex_checksum(int byte_count, int hi, int lo, int record_type, int data_sum) 
   return x;
 }
 
-bool handle_command(String command, String name, void (*function)()) {
-  if (command == name) {
-    echo_command(command);
-    (*function)();
-    return true;
+bool handle_intel(String c) {
+  if (c.length() < 11) return handle_record_error(c, "record too short");
+
+  int byte_count = convert_hex_pair(c[1], c[2]);
+  if (c.length() != (11 + (byte_count * 2))) return handle_record_error(c, "length does not match data");
+  if (byte_count > 32) return handle_record_error(c, "buffer overflow");
+
+  int address = convert_hex_address(c[3], c[4], c[5], c[6]);
+  int hi = (address & 0xFF00) >> 8;
+  int lo = address & 0x00FF;
+  int record_type = convert_hex_pair(c[7], c[8]);
+
+  byte data[32];
+  int data_sum = 0;
+  int d = 0;
+  for (int i = 0; i < (byte_count * 2); i+=2) {
+      data[d] = convert_hex_pair(
+        c.charAt(9 + i),
+        c.charAt(10 + i)
+      );
+      
+      data_sum += data[d];
+      d++;
   }
+
+  int checksum = convert_hex_pair(c[9 + (byte_count * 2)], c[10 + (byte_count * 2)]);
+  if (0x00 != ((byte_count + hi + lo + record_type + data_sum + checksum) & 0xFF)) {
+    return handle_record_error(c, "checksum error");
+  } else {
+    switch (record_type) {
+      case 0x00: /* data */
+        enable();
+        setWrite();
+        for (int i = 0; i < byte_count; i++) {
+          setAddress(address);
+          writeByte(data[i]);
+        }
+        disable();
+      case 0x04: /* extended linear address */
+        echo_command(c);
+        return;
+      default:
+        return handle_record_error(c, "unknown record type");
+    }
+  }
+
+  return true;
+}
+
+int convert_hex_pair(char a1, char a0) {
+  return (
+      (convert_hex_digit(a1) << 4) +
+      (convert_hex_digit(a0))
+  );
+}
+
+int convert_hex_digit(char digit) {
+  digit = (digit > '9' ? digit - 87 : digit - 48);
+  if (digit < 0) return digit + 32;
+  if (digit > 15) return 15;
+  return digit;
+}
+
+int convert_hex_address(char a3, char a2, char a1, char a0) {
+  return (
+      (convert_hex_digit(a3) << 12) +
+      (convert_hex_digit(a2) << 8) +
+      (convert_hex_digit(a1) << 4) +
+      (convert_hex_digit(a0))
+   );
+}
+
+bool handle_record_error(String c, String e) {
+  Serial.print(c);
+  Serial.print(" (");
+  Serial.print(e);
+  Serial.println(")");
   return false;
 }
 
-void echo_command(String command) {
-  Serial.println("> "+ command);
+void handle_paper(String command) {
+  Serial.println("Paper: " + command);  
+}
+
+void setup() {
+  pinMode(SHIFT_DATA, OUTPUT);
+  pinMode(SHIFT_CLK, OUTPUT);
+  pinMode(SHIFT_LATCH, OUTPUT);
+  pinMode(EX_EN, OUTPUT);
+
+  Serial.begin(115200);
+  disable();
+  print_version();
+
+  pinMode(EX_A13, OUTPUT);
+  pinMode(EX_A14, OUTPUT);
+  pinMode(EX_RESET, INPUT);
+  bank0();
+  base_8k0();
+  memory_1k();
 }
 
 void loop() {
@@ -289,7 +400,8 @@ void loop() {
     command = Serial.readString();
     command.trim();
 
-    if (handle_command(command, "version", version)) break;
+    if (handle_command(command, "version", print_version)) break;
+    else if (handle_command(command, "status", print_status)) break;
     else if (handle_command(command, "bank 0", bank0)) break;
     else if (handle_command(command, "bank 1", bank1)) break;
     else if (handle_command(command, "bank 2", bank2)) break;
@@ -302,6 +414,7 @@ void loop() {
     else if (handle_command(command, "memory max", memory_8k)) break;
     else if (handle_command(command, "memory max?", print_max_memory)) break;
     else if (handle_command(command, "base", print_memory_base)) break;
+    else if (handle_command(command, "base 8k0", base_8k0)) break;
     else if (handle_command(command, "base 8k1", base_8k1)) break;
     else if (handle_command(command, "base 8k2", base_8k2)) break;
     else if (handle_command(command, "base 8k3", base_8k3)) break;
@@ -311,8 +424,10 @@ void loop() {
     else if (handle_command(command, "base 8k7", base_8k7)) break;
     else if (handle_command(command, "dump", dump)) break;
     else if (handle_command(command, "hex_dump", hex_dump)) break;
+    else if (command.charAt(0) == ':') handle_intel(command);
+    else if (command.charAt(0) == ';') handle_paper(command);
     else {
-      Serial.println("? " + command);
+      echo_unknown(command);
     }
   }
 }
