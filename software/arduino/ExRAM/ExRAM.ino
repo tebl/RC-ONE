@@ -251,7 +251,7 @@ void dump() {
  */
 void hex_dump() {
   enable();
-
+  setRead();
   for (int base = 0; base < memory_size; base += 16) {
     byte data[16];
     int hi = ((memory_base + base) & 0xFF00) >> 8;
@@ -333,13 +333,11 @@ bool handle_intel(String c) {
         disable();
       case 0x04: /* extended linear address */
         echo_command(c);
-        return;
+        return true;
       default:
         return handle_record_error(c, "unknown record type");
     }
   }
-
-  return true;
 }
 
 int convert_hex_pair(char a1, char a0) {
@@ -373,8 +371,68 @@ bool handle_record_error(String c, String e) {
   return false;
 }
 
-void handle_paper(String command) {
-  Serial.println("Paper: " + command);  
+/*
+ * KIM-1 paper tape format:
+ *  Data record:
+ *    ;bbaaaaddcccc
+ *    ;             = record start
+ *     bb           = byte count
+ *       aaaa       = address (HI/LO)
+ *           dd     = data byte(2 characters per byte)
+ *             cccc = record checksum
+ *    
+ *  Last record:
+ *    ;0000040004
+ *    ;bbaaaacccc
+ *    ;             = record start
+ *     bb           = 00
+ *       aaaa       = total records
+ *           cccc   = record checksum
+ */
+bool handle_paper(String c) {
+  if (c.length() < 11) return handle_record_error(c, "record too short");
+
+  int byte_count = convert_hex_pair(c[1], c[2]);
+  if (c.length() != (11 + (byte_count * 2))) return handle_record_error(c, "length does not match data");
+  if (byte_count > 24) return handle_record_error(c, "buffer overflow");
+
+  int address = convert_hex_address(c[3], c[4], c[5], c[6]);
+  int hi = (address & 0xFF00) >> 8;
+  int lo = address & 0x00FF;
+
+  byte data[24];
+  int data_sum = 0;
+  int d = 0;
+  for (int i = 0; i < (byte_count * 2); i+=2) {
+    data[d] = convert_hex_pair(
+      c.charAt(7 + i),
+      c.charAt(8 + i)
+    );
+    
+    data_sum += data[d];
+    d++;
+  }
+
+  int checksum = convert_hex_address(
+    c[7 + (byte_count * 2)], 
+    c[8 + (byte_count * 2)],
+    c[9 + (byte_count * 2)],
+    c[10 + (byte_count * 2)]
+  );
+  if (checksum == (byte_count + hi + lo + data_sum)) {
+    enable();
+    setWrite();
+    for (int i = 0; i < byte_count; i++) {
+      setAddress(address);
+      writeByte(data[i]);
+    }
+    disable();
+
+    echo_command(c);
+    return true;
+  } else {
+    return handle_record_error(c, "checksum error");
+  }
 }
 
 void setup() {
