@@ -1291,7 +1291,6 @@ F 3 "" H 7375 5375 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 NoConn ~ 6875 4025
-NoConn ~ 6875 4525
 NoConn ~ 6875 4625
 NoConn ~ 6875 4725
 NoConn ~ 6875 4825
@@ -1819,9 +1818,10 @@ Wire Wire Line
 Entry Wire Line
 	8575 5750 8675 5850
 Wire Wire Line
-	6875 4925 6825 4925
-Wire Wire Line
-	6825 4925 6825 5750
+	6825 4525 6825 5750
 Wire Wire Line
 	6825 5750 8575 5750
+Wire Wire Line
+	6825 4525 6875 4525
+NoConn ~ 6875 4925
 $EndSCHEMATC
