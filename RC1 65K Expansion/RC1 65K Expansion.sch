@@ -1718,4 +1718,6 @@ Text Label 9325 1550 3    60   ~ 0
 RAM_4K
 Text Label 9425 1550 3    60   ~ 0
 RAM_5K
+Text Notes 15400 11075 0    60   ~ 0
+B
 $EndSCHEMATC

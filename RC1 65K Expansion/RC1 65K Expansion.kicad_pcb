@@ -3,7 +3,7 @@
   (general
     (links 131)
     (no_connects 0)
-    (area 91.364999 84.379999 190.575001 139.775001)
+    (area 85.09 75.278095 198.755001 150.495001)
     (thickness 1.6)
     (drawings 176)
     (tracks 886)
@@ -1882,7 +1882,7 @@
     )
   )
 
-  (module Housings_DIP:DIP-14_W7.62mm_Socket (layer F.Cu) (tedit 5D94CAE9) (tstamp 5D94C839)
+  (module Housings_DIP:DIP-14_W7.62mm_Socket (layer F.Cu) (tedit 5DA47062) (tstamp 5D94C839)
     (at 146.685 112.395)
     (descr "14-lead though-hole mounted DIP package, row spacing 7.62 mm (300 mils), Socket")
     (tags "THT DIP DIL PDIP 2.54mm 7.62mm 300mil Socket")
@@ -1890,7 +1890,7 @@
     (fp_text reference U5 (at 3.81 2.54) (layer F.SilkS)
       (effects (font (size 1 1) (thickness 0.15)))
     )
-    (fp_text value 74LS08 (at 3.81 17.57) (layer F.Fab)
+    (fp_text value 74LS08 (at 3.81 7.62 90) (layer F.SilkS)
       (effects (font (size 1 1) (thickness 0.15)))
     )
     (fp_arc (start 3.81 -1.33) (end 2.81 -1.33) (angle -180) (layer F.SilkS) (width 0.12))
