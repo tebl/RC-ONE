@@ -14,9 +14,28 @@
 #define MAX_MEMORY_SIZE 8192
 
 /* Variables */
-int memory_size = MAX_MEMORY_SIZE;
+int memory_bank = 0;
 int memory_base = 0x2000;
+int memory_size = MAX_MEMORY_SIZE;
 String command;
+
+void setup() {
+  pinMode(SHIFT_DATA, OUTPUT);
+  pinMode(SHIFT_CLK, OUTPUT);
+  pinMode(SHIFT_LATCH, OUTPUT);
+  pinMode(EX_EN, OUTPUT);
+
+  Serial.begin(115200);
+  disable();
+  print_version();
+
+  pinMode(EX_A13, OUTPUT);
+  pinMode(EX_A14, OUTPUT);
+  pinMode(EX_RESET, INPUT);
+  bank0();
+  base_8k0();
+  memory_1k();
+}
 
 /*
  * Assert control of the memory, locking out the system.
@@ -41,8 +60,11 @@ void disable() {
   }
 
   pinMode(EX_RnW, INPUT);
-
   digitalWrite(EX_EN, LOW);
+
+  /* ensure serial LEDs stay off */
+  digitalWrite(SHIFT_CLK, LOW);
+  digitalWrite(SHIFT_DATA, LOW);
 }
 
 /*
@@ -73,7 +95,7 @@ byte readByte(bool set_direction = false) {
   if (set_direction) setRead();
   
   byte value = 0;
-  for (int pin = EX_D0; pin >= EX_D7; pin -= 1) {
+  for (int pin = EX_D7; pin >= EX_D0; pin -= 1) {
     value = (value << 1) + digitalRead(pin);
   }
   return value;
@@ -136,32 +158,57 @@ void print_status() {
   else Serial.println("Host system online");
 }
 
+void print_bank() {
+  Serial.print("Bank ");
+  Serial.print(memory_bank);
+  Serial.println(" enabled");
+}
+
 void bank0() {
-  digitalWrite(EX_A13, LOW);
-  digitalWrite(EX_A14, LOW);
-  Serial.println("Bank 0 enabled");
+  set_bank(0);
 }
 
 void bank1() {
-  digitalWrite(EX_A13, HIGH);
-  digitalWrite(EX_A14, LOW);
-  Serial.println("Bank 1 enabled");
+  set_bank(1);
 }
 
 void bank2() {
-  digitalWrite(EX_A13, LOW);
-  digitalWrite(EX_A14, HIGH);
-  Serial.println("Bank 2 enabled");
+  set_bank(2);
 }
 
 void bank3() {
-  digitalWrite(EX_A13, HIGH);
-  digitalWrite(EX_A14, HIGH);
-  Serial.println("Bank 3 enabled");
+  set_bank(3);
+}
+
+void set_bank(int num) {
+  memory_bank = num;
+  switch (memory_bank) {
+    case 0:
+      digitalWrite(EX_A13, LOW);
+      digitalWrite(EX_A14, LOW);
+      Serial.println("Bank 0 enabled");
+      break;
+    case 1:
+      digitalWrite(EX_A13, HIGH);
+      digitalWrite(EX_A14, LOW);
+      Serial.println("Bank 1 enabled");
+      break;
+    case 2:
+      digitalWrite(EX_A13, LOW);
+      digitalWrite(EX_A14, HIGH);
+      Serial.println("Bank 2 enabled");
+      break;
+    case 3:
+      digitalWrite(EX_A13, HIGH);
+      digitalWrite(EX_A14, HIGH);
+      Serial.println("Bank 3 enabled");
+      break;
+  }
 }
 
 void print_memory() {
-  Serial.println(memory_size);
+  Serial.print(memory_size / 1024);
+  Serial.println("K");
 }
 
 void memory_1k() {
@@ -219,6 +266,88 @@ void set_base(int value){
 }
 
 /*
+ * Perform a test of the configured amount of memory, this
+ * section of memory has different patterns written to it
+ * in 16 byte blocks before comparing the value to what is
+ * read back.
+ */
+void memory_test() {
+  unsigned char patterns[] = {0x00, 0xFF, 0x55, 0xAA};
+
+  enable();
+  Serial.print("Testing ");
+  Serial.print(memory_size / 1024);
+  Serial.println("K of memory:");
+  for (char i = 0; i < (sizeof(patterns) / sizeof(patterns[0])); i++) {
+    if (memory_test_pattern(i, patterns[i])) {
+      Serial.println(" OK!");
+    } else {
+      Serial.println(" failed!");
+      break;
+    }
+  }
+  disable();
+}
+
+bool memory_test_pattern(char pass, unsigned char pattern) {
+  char tmp[10];
+  Serial.print("Pass ");
+  sprintf(tmp, "%d (0x%02X) ", pass, pattern);
+  Serial.print(tmp);
+
+  bool passed = true;
+  for (int base = 0; base < memory_size; base += 16) {
+    setWrite();
+    for (int offset = 0; offset <= 15; offset += 1) {
+      setAddress(base + offset);
+      writeByte(pattern);
+    }
+    
+    setRead();
+    bool block_passed = true;
+    for (int offset = 0; offset <= 15; offset += 1) {
+      setAddress(base + offset);
+      if (readByte() != pattern) {
+        passed = false;
+        block_passed = false;
+      }
+    }
+       
+    if (block_passed) {
+      Serial.print(".");
+    } else {
+      Serial.print("x");
+    }
+  }
+
+  return passed;
+}
+
+/*
+ * Zero out the contents of memory, this is handy when it has
+ * been filled with unknown data or simply junk.
+ */
+void memory_zero() {
+  Serial.print("Zeroing out ");
+  Serial.print(memory_size / 1024);
+  Serial.print("K of memory ");
+
+  enable();
+  setWrite();
+  for (int base = 0; base < memory_size; base += 16) {
+    for (int offset = 0; offset <= 15; offset += 1) {
+      setAddress(base + offset);
+      writeByte(0x00);
+    }
+
+    Serial.print(".");
+  }
+  disable();
+
+  Serial.println(" done!");
+}
+
+/*
  * Dumps memory contents to the console, formatting it similarly to
  * the hex dumps found in the book "The First Book of KIM".
  */
@@ -235,7 +364,7 @@ void dump() {
     }
 
     char buf[80];
-    sprintf(buf, "$%.4X- %02x %02x %02x %02x %02x %02x %02x %02x   %02x %02x %02x %02x %02x %02x %02x %02x",
+    sprintf(buf, "$%.4X- %02X %02X %02X %02X %02X %02X %02X %02X   %02X %02X %02X %02X %02X %02X %02X %02X",
             base + memory_base, data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7],
             data[8], data[9], data[10], data[11], data[12], data[13], data[14], data[15]);
 
@@ -246,8 +375,9 @@ void dump() {
 }
 
 /*
- * Dumps memory contents to serial console, formatting is set
- * to standard Intel HEX with a 16 byte record length.
+ * Handle exporting of data to Intel HEX format, this data is printed 
+ * to serial directly with a 16 byte record length along with the
+ * correct checksum.
  */
 void hex_dump() {
   enable();
@@ -293,6 +423,12 @@ int hex_checksum(int byte_count, int hi, int lo, int record_type, int data_sum) 
   return x;
 }
 
+/*
+ * Handle importing of Intel HEX files. Data is read and loaded
+ * on a line by line basis, the maximum supported byte count for
+ * each is 0x20 (32 in decimal). The only record type recognized
+ * is the one for data.
+ */
 bool handle_intel(String c) {
   if (c.length() < 11) return handle_record_error(c, "record too short");
 
@@ -435,22 +571,22 @@ bool handle_paper(String c) {
   }
 }
 
-void setup() {
-  pinMode(SHIFT_DATA, OUTPUT);
-  pinMode(SHIFT_CLK, OUTPUT);
-  pinMode(SHIFT_LATCH, OUTPUT);
-  pinMode(EX_EN, OUTPUT);
-
-  Serial.begin(115200);
-  disable();
-  print_version();
-
-  pinMode(EX_A13, OUTPUT);
-  pinMode(EX_A14, OUTPUT);
-  pinMode(EX_RESET, INPUT);
-  bank0();
-  base_8k0();
-  memory_1k();
+void print_help() {
+  Serial.println("bank           Prints bank selection");
+  Serial.println("bank <num>     Select 8k bank");
+  Serial.println("base           Prints memory offset used");
+  Serial.println("base <block>   8k0-8k7 memory offset");
+  Serial.println("dump           Dump memory");
+  Serial.println("help           Prints this screen");
+  Serial.println("hex_dump       Intel HEX dump");
+  Serial.println("memory         Print memory dump size");
+  Serial.println("memory <size>  1k/2k/4k/8k memory dump size");
+  Serial.println("memory test    Test set memory");
+  Serial.println("memory zero    Zero out set memory");
+  Serial.println("status         Prints system status");
+  Serial.println("version        Prints ExRAM software version");
+  Serial.println(":<data>        Load Intel HEX data");
+  Serial.println(";<data>        Load paper tape data");
 }
 
 void loop() {
@@ -460,6 +596,7 @@ void loop() {
 
     if (handle_command(command, "version", print_version)) break;
     else if (handle_command(command, "status", print_status)) break;
+    else if (handle_command(command, "bank", print_bank)) break;
     else if (handle_command(command, "bank 0", bank0)) break;
     else if (handle_command(command, "bank 1", bank1)) break;
     else if (handle_command(command, "bank 2", bank2)) break;
@@ -471,6 +608,8 @@ void loop() {
     else if (handle_command(command, "memory 8k", memory_8k)) break;
     else if (handle_command(command, "memory max", memory_8k)) break;
     else if (handle_command(command, "memory max?", print_max_memory)) break;
+    else if (handle_command(command, "memory test", memory_test)) break;
+    else if (handle_command(command, "memory zero", memory_zero)) break;
     else if (handle_command(command, "base", print_memory_base)) break;
     else if (handle_command(command, "base 8k0", base_8k0)) break;
     else if (handle_command(command, "base 8k1", base_8k1)) break;
@@ -484,6 +623,7 @@ void loop() {
     else if (handle_command(command, "hex_dump", hex_dump)) break;
     else if (command.charAt(0) == ':') handle_intel(command);
     else if (command.charAt(0) == ';') handle_paper(command);
+    else if (handle_command(command, "help", print_help)) break;
     else {
       echo_unknown(command);
     }
