@@ -463,7 +463,7 @@ bool handle_intel(String c) {
         enable();
         setWrite();
         for (int i = 0; i < byte_count; i++) {
-          setAddress(address);
+          setAddress(address + i);
           writeByte(data[i]);
         }
         disable();
