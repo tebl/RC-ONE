@@ -539,6 +539,7 @@ bool handle_paper(String c) {
   byte data[24];
   int data_sum = 0;
   int d = 0;
+
   for (int i = 0; i < (byte_count * 2); i+=2) {
     data[d] = convert_hex_pair(
       c.charAt(7 + i),
@@ -559,7 +560,7 @@ bool handle_paper(String c) {
     enable();
     setWrite();
     for (int i = 0; i < byte_count; i++) {
-      setAddress(address);
+      setAddress(address + i);
       writeByte(data[i]);
     }
     disable();
