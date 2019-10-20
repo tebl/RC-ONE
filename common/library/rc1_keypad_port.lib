@@ -13,6 +13,7 @@ $FPLIST
  Connector*:*2x???Pitch*
 $ENDFPLIST
 DRAW
+T 900 0 325 60 0 0 0 C.P. Normal 0 R C
 T 0 325 250 60 0 0 0 LED Normal 0 R C
 T 0 -325 -350 60 0 0 0 PA0 Normal 0 L C
 T 0 -325 -250 60 0 0 0 PA1 Normal 0 L C
@@ -28,7 +29,6 @@ T 0 -325 -650 60 0 0 0 ROW2 Normal 0 L C
 T 0 325 -250 60 0 0 0 SST_IN Normal 0 R C
 T 0 325 -150 60 0 0 0 SST_OUT Normal 0 R C
 T 0 325 -650 60 0 0 0 STOP Normal 0 R C
-T 900 0 325 60 0 0 0 VCC Normal 0 R C
 S -325 350 325 -750 0 0 0 N
 X Pin_1 1 -475 250 150 R 50 50 1 1 P
 X Pin_2 2 -475 150 150 R 50 50 1 1 P
