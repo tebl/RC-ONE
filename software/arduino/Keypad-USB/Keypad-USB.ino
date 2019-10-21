@@ -24,9 +24,7 @@
 #define ROW2_PLUS 4 
 #define ROW2_GO 5 
 #define ROW2_PC 6
-
-/* Only used for debouncing */
-#define ROW3 3
+#define ROW3 3 /* virtual row for debouncing */
 #define ROW3_RS 0
 #define ROW3_ST 1
 #define ROW3_SST 2
@@ -74,8 +72,8 @@ void setup() {
 }
 
 void loop() {
-  if (check_debounced(RS_PIN, 3, ROW3_RS, false)) Serial.println("RESET");
-  if (check_debounced(ST_PIN, 3, ROW3_ST, false)) Serial.println("STOP");
+  if (check_debounced(RS_PIN, 3, ROW3_RS, false)) handle_key(ROW3, ROW3_RS);
+  if (check_debounced(ST_PIN, 3, ROW3_ST, false)) handle_key(ROW3, ROW3_ST);
   check_sst();
 
   for (byte row = 0; row < NUM_ROWS; row++) {
@@ -99,6 +97,16 @@ void loop() {
   }
 }
 
+/*
+ * Reads the specified digital pins, debouncing is performed in order
+ * to ignore erroneous key-presses due to the mechanical nature of the
+ * switches themselves. d_row/d_col is indexes used to keep track of how
+ * long a key has been depressed, a key will normally only register as
+ * pressed as long as the reading has been stable for a reasonable amount
+ * of time. allow_repeat specifies wether a key held down will register as
+ * subsequent presses, or if it should be ignored until key has been
+ * released.
+ */
 bool check_debounced(byte pin, byte d_row, byte d_col, bool allow_repeat) {
   if (digitalRead(pin) == LOW) {
     debounceCount[d_row][d_col]++;
@@ -123,6 +131,11 @@ bool check_debounced(byte pin, byte d_row, byte d_col, bool allow_repeat) {
   return false;
 }
 
+/*
+ * Evaluates wether a key should be directly repeatable, a key
+ * that is not repeatable will not recognize any further presses
+ * until it has been released.
+ */
 bool is_repeatable(byte row, byte col) {
   if (row == ROW2) {
     switch (col) {
@@ -138,6 +151,12 @@ bool is_repeatable(byte row, byte col) {
   return true;
 }
 
+/*
+ * Monitor SST switch for changes, both state transitions are
+ * debounced like the rest of the keys. Handled separately as
+ * it is a locking key, something not normally found on a
+ * keyboard.
+ */
 void check_sst() {
   if (SST_EN) {
     if (digitalRead(SST_PIN) == HIGH) {
@@ -158,18 +177,63 @@ void check_sst() {
 }
 
 void handle_sst_on() {
+  handle_key(ROW3, ROW3_SST);
   Serial.println("SST enabled!");
   digitalWrite(LED_PIN, HIGH);
 }
 
 void handle_sst_off() {
+  handle_key(ROW3, ROW3_SST);
   Serial.println("SST disabled!");
   digitalWrite(LED_PIN, LOW);
 }
 
+/*
+ * Translate keypad keys to their equivalents found on a modern
+ * keyboard.
+ */
 void handle_key(byte row, byte col) {
-  Serial.print("Key: ");
-  Serial.print(row);
-  Serial.print(" ");
-  Serial.println(col);
+  if (row == ROW0) {
+    switch(col) {
+      case ROW0_0: Keyboard.write('0'); return;
+      case ROW0_1: Keyboard.write('1'); return;
+      case ROW0_2: Keyboard.write('2'); return;
+      case ROW0_3: Keyboard.write('3'); return;
+      case ROW0_4: Keyboard.write('4'); return;
+      case ROW0_5: Keyboard.write('5'); return;
+      case ROW0_6: Keyboard.write('6'); return;
+    }
+  }
+
+  if (row == ROW1) {
+    switch(col) {
+      case ROW1_7: Keyboard.write('7'); return;
+      case ROW1_8: Keyboard.write('8'); return;
+      case ROW1_9: Keyboard.write('9'); return;
+      case ROW1_A: Keyboard.write('A'); return;
+      case ROW1_B: Keyboard.write('B'); return;
+      case ROW1_C: Keyboard.write('C'); return;
+      case ROW1_D: Keyboard.write('D'); return;
+    }
+  }
+
+  if (row == ROW2) {
+    switch(col) {
+      case ROW2_E: Keyboard.write('E'); return;
+      case ROW2_F: Keyboard.write('F'); return;
+      case ROW2_AD: Keyboard.write('/'); return;
+      case ROW2_DA: Keyboard.write('*'); return;
+      case ROW2_PLUS: Keyboard.write('+'); return;
+      case ROW2_GO: Keyboard.write('F'); return;
+      case ROW2_PC: Keyboard.write('F'); return;
+    }
+  }
+
+  if (row == ROW3) {
+    switch(col) {
+      case ROW3_RS: Keyboard.write(0xB1); return;
+      case ROW3_ST: Keyboard.write('S'); return;
+      case ROW3_SST: Keyboard.write(0x2A); return;
+    }
+  }
 }
