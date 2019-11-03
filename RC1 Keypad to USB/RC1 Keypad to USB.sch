@@ -383,4 +383,17 @@ Wire Wire Line
 	7100 2700 7275 2700
 Text Notes 6975 6825 0    60   ~ 0
 With the MX keypads costing a fair bit to make, I wanted to be able to use them on the\ncomputer as well - Arduino time! The Pro Micro supports acting as an HID keyboard\nover USB so this just maps the relevant pins.
+$Comp
+L Conn_01x02 J2
+U 1 1 5DAEDC73
+P 11000 650
+F 0 "J2" H 11000 750 50  0000 C CNN
+F 1 "Anchor" H 11000 450 50  0000 C CNN
+F 2 "Anchor:Pin_Header_Straight_1x02_Pitch2.54mm" H 11000 650 50  0001 C CNN
+F 3 "" H 11000 650 50  0001 C CNN
+	1    11000 650 
+	1    0    0    -1  
+$EndComp
+NoConn ~ 10800 650 
+NoConn ~ 10800 750 
 $EndSCHEMATC

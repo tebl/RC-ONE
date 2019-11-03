@@ -1,3 +1,4 @@
 (fp_lib_table
   (lib (name Arduino_Pro_Micro)(type KiCad)(uri $KIPRJMOD/../common/modules/arduino_pro_micro.pretty)(options "")(descr ""))
+  (lib (name Anchor)(type KiCad)(uri $KIPRJMOD/library/anchor.pretty)(options "")(descr ""))
 )
