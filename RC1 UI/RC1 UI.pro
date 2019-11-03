@@ -1,4 +1,4 @@
-update=14/10/2019 14:53:23
+update=03/11/2019 12:25:33
 version=1
 last_client=kicad
 [pcbnew]
@@ -62,6 +62,8 @@ LibName32=valves
 LibName33=D:/owncloud/Documents/Projects/RC1/common/library/mounting
 LibName34=D:/owncloud/Documents/Projects/RC1/common/library/rc1_ui_port
 LibName35=rc1_keypad_port
+[general]
+version=1
 [schematic_editor]
 version=1
 PageLayoutDescrFile=
@@ -72,5 +74,3 @@ NetFmtName=Pcbnew
 SpiceForceRefPrefix=0
 SpiceUseNetNumbers=0
 LabSize=60
-[general]
-version=1

@@ -295,6 +295,29 @@ X Pin_6 6 -200 -300 150 R 50 50 1 1 P
 ENDDRAW
 ENDDEF
 #
+# D_Small
+#
+DEF D_Small D 0 10 N N 1 F N
+F0 "D" -50 80 50 H V L CNN
+F1 "D_Small" -150 -80 50 H V L CNN
+F2 "" 0 0 50 V I C CNN
+F3 "" 0 0 50 V I C CNN
+$FPLIST
+ TO-???*
+ *SingleDiode
+ *_Diode_*
+ *SingleDiode*
+ D_*
+$ENDFPLIST
+DRAW
+P 2 0 1 0 -30 -40 -30 40 N
+P 2 0 1 0 -30 0 30 0 N
+P 4 0 1 0 30 -40 -30 0 30 40 30 -40 N
+X K 1 -100 0 70 R 50 50 1 1 P
+X A 2 100 0 70 L 50 50 1 1 P
+ENDDRAW
+ENDDEF
+#
 # GND
 #
 DEF GND #PWR 0 0 Y Y 1 F P
@@ -435,6 +458,7 @@ $FPLIST
  Connector*:*2x???Pitch*
 $ENDFPLIST
 DRAW
+T 900 0 325 60 0 0 0 C.P. Normal 0 R C
 T 0 325 250 60 0 0 0 LED Normal 0 R C
 T 0 -325 -350 60 0 0 0 PA0 Normal 0 L C
 T 0 -325 -250 60 0 0 0 PA1 Normal 0 L C
@@ -450,7 +474,6 @@ T 0 -325 -650 60 0 0 0 ROW2 Normal 0 L C
 T 0 325 -250 60 0 0 0 SST_IN Normal 0 R C
 T 0 325 -150 60 0 0 0 SST_OUT Normal 0 R C
 T 0 325 -650 60 0 0 0 STOP Normal 0 R C
-T 900 0 325 60 0 0 0 VCC Normal 0 R C
 S -325 350 325 -750 0 0 0 N
 X Pin_1 1 -475 250 150 R 50 50 1 1 P
 X Pin_2 2 -475 150 150 R 50 50 1 1 P
