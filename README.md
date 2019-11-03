@@ -19,16 +19,18 @@ The RC-ONE computer is operational, it can be used to enter and run code via the
 ## System modules
 As mentioned earlier there are a few different modules available for the system, some will be required to make the system function and others is considered optional and can be added if you want that extra piece of 70s-technology to play around with. There may be additional modules in the project files, but the ones I've added here are the ones that can be considered ready. As modules are being worked on over time, I've also added an order link to the modules so that you can get the last version I know worked. For more information about the specific module, including schematic and a list of parts you'd need to build it - click the name of the module!
 
-Note that due to the similarities with the [RC6502  Apple 1 Replica](https://github.com/tebl/RC6502-Apple-1-Replica) some of the additions for that system will also work with the RC-ONE, for that reason some of the modules will lead you to documentation belonging to that machine instead.
+Note that due to the similarities with the [RC6502  Apple 1 Replica](https://github.com/tebl/RC6502-Apple-1-Replica), quite a few of the modules developed for that system will also work with the RC-ONE - the ones I've tested and use with the system have also been linked below.
 
-In order to build a working RC-ONE computer, you'll need the following modules:
-- [CPU](https://github.com/tebl/RC-ONE/tree/master/RC1%20CPU)
-- [User Interface](https://github.com/tebl/RC-ONE/tree/master/RC1%20UI)
-- [Keypad](https://github.com/tebl/RC-ONE/tree/master/RC1%20Keypad) or [Keypad MX](https://github.com/tebl/RC-ONE/tree/master/RC1%20Keypad%20MX)
+| Module    | RC-ONE | RC-ONE 65K | Order |
+| --------- | ------ | ---------- | ----- |
+| [CPU](https://github.com/tebl/RC-ONE/tree/master/RC1%20CPU) | required | required | |
+| [User Interface](https://github.com/tebl/RC-ONE/tree/master/RC1%20UI) | required | required | |
+| [Keypad](https://github.com/tebl/RC-ONE/tree/master/RC1%20Keypad) | required * | required * | |
+| [Keypad MX](https://github.com/tebl/RC-ONE/tree/master/RC1%20Keypad%20MX) | required * | required * | |
+| [65K Expansion](https://github.com/tebl/RC-ONE/tree/master/RC1%2065K%20Expansion) |  | required | |
+| [RC6502 Backplane](https://github.com/tebl/RC6502-Apple-1-Replica/tree/master/RC6502%20Backplane)  |  | required | [PCBWay](https://www.pcbway.com/project/shareproject/RC6502_Apple_1_Replica__Backplane_module_revision_A_.html?inviteid=88707) |
+| [RC6502 Prototyping module](https://github.com/tebl/RC6502-Apple-1-Replica/tree/master/RC6502%20Prototyping) |  | optional | [PCBWay](https://www.pcbway.com/project/shareproject/RC6502_Apple_1_Replica__Module_prototyping_board_.html?inviteid=88707) |
 
-Optional modules:
-- [65K Expansion](https://github.com/tebl/RC-ONE/tree/master/RC1%2065K%20Expansion)
-- [RC6502 Backplane](https://github.com/tebl/RC6502-Apple-1-Replica/tree/master/RC6502%20Backplane) ([order](https://www.pcbway.com/project/shareproject/RC6502_Apple_1_Replica__Backplane_module_revision_A_.html?inviteid=88707))
-- [RC6502 Prototyping module](https://github.com/tebl/RC6502-Apple-1-Replica/tree/master/RC6502%20Prototyping) ([order](https://www.pcbway.com/project/shareproject/RC6502_Apple_1_Replica__Module_prototyping_board_.html?inviteid=88707))
+*) Only one Keypad module is required, the MX version is a lot more comfortable to use though it comes at an increased cost.
 
 If you would like to have a copy of one or more modules (usually 5$ per module), consider using the order links in order to support the development of these boards while doing so. You can alternatively zip up the contents of the export directory for each module and give that to your favourite PCB fabrication plant (I use [PCBWay](https://www.pcbway.com/setinvite.aspx?inviteid=88707) instead, but not that these files may have changes not yet tested on my part.
