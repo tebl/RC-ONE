@@ -5,7 +5,7 @@ The original unit cost 245$ assembled with everything you needed to get started,
 
 I however don't have that amount of money to play with, PCB prices skyrocket past 100x100 mm so I've separated functionality into separate boards so that each version would cost only around 5$ per piece instead. It means it's no longer a single board computer, but if it means more people can build it as a fun project then that's a plus in my book. The main setup does not include the additional 15 I/O lines due to space requirements, but you can add those back to the system by including the 65K Expansion (in addition to the backplane module) if you want to. If you just want to play around with the system and try your hand at machine language coding, you can get started with the CPU board, UI board and a keypad module.
 
-![RC-ONE Standalone](https://github.com/tebl/RC-ONE/raw/master/gallery/2019-09-29%2016.26.11.jpg)
+![RC-ONE Standalone](https://github.com/tebl/RC-ONE/raw/master/gallery/2019-10-24%2020.47.25.jpg)
 
 As a classic microcomputer, I've gone ahead and created the obligatory memory map for your perusal - the highlights are shown below, but you'll find the complete set of information in the documentation section ([ODS](https://github.com/tebl/RC-ONE/raw/master/documentation/memory_map.ods)- or [PDF](https://github.com/tebl/RC-ONE/raw/master/documentation/memory_map.pdf)-format). Some of the functions have been shifted physically, but in the end the system should be functionally identical to an original system and able to run code without requireing changes.
 
@@ -13,8 +13,10 @@ As a classic microcomputer, I've gone ahead and created the obligatory memory ma
 
 The system is highly expandable, with the 65K expansion in place you'll get better utilization of the components already on the CPU board as well as the ability to add additional modules to the system with an additional backplane also in place. See *System modules* below for a list of modules required for a complete system, optional modules available as well as modules for other systems that are compatible with the RC-ONE computer.
 
+A lot of the work I've done couldn't have been completed without the work previously done by Ruud Baltissen, you can compare the schematics he did for the original KIM-1 computer and his more modern recreation of it by studying his [Build your own KIM-1](http://www.baltissen.org/newhtm/buildkim.htm) page.
+
 ## Project status
-The RC-ONE computer is operational, it can be used to enter and run code via the keypad and can output to the displays as expected and for many this will be all that's needed to have fun with it as a replica of the KIM-1. Some sections still remain, mainly those that deal with the TTY mode and tape functionality, see [TODO](https://github.com/tebl/RC-ONE/blob/master/TODO.md) for an overview of things I've yet to implement or want to change in the future!
+The RC-ONE computer is operational, it can be used to enter and run code via the keypad and can output to the displays as expected and for many this will be all that's needed to have fun with it as a replica of the KIM-1. Some sections are still being worked on, mainly those that deal with the TTY mode and tape functionality - see [TODO](https://github.com/tebl/RC-ONE/blob/master/TODO.md) for an overview of things I'd like to see done sometime in the future!
 
 ## System modules
 As mentioned earlier there are a few different modules available for the system, some will be required to make the system function and others is considered optional and can be added if you want that extra piece of 70s-technology to play around with. There may be additional modules in the project files, but the ones I've added here are the ones that can be considered ready. As modules are being worked on over time, I've also added an order link to the modules so that you can get the last version I know worked. For more information about the specific module, including schematic and a list of parts you'd need to build it - click the name of the module!
