@@ -1,10 +1,11 @@
-# RC-ONE CPU
-Among the years I've built quite a few computers, some bought as kits from various vendors and some I even designed myself based on available designs describes in books and other technical resources - above all, there was one I really wanted above all of them; the KIM-1! Originally created by MOS in order to show off their new 6502-processor, it was a success that tapped into a market they probably never knew themselves was growing into a force to be reckoned with - the homecomputing market! Later bought up by little-known typewriter-manufacturer *Commodore*, the KIM-1 is an iconic piece of hardware and since I can't afford to buy one I'll build one instead.
+# RC-ONE
 
-![Assembled CPU Board](https://github.com/tebl/RC-ONE/raw/master/RC1%20CPU/gallery/2019-10-24%2020.31.04.jpg)
+Among the years I've built quite a few computers, some bought as kits from various vendors and some I even designed myself based on available designs describes in books and other technical resources - above all, there was one I really wanted above all of them; the KIM-1! The [RC-ONE](https://github.com/tebl/RC-ONE) is a functional replica designed in a modular fashion, for the specifics see the specific module.
 
+## CPU
 The CPU board has been created to stack with the UI-board, see below for an indication of how that'll look on a completed revision B system - I'm using M3 nylon standoffs to support the boards.
 
+![Assembled CPU Board](https://github.com/tebl/RC-ONE/raw/master/RC1%20CPU/gallery/2019-10-24%2020.31.04.jpg)
 ![Stacked boards](https://github.com/tebl/RC-ONE/raw/master/gallery/2019-10-24%2020.45.34.jpg)
 
 The CPU board is actually a complete SBC (Single Board Computer) by itself, meaning that it can be used standalone - the only thing missing is an automatic reset, which the KIM-1 originally also lacked. The design follows the original KIM-1 schematics and has the exact same specifications as the original system (1Mhz, 1K RAM and 2K ROM), you can compare the [memory map](https://github.com/tebl/RC-ONE/raw/master/documentation/memory_map.pdf) for the specifics.
@@ -34,7 +35,7 @@ If you require more assistance, there is also a separate [Troubleshooting](https
 
 
 # BOM
-This is the part list as it stands now, most should be easy to get a hold of from your local electronic component shop though you might have to consider other sources depending on the quality of your local vendor.
+This is the part list as it stands now, most should be easy to get a hold of from your local electronic component shop though you might have to consider other sources depending on the quality of your local vendor. Values in parenthesis are optional components that might not be needed.
 
 Some vendors will have the same ICs in different form factors, the ones you want will often be specified as being in the form of a DIP/PDIP package. Usually you'll want sockets for each of the ICs as well, a bag of assorted sockets should be easily available without setting you back more than a couple bucks. With the sockets in place, you don't need to dread having to remove an IC later, this leads to easier fault finding and you can easily "borrow" them for other projects later! For the pin headers, you probably won't find the exact pin count so just buy the 40 pin versions and snip off the parts you don't need.
 

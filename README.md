@@ -1,10 +1,10 @@
-# RC-ONE
+# KIM-1 Replica Computer
 
 Among the years I've built quite a few computers, some bought as kits from various vendors and some I even designed myself based on available designs describes in books and other technical resources - above all, there was one I really wanted above all of them; the KIM-1! Originally created by MOS in order to show off their new 6502-processor, it was a success that tapped into a market they probably never knew themselves was growing into a force to be reckoned with - the homecomputing market! Later bought up by little-known typewriter-manufacturer *Commodore*, the KIM-1 is an iconic piece of hardware and since I can't afford to buy one I'll build one instead.
 
 The original unit cost 245$ assembled with everything you needed to get started, it had six segment displays for outputting information and a 24-key keypad onboard. CPU ran at an incredible 1 Mhz, it had a complete monitor in 2K of ROM, 1K of static RAM as well as an additional 128 bytes of RAM. You got 15 additional I/O lines to play with, all on a single PCB.
 
-## KIM-1 Replica Computer
+## RC-ONE
 I however don't have that amount of money to play with, PCB prices skyrocket past 100x100 mm so I've separated functionality into separate boards so that each version would cost only around 5$ per piece instead. It means it's no longer a single board computer, but if it means more people can build it as a fun project then that's a plus in my book. The main setup does not include the additional 15 I/O lines due to space requirements, but you can add those back to the system by including the 65K Expansion (in addition to the backplane module) if you want to. If you just want to play around with the system and try your hand at machine language coding, you can get started with the CPU board, UI board and a keypad module.
 
 ![RC-ONE Standalone](https://github.com/tebl/RC-ONE/raw/master/gallery/2019-10-24%2020.47.25.jpg)
