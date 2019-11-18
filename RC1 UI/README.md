@@ -36,7 +36,7 @@ The serial interface is now TTL level and is intended for use with USB TTL seria
 # Schematic
 The supplied KiCad files should be sufficient as both a schematic and as a starting point for ordering PCBs (basically you could just zip the contents of the export folder and upload that on a fabrication site), the schematic is also available in [PDF-format](https://github.com/tebl/RC-ONE/raw/master/RC1%20UI/export/RC1%20UI.pdf) so that you print it out and hang it on your office wall, excellent conversation starter at any technology-oriented business worth working at (or so I keep telling myself)!
 
-If you require more assistance, there is also a separate [Troubleshooting](https://github.com/tebl/RC-ONE/blob/master/documentation/Troubleshooting.md) guide as part of the supplied documentation. Also make sure to have a read through the [Manual](https://github.com/tebl/RC-ONE/blob/master/documentation/Manual.md) to see if it's a *feature* instead!
+If you require more assistance, there is also a separate [Troubleshooting](https://github.com/tebl/RC-ONE/blob/master/Troubleshooting.md) guide as part of the supplied documentation. Also make sure to have a read through the [Manual](https://github.com/tebl/RC-ONE/blob/master/Manual.md) to see if it's a *feature* instead!
 
 
 # BOM
