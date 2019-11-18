@@ -3,7 +3,7 @@
   (general
     (links 131)
     (no_connects 0)
-    (area 85.09 75.278095 198.755001 150.495001)
+    (area 91.364999 84.379999 190.575001 139.775001)
     (thickness 1.6)
     (drawings 176)
     (tracks 886)
@@ -32,7 +32,7 @@
     (45 Margin user)
     (46 B.CrtYd user)
     (47 F.CrtYd user)
-    (48 B.Fab user hide)
+    (48 B.Fab user)
     (49 F.Fab user hide)
   )
 
