@@ -27,4 +27,4 @@ The slide-switch marked SST is for single-stepping programs, it's deactivated in
 
 Neither of these keys will work directly as instended, this is because you'll need to manually configure a couple of memory addresses with the expected values in order to have these function properly. These are the CPU initialization vectors, for settings these up you can refer to the following excerpt from the excellent [*The First book of KIM*](https://archive.org/details/The_First_Book_of_KIM) by Jim Butterfield:
 
-![Vectors](https://github.com/tebl/RC-ONE/raw/master/documentation/kim_vectors.png)
+![Vectors](https://github.com/tebl/RC-ONE/raw/master/documentation/images/kim_vectors.png)
