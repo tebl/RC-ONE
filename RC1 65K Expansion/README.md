@@ -9,7 +9,7 @@ The original KIM-1 computer as well as RC-ONE base system only has around 1K of 
 
 For a complete overview of the addressing used with the computer, see [Memory Map](https://github.com/tebl/RC-ONE/raw/master/documentation/memory_map.pdf) ([ODS-format](https://github.com/tebl/RC-ONE/raw/master/documentation/memory_map.ods)) for a comparison between the relevant systems - preview of the main bits below as well!
 
-![Memory Map](https://github.com/tebl/RC-ONE/raw/master/gallery/memory_map.PNG)
+![Memory Map](https://github.com/tebl/RC-ONE/raw/master/documentation/images/memory_map.PNG)
 
 The 65K Expansion expands upon the address decoding performed by the [CPU-board](https://github.com/tebl/RC-ONE/tree/master/RC1%20CPU) so that more of the address space is both freed up, my implementation on it is for the most part functionally the same as the one described in the [KIM-1 Programming Manual](http://users.telenet.be/kim1-6502/6502/proman.html) (which is why it's called the *65K Expansion*).
 
