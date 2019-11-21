@@ -64,14 +64,15 @@ Anyway, third time's the charm! Thankfully, in time before things really start g
 ## 4> Construction
 Welcome to the part where you'll be expected to play along, so get your soldering iron heated up and lets get going. First of though, make sure that you've got all of the components and modules necessary to build at least a basic RC-ONE system. The required modules have been listed in the table below, but for a complete list of available modules including all of the cool extras - see the main project [README](https://github.com/tebl/RC-ONE)!
 
-| Module    | RC-ONE | RC-ONE 65K |
-| --------- | ------ | ---------- |
-| [CPU](https://github.com/tebl/RC-ONE/tree/master/RC1%20CPU) | required | required |
-| [User Interface](https://github.com/tebl/RC-ONE/tree/master/RC1%20UI) | required | required |
-| [Keypad](https://github.com/tebl/RC-ONE/tree/master/RC1%20Keypad) | required * | required * |
-| [Keypad MX](https://github.com/tebl/RC-ONE/tree/master/RC1%20Keypad%20MX) | required * | required * |
-| [65K Expansion](https://github.com/tebl/RC-ONE/tree/master/RC1%2065K%20Expansion) |  | required |
-| [RC6502 Backplane](https://github.com/tebl/RC6502-Apple-1-Replica/tree/master/RC6502%20Backplane)  |  | required |
+| Module                                                                                            | RC-ONE     | RC-ONE 65K |
+| ------------------------------------------------------------------------------------------------- | ---------- | ---------- |
+| [CPU](https://github.com/tebl/RC-ONE/tree/master/RC1%20CPU)                                       | required   | required   |
+| [User Interface](https://github.com/tebl/RC-ONE/tree/master/RC1%20UI)                             | required   | required   |
+| [Keypad](https://github.com/tebl/RC-ONE/tree/master/RC1%20Keypad)                                 | required * | required * |
+| [Keypad MX](https://github.com/tebl/RC-ONE/tree/master/RC1%20Keypad%20MX)                         | required * | required * |
+| [65K Expansion](https://github.com/tebl/RC-ONE/tree/master/RC1%2065K%20Expansion)                 |            | required   |
+| [RC6502 Backplane](https://github.com/tebl/RC6502-Apple-1-Replica/tree/master/RC6502%20Backplane) |            | required   |
+
 *) Only one Keypad module is required, the MX version is a lot more comfortable to use though it comes at an increased cost.
 
 In order to build each of the modules, you'll need to obtain the pre-requisite number of components as specified - a component list will usually be found in something called a *BOM*, you'll find them separately listed for each of the modules by clicking on them above.
@@ -132,7 +133,10 @@ Other computers you've worked with probably includes an automatic reset when you
 
 ### 4.4> When things fail
 If you've gotten to this point and everything works;
-> Congraturation. This is happy end. Thank you. Return to starting point. Challenge again!
+> Congraturation,
+> This story is happy end.
+> Reset to starting point.
+> Challenge again!
 
 Didn't work at all or just some things working? If nothing is working, return to the start of chapter 4 and start there again - read the pinouts and use your multimeter to ensure that each of the chips are receiving somewhere in the vicinity of 5v on the pins labelled VCC (some might say VDD though - same thing, different conventions of naming things). Beginners tip; put the black one on somewhere named *GND* and the red on the one you're measuring, check manual for which setting to use when measuring voltage.
 
@@ -180,7 +184,7 @@ The first step that you always have to do before doing anything with the compute
 
 The computer should already be in addressing mode after it has been reset, meaning that the next digits typed in will set the address on the first 4 displays. After typing in **17FA**, push **DA** to go into data entry mode and enter 00 using the keypad. Press the **+** key to go to the next address, verify that it is listed as **17FB** and enter **1C**. Keep pusing **+** to get to **17FE** and keep goint until all of the data has been entered.
 
-### 5.1> Mapping out stuff
+### 5.1> Mapping it all out
 Life may be like a box of chocolate, but computers not so much - unless you veer into unitialized memory, then all bets are off until you put something sensible into them. Returning to the magical number of **17FA** in the previous section, which is usually written as **$17FA** as it's a hexadecimal number - even more, it's a four digit address into the 64K of total address space that the 6502 processor is able to access directly. Where does this number come from?
 
 Well, some numbers are magical - meaning that someone else, in this case the designer of the original KIM-1 decided that this specific address should be used for that uniquely specific thing. All of the machines that operate in the same fashion has rules determining how the system should react, in the case of a 6502-based system it all comes down to which memory addresses are assigned to the various segments of RAM, ROM or even more traditional devices that you'd probably not think of as a storage device (they probably aren't, but we call them registers when working with them like that). 
@@ -189,8 +193,25 @@ So where is everything? To answer that, we need a map and when dealing with anyt
 
 ![Memory map preview](https://github.com/tebl/RC-ONE/raw/master/documentation/images/memory_map.PNG)
 
-There's a lot of information to take in, but rememember that this is only used as a reference when programming new things into the computer so you don't have to remember everything - it's in a document so that I don't actually have to remember it. The picture only includes the highlights, in order to get the complete set of information you'll find the complete document within the documentation section of this project ([ODS](https://github.com/tebl/RC-ONE/raw/master/documentation/memory_map.ods)- or [PDF](https://github.com/tebl/RC-ONE/raw/master/documentation/memory_map.pdf)-format).
+There's a lot of information to take in, but rememember that this is only used as a reference when programming new things into the computer so you don't have to remember everything - it's in a document so that I don't actually have to remember it. The picture only includes the highlights, in order to get the complete and most up to date information you'll have to check out the source material - available in [ODS](https://github.com/tebl/RC-ONE/raw/master/documentation/memory_map.ods)- or [PDF](https://github.com/tebl/RC-ONE/raw/master/documentation/memory_map.pdf)-format).
 
 The essential part when getting started is just getting a feeling for where everything lives, you can see the differences between the original KIM-1 and the various versions of the RC-ONE.
 
-### 5.2> Going 65K
+## 6> Going 65K
+As you've probably already noticed from studying the extremely detailed memory map that I gave you somewhere around chapter 5, there aren't really all that many blocks of *free* address space that can be easily used for expansions in on unexpanded system - what you get is mostly K1 through K4. What happened to the other 56K available to the 6502, 8K1 through 8K8 to make them go all gray and unattractive?
+
+The short story is that the base systems do not differentiate between any of the high address lines (partial address decoding), so that the bottom 8K is mirrored into every 8K section on the computer - their mirrors of eachother! Initially it would seem like a bad design choice, but when they made the system they already thought out a pretty nifty upgrade path for the system by building a 65K Expansion for the system (it's in the manual, that's what they called it back then).
+
+What they did was add a jumper called *DECODER ENABLE*, this is *DEN* on the RC-ONE CPU board and it should be removed on a 65K system. Given that the RC-ONE also has a lot more RAM and ROM than what is normally accessible, mostly due to those ICs being a lot cheaper these days, I added a way of overriding the original memory decoding so that an upgraded system can access most of it. The table below summarizes the jumper settings used for a 65K system, these are all found on the CPU board of the computer. 
+
+| Reference | Position | Description                                       |
+| --------- | -------- | ------------------------------------------------  |
+| DEN       | o o      | Remove jumper for a 65K system                    |
+| RAM_EXT   | 1-2      | Jumper when NOT using with 65K Expansion          |
+|           | 2-3 *    | RAM decoding is handled by 65K Expansion          |
+| ROM_EXT   | 1-2      | Jumper when NOT using with 65K Expansion          |
+|           | 2-3 *    | ROM decoding is handled by 65K Expansion          |
+
+If you recall from chapter 4 there is one more module that you'll need in addition to the 65K Expansion itself - a backplane to connect it all together (this is why there's also those 39 pins at the bottom of the CPU board). Any compatible backplane such as the one that comes with the RC2014-line of computers can be used, as I've done in with the 65K computer shown below. Alternatively you can use the RC6502 backplane, it makes things a bit easier at it has the proper pin names used with a 6502 processor.
+
+![65K System](https://github.com/tebl/RC-ONE/raw/master/documentation/images/65k_system.jpg)
