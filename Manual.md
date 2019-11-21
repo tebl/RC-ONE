@@ -126,7 +126,7 @@ Connect the power, but only do so for a short while at first; observe the board 
 ### 4.3 Connect the power (for real this time)
 Connect the power as previously described, did something happen? At the very least you should have a green (or whatever colour you selected) LED lighting up on the keypad of your choice. Some of the 7-segment displays might even light up, but this is mainly due to the randomness of the computer being in an unknown state until it is properly reset.
 
-Other computers you've worked with probably includes an automatic reset when you power it on, the RC6502 has one in the form of a 555-timer if you're wondering how that'd work in a circuit (with the RESET-signal present on the backplane connector, you can actually make a separate expansion that does this for you if you'd like to). Anyway, the KIM-1 didn't include one - and so the RC-ONE in its current revision doesn't either. You need to manually press the *RESET* button on the keypad in order to reset the computer. Hopefully the displays light up, letting you bask in the electronic afterglow of having a computer that more or less runs!
+Other computers you've worked with probably includes an automatic reset when you power it on, the RC6502 has one in the form of a 555-timer if you're wondering how that'd work in a circuit (with the RESET-signal present on the backplane connector, you can actually make a separate expansion that does this for you if you'd like to). Anyway, the KIM-1 didn't include one - and so the RC-ONE in its current revision doesn't either. You need to manually press the *RESET* (**RS**) button on the keypad in order to reset the computer. Hopefully the displays light up, letting you bask in the electronic afterglow of having a computer that more or less runs!
 
 **NB!** Make sure that the *SST* switch is off, this means that the DIP-switch/slide-switch or something else entirely, that has a direction, is in the left position.
 
@@ -156,3 +156,41 @@ Note down on the paper things you've checked and are sure about, if you feel lik
 I've also started putting things related to troubleshooting in a separate [Troubleshooting](https://github.com/tebl/RC-ONE/blob/master/Troubleshooting.md)-document as well, it'll be a bit more on the dry side though it might quite possibly contain that little extra nugget of wisdom required to get further in the build process. On that note, here ends the construction section of the manual. Sadness all around, but hopefully there's a happy little RC-ONE computer at the end of it all!
 
 ## 5> The software side of life
+The software running on the RC-ONE is the same as the one powering the original KIM-1, it is a simple monitor that allows you to enter program using the hex-keypad (meaning it has keys numbered from 0 to F in hexadecimal), run it and even perform simple debugging. With the 65K Expansion you'll be able to put up to 6K worth of extra programs on the same EPROM, but on the base system you'll have to enter those the hard way (usually by typing them in, possibly even loading them from tape if I get that working). If you recall from some of those earlier pictures, the keypad on the RC-ONE will look something like the following:
+
+![Keypad](https://github.com/tebl/RC-ONE/raw/master/documentation/images/keypad.jpg)
+
+I won't go into more details on what each key does than what is shown below, as the book that originally came with the system - the [Programmers Manual](http://users.telenet.be/kim1-6502/6502/proman.html) will do a better job of explaining all the fine details. When looking for something a little more accessible, I highly recommend checking out The [First Book of KIM](https://archive.org/details/The_First_Book_of_KIM).
+
+| Key | Description                                          |
+| --- | ---------------------------------------------------- |
+| SST | Right position to single-step code                   |
+| GO  | Start executing from current address                 |
+| ST  | Stop executing program                               |
+| RS  | Resets the computer                                  |
+| AD  | Address mode, enter digits to set (4 digits)         |
+| DA  | Data mode, enter digits to set (last 2 digits)       |
+| PC  | Resume single-stepping after each step               |
+|  +  | Increases currently set address                      |
+| 0-F | Enters digits into data or address depending on mode |
+
+The first step that you always have to do before doing anything with the computer is to set the initalization vectors for the monitor. These are the addresses that the CPU will used to determing where it should start execution when an interrupt is encountered such as when pressing the ST-button to stop execution. The following snippet from the First Book of KIM describes this process in detail:
+
+![Reset vectors](https://github.com/tebl/RC-ONE/raw/master/documentation/images/kim_vectors.png)
+
+The computer should already be in addressing mode after it has been reset, meaning that the next digits typed in will set the address on the first 4 displays. After typing in **17FA**, push **DA** to go into data entry mode and enter 00 using the keypad. Press the **+** key to go to the next address, verify that it is listed as **17FB** and enter **1C**. Keep pusing **+** to get to **17FE** and keep goint until all of the data has been entered.
+
+### 5.1> Mapping out stuff
+Life may be like a box of chocolate, but computers not so much - unless you veer into unitialized memory, then all bets are off until you put something sensible into them. Returning to the magical number of **17FA** in the previous section, which is usually written as **$17FA** as it's a hexadecimal number - even more, it's a four digit address into the 64K of total address space that the 6502 processor is able to access directly. Where does this number come from?
+
+Well, some numbers are magical - meaning that someone else, in this case the designer of the original KIM-1 decided that this specific address should be used for that uniquely specific thing. All of the machines that operate in the same fashion has rules determining how the system should react, in the case of a 6502-based system it all comes down to which memory addresses are assigned to the various segments of RAM, ROM or even more traditional devices that you'd probably not think of as a storage device (they probably aren't, but we call them registers when working with them like that). 
+
+So where is everything? To answer that, we need a map and when dealing with anything 8bit you should find one for just about any computer you'll every work with (unless they come up with something better). This map is usually referenced to as the computers Memory Map, if you're lucky it exists and even matches the actual hardware you'll be working on in practice though you'll usually also need to refer to the datasheets related to the IC living in that area of memory. The RC-ONE has a map that looks something like the following:
+
+![Memory map preview](https://github.com/tebl/RC-ONE/raw/master/documentation/images/memory_map.PNG)
+
+There's a lot of information to take in, but rememember that this is only used as a reference when programming new things into the computer so you don't have to remember everything - it's in a document so that I don't actually have to remember it. The picture only includes the highlights, in order to get the complete set of information you'll find the complete document within the documentation section of this project ([ODS](https://github.com/tebl/RC-ONE/raw/master/documentation/memory_map.ods)- or [PDF](https://github.com/tebl/RC-ONE/raw/master/documentation/memory_map.pdf)-format).
+
+The essential part when getting started is just getting a feeling for where everything lives, you can see the differences between the original KIM-1 and the various versions of the RC-ONE.
+
+### 5.2> Going 65K
