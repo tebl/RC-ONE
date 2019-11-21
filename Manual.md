@@ -197,6 +197,44 @@ There's a lot of information to take in, but rememember that this is only used a
 
 The essential part when getting started is just getting a feeling for where everything lives, you can see the differences between the original KIM-1 and the various versions of the RC-ONE.
 
+### 5.2> Hello KIM-1
+The chapter where we finally type in our first program, but not before setting up those interrupt vector you learned all about at the beginning of the chapter - do this now, the next time and every time before you start entering programs. With that done, let's go completely coocoo on this KIM-1 (*sort of*) by getting the important parts of the follwing assembler listing typed in:
+```
+0000-                  1               .CR     6502
+0000-                  2               .TF     hello.hex,INT
+0000-                  3
+00FA-                  4       POINTL  .EQ     $FA     addressL on display
+00FB-                  5       POINTH  .EQ     $FB     addressH on display
+00F9-                  6       INH     .EQ     $F9     inputbuffer high
+1F1F-                  7       SCANDS  .EQ     $1F1F
+0000-                  8
+0200-                  9               .OR     $0200
+0200-                 10               .TA     $0000
+0200-                 11
+0200-A9 C0            12 (  2) START   LDA     #$C0
+0202-85 FB            13 (  2)         STA     POINTH
+0204-A9 0C            14 (  2)         LDA     #$0C
+0206-85 FA            15 (  2)         STA     POINTL
+0208-A9 00            16 (  2)         LDA     #$00
+020A-85 F9            17 (  2)         STA     INH
+020C-20 1F 1F         18 (  6) LOOP    JSR     SCANDS
+020F-4C 0C 02         19 (  3)         JMP     LOOP
+```
+
+Well, that's certainly a bunch of information just to type in one simple program! I could probably have just given you the byte by byte listing instead, but where would the learning process be in that as you'd just be getting a load of magic numbers instead. This way is better, trust me!
+
+Each assembly statement is one line, the lines are numbered from 1 to 19 and all of them equal a maximum of one machine language instruction (the stuff that the CPU knows how to execute). I say maximum because most of the lines at the beginning are just equates, they tell the assembler program information that should be used when converting the program to the machine language instructions. As programs for the KIM-1 usually do, the program should be loaded into memory starting at location $0200 (this is the first column of the code listing) and the first bits of data to be typed into the computer is on line 12.
+
+Enter 0200 while in address mode (push *AD* if you're not sure), push *DA* to tell the monitor program that'll you'll be entering data next. The first instruction consists of two bytes, which is why there's two numbers listed after the address - type in *A* and *9* for the first one, push *+* to go to the next memory location and then enter C0 and hit the *+*-key again. The address part of the display should now read 0202 and we've come to the next line, continuing to enter data as you go along until the entire thing has been loaded into memory. Now imagine the mind-blowing experience this was back in those days!
+
+To verify that everything was entered correctly, go back into address mode using the *AD* key and enter the $0200 address again. Use the *+* key again and verify that you've gotten all of the bytes in the correct place, correct if necessary. Keeping track of the addresses as you go along makes it easy to spot bytes left out, or those that snuck in without having a place in the program.
+
+To run the program, return to $0200 (again). Hit *GO* and hope that the program runs the way it should - either the computer will go coocoo - or - you will!
+
+Press the stop key (*ST*) when you're bored with the program, after that - either go looking for other more advanced programs to enter into the computer or write your own!
+
+Check out chapter 7 for some of the places to find more stuff!
+
 ## 6> Going 65K
 As you've probably already noticed from studying the extremely detailed memory map that I gave you somewhere around chapter 5, there aren't really all that many blocks of *free* address space that can be easily used for expansions in on unexpanded system - what you get is mostly K1 through K4. What happened to the other 56K available to the 6502, 8K1 through 8K8 to make them go all gray and unattractive?
 
@@ -215,3 +253,10 @@ What they did was add a jumper called *DECODER ENABLE*, this is *DEN* on the RC-
 If you recall from chapter 4 there is one more module that you'll need in addition to the 65K Expansion itself - a backplane to connect it all together (this is why there's also those 39 pins at the bottom of the CPU board). Any compatible backplane such as the one that comes with the RC2014-line of computers can be used, as I've done in with the 65K computer shown below. Alternatively you can use the RC6502 backplane, it makes things a bit easier at it has the proper pin names used with a 6502 processor.
 
 ![65K System](https://github.com/tebl/RC-ONE/raw/master/documentation/images/65k_system.jpg)
+
+## 7> Where do I go now?
+As with most things in life, that'll be up to you to decide and I'm neither old enough or wise enough to pretend I know the answer to that question. The Aardvar would probably find the answer using its long snout, then again it doesn't care much for old computers - if it'd ever encounter one, given that it is a medium-sized mammal mostly just living in Zoo-s outside of Africa there's a rather slim chance of that.
+
+As previously mentioned an on the topic of the KIM-1 and the RC-ONE, you really should spend some time reading the [Programmers Manual](http://users.telenet.be/kim1-6502/6502/proman.html) to get the finer details I completely messed up or left out due to humour or downright neglect (is that possible when it's a hobby project?). The [First Book of KIM](https://archive.org/details/The_First_Book_of_KIM) is another excellent tome of knowledge, you mostly just have 20 pages in total to read - after that it's just program listings. Interest that the computer initially created spawned a magaine called the [Dr. Dobb's Journal of Computer Calisthenics and Orthodontia](http://6502.org/documents/publications/dr_dobbs_journal), all collected volumes are available online and there is no better way of learning about a system than reading through what the original owners did with their systems back then.
+
+A gentleman named Jeff Tranter on YouTube made an excellent series of videos on the original KIM-1, those come highly recommended. [Part 1](https://www.youtube.com/watch?v=jj0Hn2ZcW-s), [Part2](https://www.youtube.com/watch?v=97PccuhGl9w) and finally [Part3](https://www.youtube.com/watch?v=3loypYCzEj8). He also provides a [GitHub](https://github.com/jefftranter/6502/tree/master/asm/KIM-1)-repository with a sizable collection of programs for the KIM-1 in one place.
