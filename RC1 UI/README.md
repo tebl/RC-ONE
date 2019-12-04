@@ -47,6 +47,7 @@ Some vendors will have the same ICs in different form factors, the ones you want
 | Reference       | Item                                  | Count |
 | --------------- | ------------------------------------- | ----- |
 | PCB             | Fabricate yourself using Gerber files |     1 |
+| AFF1-AFF6       | 0.56" 7-segment displays (C.K.)       |     6 |
 | C7,C9           | 50nF ceramic capacitor                |    (2)|
 | C8              | 68nF ceramic capacitor                |    (1)|
 | C1-C6           | 100nF ceramic capacitor               |     6 |
