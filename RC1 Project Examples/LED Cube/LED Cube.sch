@@ -32,7 +32,7 @@ LIBS:mounting
 LIBS:rc1_backplane
 LIBS:led_cube_4x4
 LIBS:switches
-LIBS:LED Cub-cache
+LIBS:LED Cube-cache
 EELAYER 25 0
 EELAYER END
 $Descr A3 16535 11693
@@ -48,27 +48,27 @@ Comment3 ""
 Comment4 ""
 $EndDescr
 Text Notes 12175 10925 0    60   ~ 0
-RC-ONE Project Board
+RC-ONE LED Cube 4x4 (Project Board)
 $Comp
 L VCC #PWR01
 U 1 1 5D63F697
-P 14725 7525
-F 0 "#PWR01" H 14725 7375 50  0001 C CNN
-F 1 "VCC" H 14725 7675 50  0000 C CNN
-F 2 "" H 14725 7525 50  0001 C CNN
-F 3 "" H 14725 7525 50  0001 C CNN
-	1    14725 7525
+P 14825 7525
+F 0 "#PWR01" H 14825 7375 50  0001 C CNN
+F 1 "VCC" H 14825 7675 50  0000 C CNN
+F 2 "" H 14825 7525 50  0001 C CNN
+F 3 "" H 14825 7525 50  0001 C CNN
+	1    14825 7525
 	1    0    0    -1  
 $EndComp
 $Comp
 L GND #PWR02
 U 1 1 5D63F634
-P 14725 7775
-F 0 "#PWR02" H 14725 7525 50  0001 C CNN
-F 1 "GND" H 14725 7625 50  0000 C CNN
-F 2 "" H 14725 7775 50  0001 C CNN
-F 3 "" H 14725 7775 50  0001 C CNN
-	1    14725 7775
+P 14825 7775
+F 0 "#PWR02" H 14825 7525 50  0001 C CNN
+F 1 "GND" H 14825 7625 50  0000 C CNN
+F 2 "" H 14825 7775 50  0001 C CNN
+F 3 "" H 14825 7775 50  0001 C CNN
+	1    14825 7775
 	1    0    0    -1  
 $EndComp
 Text Notes 15400 11075 0    60   ~ 0
@@ -85,7 +85,7 @@ F 3 "" H 15150 7400 50  0001 C CNN
 	1    0    0    1   
 $EndComp
 Wire Wire Line
-	14725 7700 14725 7775
+	14825 7700 14825 7775
 $Comp
 L C_Small C1
 U 1 1 5DD0E0B6
@@ -144,8 +144,8 @@ $EndComp
 Connection ~ 11200 10375
 Wire Wire Line
 	11475 10650 11475 10800
-Text Notes 11850 10250 0    60   ~ 0
-After building a few things on breadboards with a microcontroller, I wanted to do the\nsame with the computer instead so I created this as an easy work-surface to do those\nthings.
+Text Notes 11825 10550 0    60   ~ 0
+A 4x4 LED Cube with integrated template, created for slotting on top of the RC-ONE\nProject Board. As a cube it's rather small, but given that it already contains 64 individual\nLEDs I believe it's a manageable yet fun project.\n\nEach layer is constructed separately on the reverse side with 0.5mm diameter metal bars\nfor the anodes. Layers are then moved to the front and stacked.
 $Comp
 L Conn_01x10 J5
 U 1 1 5DE736F3
@@ -987,11 +987,7 @@ Wire Bus Line
 Wire Bus Line
 	2200 6175 2200 3100
 Wire Wire Line
-	14725 7600 14725 7525
-Wire Wire Line
-	14725 7700 14950 7700
-Wire Wire Line
-	14725 7600 14950 7600
+	14825 7600 14825 7525
 Wire Wire Line
 	4750 5600 5500 5600
 Wire Wire Line
@@ -1225,4 +1221,14 @@ F 3 "" H 15725 550 50  0001 C CNN
 	1    15725 550 
 	1    0    0    -1  
 $EndComp
+Wire Wire Line
+	14825 7600 14950 7600
+Wire Wire Line
+	14950 7700 14825 7700
+Text Notes 14550 1000 0    60   ~ 0
+Used to attach two PCBs on top\nof the other to serve as guides\nfor the vertical rods. Hex\nstandoffs used between them.
+Text Notes 6800 6600 0    60   ~ 0
+Used to attach two PCBs on top\n74LS374s drive 8 LEDs each,\nmaking up half of each layer.\n\nCP is clocked on positive edge,\nsignal taken low the high again\nto copy PA data to the latch.
+Text Notes 3175 8250 0    60   ~ 0
+Each layer is enabled by\nactivating the corresponding\ntransistor. Only one layer\nshould be enabled at a\ntime.
 $EndSCHEMATC
