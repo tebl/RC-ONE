@@ -1,0 +1,317 @@
+EESchema-LIBRARY Version 2.3
+#encoding utf-8
+#
+# Prototype
+#
+DEF Prototype J 0 40 Y N 1 F N
+F0 "J" 0 100 50 H V C CNN
+F1 "Prototype" 0 -100 50 H V C CNN
+F2 "" 0 0 50 H I C CNN
+F3 "" 0 0 50 H I C CNN
+$FPLIST
+ Connector*:*_??x*mm*
+ Connector*:*1x??x*mm*
+ Pin?Header?Straight?1X*
+ Pin?Header?Angled?1X*
+ Socket?Strip?Straight?1X*
+ Socket?Strip?Angled?1X*
+$ENDFPLIST
+DRAW
+S -50 5 0 -5 1 1 6 N
+S -50 50 50 -50 1 1 10 f
+X Pin_1 ~ -200 0 150 R 50 50 1 1 N
+ENDDRAW
+ENDDEF
+#
+# Prototype_17
+#
+DEF ~Prototype_17 P 0 40 Y N 1 F N
+F0 "P" 0 -50 50 H I C CNN
+F1 "Prototype_17" 0 -125 50 H I C CNN
+F2 "" 0 0 50 H I C CNN
+F3 "" 0 0 50 H I C CNN
+$FPLIST
+ Connector*:*_??x*mm*
+ Connector*:*1x??x*mm*
+ Pin?Header?Straight?1X*
+ Pin?Header?Angled?1X*
+ Socket?Strip?Straight?1X*
+ Socket?Strip?Angled?1X*
+$ENDFPLIST
+DRAW
+X ~ 1 0 0 39 R 24 24 1 1 N
+X ~ 2 0 50 39 R 24 24 1 1 N
+X ~ 3 0 100 39 R 24 24 1 1 N
+X ~ 4 0 150 39 R 24 24 1 1 N
+X ~ 5 0 200 39 R 24 24 1 1 N
+X ~ 6 0 250 39 R 24 24 1 1 N
+X ~ 7 0 300 39 R 24 24 1 1 N
+X ~ 8 0 350 39 R 24 24 1 1 N
+X ~ 9 0 400 39 R 24 24 1 1 N
+X ~ 10 0 450 39 R 24 24 1 1 N
+X ~ 11 0 500 39 R 24 24 1 1 N
+X ~ 12 0 550 39 R 24 24 1 1 N
+X ~ 13 0 600 39 R 24 24 1 1 N
+X ~ 14 0 650 39 R 24 24 1 1 N
+X ~ 15 0 700 39 R 24 24 1 1 N
+X ~ 16 0 750 39 R 24 24 1 1 N
+X ~ 17 0 800 39 R 24 24 1 1 N
+ENDDRAW
+ENDDEF
+#
+# Prototype_21
+#
+DEF ~Prototype_21 P 0 40 Y N 1 F N
+F0 "P" 0 -50 50 H I C CNN
+F1 "Prototype_21" 0 -125 50 H I C CNN
+F2 "" 0 0 50 H I C CNN
+F3 "" 0 0 50 H I C CNN
+$FPLIST
+ Connector*:*_??x*mm*
+ Connector*:*1x??x*mm*
+ Pin?Header?Straight?1X*
+ Pin?Header?Angled?1X*
+ Socket?Strip?Straight?1X*
+ Socket?Strip?Angled?1X*
+$ENDFPLIST
+DRAW
+X ~ 1 0 0 39 R 24 24 1 1 N
+X ~ 2 0 50 39 R 24 24 1 1 N
+X ~ 3 0 100 39 R 24 24 1 1 N
+X ~ 4 0 150 39 R 24 24 1 1 N
+X ~ 5 0 200 39 R 24 24 1 1 N
+X ~ 6 0 250 39 R 24 24 1 1 N
+X ~ 7 0 300 39 R 24 24 1 1 N
+X ~ 8 0 350 39 R 24 24 1 1 N
+X ~ 9 0 400 39 R 24 24 1 1 N
+X ~ 10 0 450 39 R 24 24 1 1 N
+X ~ 20 0 950 39 R 24 24 1 1 N
+X ~ 11 0 500 39 R 24 24 1 1 N
+X ~ 21 0 1000 39 R 24 24 1 1 N
+X ~ 12 0 550 39 R 24 24 1 1 N
+X ~ 13 0 600 39 R 24 24 1 1 N
+X ~ 14 0 650 39 R 24 24 1 1 N
+X ~ 15 0 700 39 R 24 24 1 1 N
+X ~ 16 0 750 39 R 24 24 1 1 N
+X ~ 17 0 800 39 R 24 24 1 1 N
+X ~ 18 0 850 39 R 24 24 1 1 N
+X ~ 19 0 900 39 R 24 24 1 1 N
+ENDDRAW
+ENDDEF
+#
+# Prototype_22
+#
+DEF ~Prototype_22 P 0 40 Y N 1 F N
+F0 "P" 0 -50 50 H I C CNN
+F1 "Prototype_22" 0 -125 50 H I C CNN
+F2 "" 0 0 50 H I C CNN
+F3 "" 0 0 50 H I C CNN
+$FPLIST
+ Connector*:*_??x*mm*
+ Connector*:*1x??x*mm*
+ Pin?Header?Straight?1X*
+ Pin?Header?Angled?1X*
+ Socket?Strip?Straight?1X*
+ Socket?Strip?Angled?1X*
+$ENDFPLIST
+DRAW
+X ~ 1 0 0 39 R 24 24 1 1 N
+X ~ 2 0 50 39 R 24 24 1 1 N
+X ~ 3 0 100 39 R 24 24 1 1 N
+X ~ 4 0 150 39 R 24 24 1 1 N
+X ~ 5 0 200 39 R 24 24 1 1 N
+X ~ 6 0 250 39 R 24 24 1 1 N
+X ~ 7 0 300 39 R 24 24 1 1 N
+X ~ 8 0 350 39 R 24 24 1 1 N
+X ~ 9 0 400 39 R 24 24 1 1 N
+X ~ 10 0 450 39 R 24 24 1 1 N
+X ~ 20 0 950 39 R 24 24 1 1 N
+X ~ 11 0 500 39 R 24 24 1 1 N
+X ~ 21 0 1000 39 R 24 24 1 1 N
+X ~ 12 0 550 39 R 24 24 1 1 N
+X ~ 22 0 1050 39 R 24 24 1 1 N
+X ~ 13 0 600 39 R 24 24 1 1 N
+X ~ 14 0 650 39 R 24 24 1 1 N
+X ~ 15 0 700 39 R 24 24 1 1 N
+X ~ 16 0 750 39 R 24 24 1 1 N
+X ~ 17 0 800 39 R 24 24 1 1 N
+X ~ 18 0 850 39 R 24 24 1 1 N
+X ~ 19 0 900 39 R 24 24 1 1 N
+ENDDRAW
+ENDDEF
+#
+# Prototype_23
+#
+DEF ~Prototype_23 P 0 40 Y N 1 F N
+F0 "P" 0 -50 50 H I C CNN
+F1 "Prototype_23" 0 -125 50 H I C CNN
+F2 "" 0 0 50 H I C CNN
+F3 "" 0 0 50 H I C CNN
+$FPLIST
+ Connector*:*_??x*mm*
+ Connector*:*1x??x*mm*
+ Pin?Header?Straight?1X*
+ Pin?Header?Angled?1X*
+ Socket?Strip?Straight?1X*
+ Socket?Strip?Angled?1X*
+$ENDFPLIST
+DRAW
+X ~ 1 0 0 39 R 24 24 1 1 N
+X ~ 2 0 50 39 R 24 24 1 1 N
+X ~ 3 0 100 39 R 24 24 1 1 N
+X ~ 4 0 150 39 R 24 24 1 1 N
+X ~ 5 0 200 39 R 24 24 1 1 N
+X ~ 6 0 250 39 R 24 24 1 1 N
+X ~ 7 0 300 39 R 24 24 1 1 N
+X ~ 8 0 350 39 R 24 24 1 1 N
+X ~ 9 0 400 39 R 24 24 1 1 N
+X ~ 10 0 450 39 R 24 24 1 1 N
+X ~ 20 0 950 39 R 24 24 1 1 N
+X ~ 11 0 500 39 R 24 24 1 1 N
+X ~ 21 0 1000 39 R 24 24 1 1 N
+X ~ 12 0 550 39 R 24 24 1 1 N
+X ~ 22 0 1050 39 R 24 24 1 1 N
+X ~ 13 0 600 39 R 24 24 1 1 N
+X ~ 23 0 1100 39 R 24 24 1 1 N
+X ~ 14 0 650 39 R 24 24 1 1 N
+X ~ 15 0 700 39 R 24 24 1 1 N
+X ~ 16 0 750 39 R 24 24 1 1 N
+X ~ 17 0 800 39 R 24 24 1 1 N
+X ~ 18 0 850 39 R 24 24 1 1 N
+X ~ 19 0 900 39 R 24 24 1 1 N
+ENDDRAW
+ENDDEF
+#
+# Prototype_24
+#
+DEF ~Prototype_24 P 0 40 Y N 1 F N
+F0 "P" 0 -50 50 H I C CNN
+F1 "Prototype_24" 0 -125 50 H I C CNN
+F2 "" 0 0 50 H I C CNN
+F3 "" 0 0 50 H I C CNN
+$FPLIST
+ Connector*:*_??x*mm*
+ Connector*:*1x??x*mm*
+ Pin?Header?Straight?1X*
+ Pin?Header?Angled?1X*
+ Socket?Strip?Straight?1X*
+ Socket?Strip?Angled?1X*
+$ENDFPLIST
+DRAW
+X ~ 1 0 0 39 R 24 24 1 1 N
+X ~ 2 0 50 39 R 24 24 1 1 N
+X ~ 3 0 100 39 R 24 24 1 1 N
+X ~ 4 0 150 39 R 24 24 1 1 N
+X ~ 5 0 200 39 R 24 24 1 1 N
+X ~ 6 0 250 39 R 24 24 1 1 N
+X ~ 7 0 300 39 R 24 24 1 1 N
+X ~ 8 0 350 39 R 24 24 1 1 N
+X ~ 9 0 400 39 R 24 24 1 1 N
+X ~ 10 0 450 39 R 24 24 1 1 N
+X ~ 20 0 950 39 R 24 24 1 1 N
+X ~ 11 0 500 39 R 24 24 1 1 N
+X ~ 21 0 1000 39 R 24 24 1 1 N
+X ~ 12 0 550 39 R 24 24 1 1 N
+X ~ 22 0 1050 39 R 24 24 1 1 N
+X ~ 13 0 600 39 R 24 24 1 1 N
+X ~ 23 0 1100 39 R 24 24 1 1 N
+X ~ 14 0 650 39 R 24 24 1 1 N
+X ~ 24 0 1150 39 R 24 24 1 1 N
+X ~ 15 0 700 39 R 24 24 1 1 N
+X ~ 16 0 750 39 R 24 24 1 1 N
+X ~ 17 0 800 39 R 24 24 1 1 N
+X ~ 18 0 850 39 R 24 24 1 1 N
+X ~ 19 0 900 39 R 24 24 1 1 N
+ENDDRAW
+ENDDEF
+#
+# Prototype_25
+#
+DEF ~Prototype_25 P 0 40 Y N 1 F N
+F0 "P" 0 -50 50 H I C CNN
+F1 "Prototype_25" 0 -125 50 H I C CNN
+F2 "" 0 0 50 H I C CNN
+F3 "" 0 0 50 H I C CNN
+$FPLIST
+ Connector*:*_??x*mm*
+ Connector*:*1x??x*mm*
+ Pin?Header?Straight?1X*
+ Pin?Header?Angled?1X*
+ Socket?Strip?Straight?1X*
+ Socket?Strip?Angled?1X*
+$ENDFPLIST
+DRAW
+X ~ 1 0 0 39 R 24 24 1 1 N
+X ~ 2 0 50 39 R 24 24 1 1 N
+X ~ 3 0 100 39 R 24 24 1 1 N
+X ~ 4 0 150 39 R 24 24 1 1 N
+X ~ 5 0 200 39 R 24 24 1 1 N
+X ~ 6 0 250 39 R 24 24 1 1 N
+X ~ 7 0 300 39 R 24 24 1 1 N
+X ~ 8 0 350 39 R 24 24 1 1 N
+X ~ 9 0 400 39 R 24 24 1 1 N
+X ~ 10 0 450 39 R 24 24 1 1 N
+X ~ 20 0 950 39 R 24 24 1 1 N
+X ~ 11 0 500 39 R 24 24 1 1 N
+X ~ 21 0 1000 39 R 24 24 1 1 N
+X ~ 12 0 550 39 R 24 24 1 1 N
+X ~ 22 0 1050 39 R 24 24 1 1 N
+X ~ 13 0 600 39 R 24 24 1 1 N
+X ~ 23 0 1100 39 R 24 24 1 1 N
+X ~ 14 0 650 39 R 24 24 1 1 N
+X ~ 24 0 1150 39 R 24 24 1 1 N
+X ~ 15 0 700 39 R 24 24 1 1 N
+X ~ 25 0 1200 39 R 24 24 1 1 N
+X ~ 16 0 750 39 R 24 24 1 1 N
+X ~ 17 0 800 39 R 24 24 1 1 N
+X ~ 18 0 850 39 R 24 24 1 1 N
+X ~ 19 0 900 39 R 24 24 1 1 N
+ENDDRAW
+ENDDEF
+#
+# Prototype_26
+#
+DEF ~Prototype_26 P 0 40 Y N 1 F N
+F0 "P" 0 -50 50 H I C CNN
+F1 "Prototype_26" 0 -125 50 H I C CNN
+F2 "" 0 0 50 H I C CNN
+F3 "" 0 0 50 H I C CNN
+$FPLIST
+ Connector*:*_??x*mm*
+ Connector*:*1x??x*mm*
+ Pin?Header?Straight?1X*
+ Pin?Header?Angled?1X*
+ Socket?Strip?Straight?1X*
+ Socket?Strip?Angled?1X*
+$ENDFPLIST
+DRAW
+X ~ 1 0 0 39 R 24 24 1 1 N
+X ~ 2 0 50 39 R 24 24 1 1 N
+X ~ 3 0 100 39 R 24 24 1 1 N
+X ~ 4 0 150 39 R 24 24 1 1 N
+X ~ 5 0 200 39 R 24 24 1 1 N
+X ~ 6 0 250 39 R 24 24 1 1 N
+X ~ 7 0 300 39 R 24 24 1 1 N
+X ~ 8 0 350 39 R 24 24 1 1 N
+X ~ 9 0 400 39 R 24 24 1 1 N
+X ~ 10 0 450 39 R 24 24 1 1 N
+X ~ 20 0 950 39 R 24 24 1 1 N
+X ~ 11 0 500 39 R 24 24 1 1 N
+X ~ 21 0 1000 39 R 24 24 1 1 N
+X ~ 12 0 550 39 R 24 24 1 1 N
+X ~ 22 0 1050 39 R 24 24 1 1 N
+X ~ 13 0 600 39 R 24 24 1 1 N
+X ~ 23 0 1100 39 R 24 24 1 1 N
+X ~ 14 0 650 39 R 24 24 1 1 N
+X ~ 24 0 1150 39 R 24 24 1 1 N
+X ~ 15 0 700 39 R 24 24 1 1 N
+X ~ 25 0 1200 39 R 24 24 1 1 N
+X ~ 16 0 750 39 R 24 24 1 1 N
+X ~ 26 0 1250 39 R 24 24 1 1 N
+X ~ 17 0 800 39 R 24 24 1 1 N
+X ~ 18 0 850 39 R 24 24 1 1 N
+X ~ 19 0 900 39 R 24 24 1 1 N
+ENDDRAW
+ENDDEF
+#
+#End Library

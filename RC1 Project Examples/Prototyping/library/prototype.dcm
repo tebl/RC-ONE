@@ -1,0 +1,51 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP Prototype
+D Generic connector, single row, 01x01
+K connector
+F ~
+$ENDCMP
+#
+$CMP Prototype_17
+D Generic connector, single row, 01x01
+K connector
+F ~
+$ENDCMP
+#
+$CMP Prototype_21
+D Generic connector, single row, 01x01
+K connector
+F ~
+$ENDCMP
+#
+$CMP Prototype_22
+D Generic connector, single row, 01x01
+K connector
+F ~
+$ENDCMP
+#
+$CMP Prototype_23
+D Generic connector, single row, 01x01
+K connector
+F ~
+$ENDCMP
+#
+$CMP Prototype_24
+D Generic connector, single row, 01x01
+K connector
+F ~
+$ENDCMP
+#
+$CMP Prototype_25
+D Generic connector, single row, 01x01
+K connector
+F ~
+$ENDCMP
+#
+$CMP Prototype_26
+D Generic connector, single row, 01x01
+K connector
+F ~
+$ENDCMP
+#
+#End Doc Library
