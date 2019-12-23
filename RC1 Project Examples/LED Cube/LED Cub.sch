@@ -1192,4 +1192,37 @@ F 3 "" H 6625 5550 50  0001 C CNN
 	1    6625 5550
 	0    -1   -1   0   
 $EndComp
+$Comp
+L Mounting M3
+U 1 1 5E007EB8
+P 15975 550
+F 0 "M3" H 15975 650 50  0001 C CNN
+F 1 "Mounting" H 15975 475 50  0001 C CNN
+F 2 "mounting:1pin" H 15975 550 50  0001 C CNN
+F 3 "" H 15975 550 50  0001 C CNN
+	1    15975 550 
+	1    0    0    -1  
+$EndComp
+$Comp
+L Mounting M2
+U 1 1 5E007F3A
+P 15850 550
+F 0 "M2" H 15850 650 50  0001 C CNN
+F 1 "Mounting" H 15850 475 50  0001 C CNN
+F 2 "mounting:1pin" H 15850 550 50  0001 C CNN
+F 3 "" H 15850 550 50  0001 C CNN
+	1    15850 550 
+	1    0    0    -1  
+$EndComp
+$Comp
+L Mounting M1
+U 1 1 5E007F6F
+P 15725 550
+F 0 "M1" H 15725 650 50  0001 C CNN
+F 1 "Mounting" H 15725 475 50  0001 C CNN
+F 2 "mounting:1pin" H 15725 550 50  0001 C CNN
+F 3 "" H 15725 550 50  0001 C CNN
+	1    15725 550 
+	1    0    0    -1  
+$EndComp
 $EndSCHEMATC
