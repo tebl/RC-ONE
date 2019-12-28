@@ -387,7 +387,7 @@ F 3 "" H 8950 10125 50  0001 C CNN
 	0    -1   -1   0   
 $EndComp
 Text GLabel 4850 1325 0    60   Input ~ 0
-BUS_EN
+CONTROL
 Wire Wire Line
 	14150 7150 14150 6975
 Wire Wire Line
@@ -735,7 +735,7 @@ R/~W
 Entry Wire Line
 	10525 7975 10625 8075
 Text GLabel 6500 1825 2    60   Output ~ 0
-~EXT_CS
+~RC1_CS
 Wire Bus Line
 	10525 7975 10525 8325
 Wire Bus Line
@@ -969,11 +969,11 @@ Text Label 10650 6350 0    60   ~ 0
 EX_A12
 NoConn ~ 11000 6650
 Text GLabel 11000 8175 0    60   Input ~ 0
-~EXT_CS
+~RC1_CS
 Text GLabel 12550 5725 2    60   Input ~ 0
-~EXT_CS
+~RC1_CS
 Text GLabel 12550 6950 2    60   Input ~ 0
-~EXT_CS
+~RC1_CS
 Wire Wire Line
 	12200 3525 12275 3525
 Wire Wire Line
@@ -1038,8 +1038,8 @@ Wire Wire Line
 	10625 2975 11200 2975
 Wire Wire Line
 	10625 2875 11200 2875
-Text Notes 6950 1725 2    60   ~ 0
-Enable bus\ntransceivers
+Text Notes 7175 1725 2    60   ~ 0
+RC-ONE is accessing\ndata from memory.
 $Comp
 L 74HC595 U3
 U 1 1 5D81EA35
@@ -1124,13 +1124,9 @@ EX_A12
 NoConn ~ 8200 8325
 NoConn ~ 8200 8425
 Text GLabel 6500 1325 2    60   Output ~ 0
-~BUS_EN
+BUSY
 Wire Wire Line
 	5225 1225 5300 1225
-Text GLabel 6800 8425 0    60   Input ~ 0
-~BUS_EN
-Text GLabel 6800 7125 0    60   Input ~ 0
-~BUS_EN
 Wire Wire Line
 	5775 7025 6800 7025
 Wire Wire Line
@@ -1271,7 +1267,7 @@ Wire Wire Line
 NoConn ~ 7875 3625
 NoConn ~ 7875 3725
 Text GLabel 7975 4075 2    60   Output ~ 0
-BUS_EN
+CONTROL
 Wire Wire Line
 	7275 5225 7275 5300
 Wire Wire Line
@@ -1400,7 +1396,7 @@ Wire Wire Line
 Wire Wire Line
 	7875 4925 8575 4925
 Text GLabel 2600 4550 0    60   Input ~ 0
-BUS_EN
+BUSY
 Text Label 12625 6450 0    60   ~ 0
 R/~W
 Wire Wire Line
@@ -1824,4 +1820,10 @@ Wire Wire Line
 Wire Wire Line
 	6825 4525 6875 4525
 NoConn ~ 6875 4925
+Text GLabel 6800 7125 0    60   Input ~ 0
+CONTROL
+Text GLabel 6800 8425 0    60   Input ~ 0
+CONTROL
+Text Notes 6875 1250 2    60   ~ 0
+ExRAM is\ncontrolling\nmemory
 $EndSCHEMATC

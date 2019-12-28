@@ -8,7 +8,7 @@
 #define EX_A14 15
 #define EX_RnW 16
 
-#define EX_EN 5
+#define EX_CONTROL 5
 #define EX_RESET 17
 
 #define MAX_MEMORY_SIZE 8192
@@ -23,7 +23,7 @@ void setup() {
   pinMode(SHIFT_DATA, OUTPUT);
   pinMode(SHIFT_CLK, OUTPUT);
   pinMode(SHIFT_LATCH, OUTPUT);
-  pinMode(EX_EN, OUTPUT);
+  pinMode(EX_CONTROL, OUTPUT);
 
   Serial.begin(115200);
   disable();
@@ -41,7 +41,7 @@ void setup() {
  * Assert control of the memory, locking out the system.
  */
 void enable() {
-  digitalWrite(EX_EN, HIGH);
+  digitalWrite(EX_CONTROL, LOW);
   
   digitalWrite(EX_RnW, HIGH);
   pinMode(EX_RnW, OUTPUT);
@@ -60,7 +60,7 @@ void disable() {
   }
 
   pinMode(EX_RnW, INPUT);
-  digitalWrite(EX_EN, LOW);
+  digitalWrite(EX_CONTROL, HIGH);
 
   /* ensure serial LEDs stay off */
   digitalWrite(SHIFT_CLK, LOW);
