@@ -1,0 +1,82 @@
+
+SB-Cross Assembler version 3.03.06
+Please visit www.sbprojects.net for a complete description.
+
+Assembling....
+
+Pass one
+Loaded 6502 overlay version 3.01.02
+
+Pass two
+0000-                  1               .CR     6502
+0000-                  2               .TF     clock.hex,INT
+0000-                  3
+0060-                  4       SET_HH  .EQ     $60     HOURS
+0061-                  5       SET_MM  .EQ     $61     MINUTES
+0062-                  6       SET_SS  .EQ     $62     SECONDS
+0063-                  7       RAM1    .EQ     $63
+0064-                  8       RAM2    .EQ     $64
+0000-                  9
+00FB-                 10       POINTH  .EQ     $FB     DIGITS 1-2
+00FA-                 11       POINTL  .EQ     $FA     DIGITS 3-4
+00F9-                 12       INH     .EQ     $F9     DIGITS 5-6
+0000-                 13
+1F1F-                 14       SCANDS  .EQ     $1F1F
+0000-                 15
+0200-                 16               .OR     $0200
+0200-                 17               .TA     $0000
+0200-                 18
+0200-A2 EA            19 (  2) START   LDX     #$EA    SET NO. OF LOOPS FOR 1 SECOND
+0202-CA               20 (  2) LOOP    DEX
+0203-A5 60            21 (  3)         LDA     SET_HH  STORE SET HOURS ON
+0205-85 FB            22 (  2)         STA     POINTH   DIGITS 1-2
+0207-A5 61            23 (  3)         LDA     SET_MM  STORE SET MINUTES ON
+0209-85 FA            24 (  2)         STA     POINTL   DIGITS 3-4
+020B-A5 62            25 (  3)         LDA     SET_SS  STORE SET SECONDS ON
+020D-85 F9            26 (  2)         STA     INH      DIGITS 5-6
+020F-86 63            27 (  3)         STX     RAM1    SAVE X
+0211-84 64            28 (  3)         STY     RAM2    SAVE Y (NOT NECESSARY, FILLER)
+0213-20 1F 1F         29 (  6)         JSR     SCANDS  DISPLAY TIME
+0216-A6 63            30 (  3)         LDX     RAM1    RESTORE X
+0218-A4 64            31 (  3)         LDY     RAM2    RESTORE Y
+021A-E0 00            32 (  2)         CPX     #$00
+021C-D0 E4            33 (2**)         BNE     LOOP
+021E-                 34
+021E-F8               35 (  2)         SED             SET DECIMAL MODE TO AVOID HEX DIGITS
+021F-38               36 (  2)         SEC             SET CARRY BIT
+0220-A9 00            37 (  2)         LDA     #$00
+0222-65 62            38 (  3)         ADC     SET_SS  ADD A+C+M -> (0+1+SEC -> ACC.)
+0224-85 62            39 (  2)         STA     SET_SS  STORE IN $62 (SEC) (ACC -> 62)
+0226-D8               40 (  2)         CLD             CLEAR DECIMAL MODE FOR "SCANDS"
+0227-C9 60            41 (  2)         CMP     #$60    TO START (TO 0200) (RESETTING LOOP FOR NEW SECOND)
+0229-D0 D5            42 (2**)         BNE     START
+022B-                 43
+022B-F8               44 (  2)         SED             SAME AS SECONDS
+022C-38               45 (  2)         SEC
+022D-A9 00            46 (  2)         LDA     #$00
+022F-85 62            47 (  2)         STA     SET_SS  RESET SECONDS TO 00
+0231-65 61            48 (  3)         ADC     SET_MM  ADD 0+1+MIN -> ACC
+0233-85 61            49 (  2)         STA     SET_MM  STORE IN $61 (MIN) (ACC -> 61)
+0235-D8               50 (  2)         CLD
+0236-C9 60            51 (  2)         CMP     #$60    CMP TO START (TO 0200)
+0238-D0 C6            52 (2**)         BNE     START
+023A-                 53
+023A-F8               54 (  2)         SED             SAME AS MINUTES
+023B-38               55 (  2)         SEC
+023C-A9 00            56 (  2)         LDA     #$00
+023E-85 62            57 (  2)         STA     SET_SS  RESET SECONDS TO 00
+0240-85 61            58 (  2)         STA     SET_MM  RESET MINUTS TO 00
+0242-65 60            59 (  3)         ADC     SET_HH  ADD 0+1+HRS -> ACC
+0244-85 60            60 (  2)         STA     SET_HH
+0246-D8               61 (  2)         CLD
+0247-C9 13            62 (  2)         CMP     #$13
+0249-D0 B5            63 (2**)         BNE     START
+024B-A9 01            64 (  2)         LDA     #1      WHEN HOURS REACH 13,
+024D-85 60            65 (  2)         STA     SET_HH   RESET HOURS TO 1
+024F-C9 01            66 (  2)         CMP     #$1     CMP TO START (TO 0200)
+0251-F0 AD            67 (2**)         BEQ     START
+0253-20 18 5C         68 (  6)         JSR     $5C18
+
+0 Errors found during assembly.
+0 Warnings found during assembly.
+
