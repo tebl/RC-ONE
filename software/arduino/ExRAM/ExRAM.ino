@@ -1,3 +1,10 @@
+/*
+ * Originally based on the Arduino EEPROM programmer as
+ * featured in a video by Ben Eater. I started with his
+ * code, then adapted it to serve as a way to load data
+ * into a 62256 static RAM chip before adding functions
+ * for handling Intel HEX and papertape formats.
+ */
 #define SHIFT_DATA 2
 #define SHIFT_CLK 3
 #define SHIFT_LATCH 4
@@ -27,14 +34,19 @@ void setup() {
 
   Serial.begin(115200);
   disable();
-  print_version();
-
+  
   pinMode(EX_A13, OUTPUT);
   pinMode(EX_A14, OUTPUT);
   pinMode(EX_RESET, INPUT);
+
+  print_version();
+  Serial.println(F("\nConfiguration:"));
   bank0();
   base_8k0();
   memory_1k();
+
+  Serial.println();
+  print_help();
 }
 
 /*
@@ -148,20 +160,31 @@ void echo_unknown(String command) {
   Serial.println("? " + command);
 }
 
+/*
+ * Prints the welcome message to serial output, essentially
+ * program version followed by the help message.
+ */
+void print_welcome() {
+  print_version();
+  Serial.println();
+  print_help();
+  Serial.println();
+}
+
 void print_version() {
-  Serial.println("ExRAM 0.1");
+  Serial.println(F("ExRAM 0.2"));
 }
 
 void print_status() {
   int val = digitalRead(EX_RESET);
-  if (val == 0) Serial.println("Host system offline.");
-  else Serial.println("Host system online");
+  if (val == 0) Serial.println(F("Host system offline."));
+  else Serial.println(F("Host system online"));
 }
 
 void print_bank() {
-  Serial.print("Bank ");
+  Serial.print(F("Bank "));
   Serial.print(memory_bank);
-  Serial.println(" enabled");
+  Serial.println(F(" enabled"));
 }
 
 void bank0() {
@@ -186,22 +209,22 @@ void set_bank(int num) {
     case 0:
       digitalWrite(EX_A13, LOW);
       digitalWrite(EX_A14, LOW);
-      Serial.println("Bank 0 enabled");
+      Serial.println(F("Bank 0 enabled"));
       break;
     case 1:
       digitalWrite(EX_A13, HIGH);
       digitalWrite(EX_A14, LOW);
-      Serial.println("Bank 1 enabled");
+      Serial.println(F("Bank 1 enabled"));
       break;
     case 2:
       digitalWrite(EX_A13, LOW);
       digitalWrite(EX_A14, HIGH);
-      Serial.println("Bank 2 enabled");
+      Serial.println(F("Bank 2 enabled"));
       break;
     case 3:
       digitalWrite(EX_A13, HIGH);
       digitalWrite(EX_A14, HIGH);
-      Serial.println("Bank 3 enabled");
+      Serial.println(F("Bank 3 enabled"));
       break;
   }
 }
@@ -275,17 +298,18 @@ void memory_test() {
   unsigned char patterns[] = {0x00, 0xFF, 0x55, 0xAA};
 
   enable();
-  Serial.print("Testing ");
+  Serial.print(F("Testing "));
   Serial.print(memory_size / 1024);
   Serial.println("K of memory:");
   for (char i = 0; i < (sizeof(patterns) / sizeof(patterns[0])); i++) {
     if (memory_test_pattern(i, patterns[i])) {
-      Serial.println(" OK!");
+      Serial.println(F(" OK!"));
     } else {
-      Serial.println(" failed!");
+      Serial.println(F(" failed!"));
       break;
     }
   }
+  Serial.println(F("Testing completed!"));
   disable();
 }
 
@@ -328,9 +352,9 @@ bool memory_test_pattern(char pass, unsigned char pattern) {
  * been filled with unknown data or simply junk.
  */
 void memory_zero() {
-  Serial.print("Zeroing out ");
+  Serial.print(F("Zeroing out "));
   Serial.print(memory_size / 1024);
-  Serial.print("K of memory ");
+  Serial.print(F("K of memory "));
 
   enable();
   setWrite();
@@ -344,7 +368,7 @@ void memory_zero() {
   }
   disable();
 
-  Serial.println(" done!");
+  Serial.println(F(" done!"));
 }
 
 /*
@@ -355,7 +379,7 @@ void dump() {
   enable();
   setRead();
 
-  Serial.println("        0  1  2  3  4  5  6  7    8  9  A  B  C  D  E  F ");
+  Serial.println(F("        0  1  2  3  4  5  6  7    8  9  A  B  C  D  E  F "));
   for (int base = 0; base < memory_size; base += 16) {
     byte data[16];
     for (int offset = 0; offset <= 15; offset += 1) {
@@ -430,11 +454,11 @@ int hex_checksum(int byte_count, int hi, int lo, int record_type, int data_sum) 
  * is the one for data.
  */
 bool handle_intel(String c) {
-  if (c.length() < 11) return handle_record_error(c, "record too short");
+  if (c.length() < 11) return handle_record_error(c, F("record too short"));
 
   int byte_count = convert_hex_pair(c[1], c[2]);
-  if (c.length() != (11 + (byte_count * 2))) return handle_record_error(c, "length does not match data");
-  if (byte_count > 32) return handle_record_error(c, "buffer overflow");
+  if (c.length() != (11 + (byte_count * 2))) return handle_record_error(c, F("length does not match data"));
+  if (byte_count > 32) return handle_record_error(c, F("buffer overflow"));
 
   int address = convert_hex_address(c[3], c[4], c[5], c[6]);
   int hi = (address & 0xFF00) >> 8;
@@ -471,7 +495,7 @@ bool handle_intel(String c) {
         echo_command(c);
         return true;
       default:
-        return handle_record_error(c, "unknown record type");
+        return handle_record_error(c, F("unknown record type"));
     }
   }
 }
@@ -526,11 +550,11 @@ bool handle_record_error(String c, String e) {
  *           cccc   = record checksum
  */
 bool handle_paper(String c) {
-  if (c.length() < 11) return handle_record_error(c, "record too short");
+  if (c.length() < 11) return handle_record_error(c, F("record too short"));
 
   int byte_count = convert_hex_pair(c[1], c[2]);
-  if (c.length() != (11 + (byte_count * 2))) return handle_record_error(c, "length does not match data");
-  if (byte_count > 24) return handle_record_error(c, "buffer overflow");
+  if (c.length() != (11 + (byte_count * 2))) return handle_record_error(c, F("length does not match data"));
+  if (byte_count > 24) return handle_record_error(c, F("buffer overflow"));
 
   int address = convert_hex_address(c[3], c[4], c[5], c[6]);
   int hi = (address & 0xFF00) >> 8;
@@ -568,26 +592,27 @@ bool handle_paper(String c) {
     echo_command(c);
     return true;
   } else {
-    return handle_record_error(c, "checksum error");
+    return handle_record_error(c, F("checksum error"));
   }
 }
 
 void print_help() {
-  Serial.println("bank           Prints bank selection");
-  Serial.println("bank <num>     Select 8k bank");
-  Serial.println("base           Prints memory offset used");
-  Serial.println("base <block>   8k0-8k7 memory offset");
-  Serial.println("dump           Dump memory");
-  Serial.println("help           Prints this screen");
-  Serial.println("hex_dump       Intel HEX dump");
-  Serial.println("memory         Print memory dump size");
-  Serial.println("memory <size>  1k/2k/4k/8k memory dump size");
-  Serial.println("memory test    Test set memory");
-  Serial.println("memory zero    Zero out set memory");
-  Serial.println("status         Prints system status");
-  Serial.println("version        Prints ExRAM software version");
-  Serial.println(":<data>        Load Intel HEX data");
-  Serial.println(";<data>        Load paper tape data");
+  Serial.println(F("Commands supported:"));
+  Serial.println(F("bank           Prints bank selection"));
+  Serial.println(F("bank <num>     Select 8k bank"));
+  Serial.println(F("base           Prints memory offset used"));
+  Serial.println(F("base <block>   8k0-8k7 memory offset"));
+  Serial.println(F("dump           Dump memory"));
+  Serial.println(F("help           Prints this screen"));
+  Serial.println(F("hex_dump       Intel HEX dump"));
+  Serial.println(F("memory         Print memory dump size"));
+  Serial.println(F("memory <size>  1k/2k/4k/8k memory dump size"));
+  Serial.println(F("memory test    Test set memory"));
+  Serial.println(F("memory zero    Zero out set memory"));
+  Serial.println(F("status         Prints system status"));
+  Serial.println(F("version        Prints ExRAM software version"));
+  Serial.println(F(":<data>        Load Intel HEX data"));
+  Serial.println(F(";<data>        Load paper tape data"));
 }
 
 void loop() {
@@ -595,33 +620,33 @@ void loop() {
     command = Serial.readString();
     command.trim();
 
-    if (handle_command(command, "version", print_version)) break;
-    else if (handle_command(command, "status", print_status)) break;
-    else if (handle_command(command, "bank", print_bank)) break;
-    else if (handle_command(command, "bank 0", bank0)) break;
-    else if (handle_command(command, "bank 1", bank1)) break;
-    else if (handle_command(command, "bank 2", bank2)) break;
-    else if (handle_command(command, "bank 3", bank3)) break;
-    else if (handle_command(command, "memory", print_memory)) break;
-    else if (handle_command(command, "memory 1k", memory_1k)) break;
-    else if (handle_command(command, "memory 2k", memory_2k)) break;
-    else if (handle_command(command, "memory 4k", memory_4k)) break;
-    else if (handle_command(command, "memory 8k", memory_8k)) break;
-    else if (handle_command(command, "memory max", memory_8k)) break;
-    else if (handle_command(command, "memory max?", print_max_memory)) break;
-    else if (handle_command(command, "memory test", memory_test)) break;
-    else if (handle_command(command, "memory zero", memory_zero)) break;
-    else if (handle_command(command, "base", print_memory_base)) break;
-    else if (handle_command(command, "base 8k0", base_8k0)) break;
-    else if (handle_command(command, "base 8k1", base_8k1)) break;
-    else if (handle_command(command, "base 8k2", base_8k2)) break;
-    else if (handle_command(command, "base 8k3", base_8k3)) break;
-    else if (handle_command(command, "base 8k4", base_8k4)) break;
-    else if (handle_command(command, "base 8k5", base_8k5)) break;
-    else if (handle_command(command, "base 8k6", base_8k6)) break;
-    else if (handle_command(command, "base 8k7", base_8k7)) break;
-    else if (handle_command(command, "dump", dump)) break;
-    else if (handle_command(command, "hex_dump", hex_dump)) break;
+    if (handle_command(command, F("version"), print_version)) break;
+    else if (handle_command(command, F("status"), print_status)) break;
+    else if (handle_command(command, F("bank"), print_bank)) break;
+    else if (handle_command(command, F("bank 0"), bank0)) break;
+    else if (handle_command(command, F("bank 1"), bank1)) break;
+    else if (handle_command(command, F("bank 2"), bank2)) break;
+    else if (handle_command(command, F("bank 3"), bank3)) break;
+    else if (handle_command(command, F("memory"), print_memory)) break;
+    else if (handle_command(command, F("memory 1k"), memory_1k)) break;
+    else if (handle_command(command, F("memory 2k"), memory_2k)) break;
+    else if (handle_command(command, F("memory 4k"), memory_4k)) break;
+    else if (handle_command(command, F("memory 8k"), memory_8k)) break;
+    else if (handle_command(command, F("memory max"), memory_8k)) break;
+    else if (handle_command(command, F("memory max?"), print_max_memory)) break;
+    else if (handle_command(command, F("memory test"), memory_test)) break;
+    else if (handle_command(command, F("memory zero"), memory_zero)) break;
+    else if (handle_command(command, F("base"), print_memory_base)) break;
+    else if (handle_command(command, F("base 8k0"), base_8k0)) break;
+    else if (handle_command(command, F("base 8k1"), base_8k1)) break;
+    else if (handle_command(command, F("base 8k2"), base_8k2)) break;
+    else if (handle_command(command, F("base 8k3"), base_8k3)) break;
+    else if (handle_command(command, F("base 8k4"), base_8k4)) break;
+    else if (handle_command(command, F("base 8k5"), base_8k5)) break;
+    else if (handle_command(command, F("base 8k6"), base_8k6)) break;
+    else if (handle_command(command, F("base 8k7"), base_8k7)) break;
+    else if (handle_command(command, F("dump"), dump)) break;
+    else if (handle_command(command, F("hex_dump"), hex_dump)) break;
     else if (command.charAt(0) == ':') handle_intel(command);
     else if (command.charAt(0) == ';') handle_paper(command);
     else if (handle_command(command, "help", print_help)) break;
