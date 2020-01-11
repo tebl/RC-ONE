@@ -1,3 +1,13 @@
+* ----------------------------------------------------------------------
+* THIS IS A TYPE IN CALLED "KIM-1 CLOCK" BY JIM MILLER, ORIGINALLY
+* PUBLISHED IN KILOBAUD MAGAZINE FROM FEBRUARY 1977.
+* 
+* DISPLAYS HHMMSS ON THE KIM-1 DISPLAYS. HOURS, MINUTES AND SECONDS
+* MUST BE CONFIGURED BY ENTERING THE RELEVANT INFORMATION IN ADDRESSES
+* $60 THROUGH $62. CHANGES HAVE BEEN MADE TO COMPLETE THE ASSEMBLY AS
+* PARTS OF IT WERE ONLY INCLUDED IN THE SUPPLIED MACHINE CODE. RELEVANT
+* CHANGES FOR 24 HOUR CLOCK HAVE ALSO BEEN IMPLEMENTED.
+*
         .CR     6502
         .TF     clock.hex,INT
 
@@ -32,8 +42,7 @@ LOOP    DEX
         LDY     RAM2    RESTORE Y
         CPX     #$00
         BNE     LOOP
-        
-        SED             SET DECIMAL MODE TO AVOID HEX DIGITS
+SECONDS SED             SET DECIMAL MODE TO AVOID HEX DIGITS
         SEC             SET CARRY BIT
         LDA     #$00
         ADC     SET_SS  ADD A+C+M -> (0+1+SEC -> ACC.)
@@ -41,8 +50,7 @@ LOOP    DEX
         CLD             CLEAR DECIMAL MODE FOR "SCANDS"
         CMP     #$60    TO START (TO 0200) (RESETTING LOOP FOR NEW SECOND)
         BNE     START
-
-        SED             SAME AS SECONDS
+MINUTES SED             SAME AS SECONDS
         SEC             
         LDA     #$00
         STA     SET_SS  RESET SECONDS TO 00
@@ -51,8 +59,7 @@ LOOP    DEX
         CLD
         CMP     #$60    CMP TO START (TO 0200)
         BNE     START
-        
-        SED             SAME AS MINUTES
+HOURS   SED             SAME AS MINUTES
         SEC
         LDA     #$00
         STA     SET_SS  RESET SECONDS TO 00
@@ -60,10 +67,10 @@ LOOP    DEX
         ADC     SET_HH  ADD 0+1+HRS -> ACC
         STA     SET_HH
         CLD
-        CMP     #$13
+        CMP     #24
         BNE     START
-        LDA     #1      WHEN HOURS REACH 13,
+        LDA     #$00    WHEN HOURS REACH 24,
         STA     SET_HH   RESET HOURS TO 1
-        CMP     #$1     CMP TO START (TO 0200)
+        CMP     #$00    CMP TO START (TO 0200)
         BEQ     START
         JSR     BLANK
