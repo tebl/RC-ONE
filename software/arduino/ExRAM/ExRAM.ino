@@ -564,6 +564,7 @@ bool handle_intel(String c) {
           write_byte(data[i]);
         }
         disable();
+      case 0x01: /* end of file */
       case 0x04: /* extended linear address */
         echo_command(c);
         return true;
