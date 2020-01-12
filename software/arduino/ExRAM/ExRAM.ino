@@ -56,7 +56,7 @@ void setup() {
 void ansi_on() {
   colorize = true;
   Serial.print(F("ANSI terminal codes "));
-  ansi_title();
+  ansi_bright();
   Serial.print(F("ON"));
   ansi_default();
   Serial.println("!");
@@ -68,9 +68,15 @@ void ansi_off() {
 }
 #endif
 
-void ansi_title() {
+void ansi_bright() {
   #ifdef COLORIZE
   if (colorize) Serial.print(F("\033[1;37m"));
+  #endif
+}
+
+void ansi_weak() {
+  #ifdef COLORIZE
+  if (colorize) Serial.print(F("\033[34m"));
   #endif
 }
 
@@ -188,7 +194,7 @@ void write_byte(byte value, bool set_direction = false) {
  * program version followed by the help message.
  */
 void print_welcome() {
-  ansi_title();
+  ansi_bright();
   print_version();
   ansi_default();
   ansi_notice();
@@ -338,7 +344,7 @@ void memory_test() {
 
   enable();
   Serial.print(F("Testing "));
-  ansi_title();
+  ansi_bright();
   Serial.print(memory_size / 1024);
   Serial.print('K');
   ansi_default();
@@ -401,7 +407,7 @@ bool memory_test_pattern(char pass, unsigned char pattern) {
  */
 void memory_zero() {
   Serial.print(F("Zeroing "));
-  ansi_title();
+  ansi_bright();
   Serial.print(memory_size / 1024);
   Serial.print('K');
   ansi_default();
@@ -437,9 +443,11 @@ void dump() {
   ansi_default();
   for (int base = 0; base < memory_size; base += 16) {
     byte data[16];
+    int sum = 0;
     for (int offset = 0; offset <= 15; offset += 1) {
       set_address(base + offset);
       data[offset] = read_byte();
+      sum += data[offset];
     }
 
     char buf[80];
@@ -452,7 +460,9 @@ void dump() {
             data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7],
             data[8], data[9], data[10], data[11], data[12], data[13], data[14], data[15]);
 
+    if (sum == 0 || sum == 4080) ansi_weak();
     Serial.println(buf);
+    if (sum == 0 || sum == 4080) ansi_default();
   }
 
   disable();
@@ -705,7 +715,7 @@ void process_serial(const byte byte_in) {
     case '\b':
       if (input_pos > 0) {
         input_pos--;
-        Serial.print(" \b");
+        Serial.print(F(" \b"));
       }
       break;
 
