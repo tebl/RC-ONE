@@ -697,6 +697,12 @@ void process_serial(const byte byte_in) {
 
   Serial.print((char) byte_in);
   switch (byte_in) {
+    /* Handle backspace */
+    case '\b':
+      if (input_pos > 0) input_pos--;
+      break;
+
+    /* Handle end-of-line */
     case '\n':
     case '\r':
       if (input_pos > 0) {
@@ -705,9 +711,12 @@ void process_serial(const byte byte_in) {
         input_pos = 0;
       }
       break;
-    
+
+    /* Ignore leading zeroes */
     case ' ':
       if (input_pos == 0) break;
+      
+    /* Add character to current command */
     default:
       if (input_pos < (MAX_INPUT_SIZE - 1)) {
         input_line[input_pos++] = byte_in;
