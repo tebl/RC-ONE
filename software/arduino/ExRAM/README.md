@@ -1,0 +1,6 @@
+# ExRAM
+Originally based on the Arduino EEPROM programmer as featured in a [video](https://www.youtube.com/watch?v=K88pgWhEb1M) by the master of breadboards, Ben Eater. I started this project with his code at the heart of it all, then coerced it into becoming a way of loading data onto a 62256 static RAM chip before adding a bunch of features to the whole overall package.
+
+The Arduino has a fully functioning command-line interface added to it so that you can send it commands using most fully-featured terminal programs, the one I use for this project is Tera Term for Windows. The configuration I use is included in the project files, but you will most certainly have to change the COM-port used to make it work - there's nothing special added to it other than line-delays in order to make data transfers more reliable. The reason for the delays is that the Arduino Nano doesn't include any form of hardware-based flow control so while it still runs at a whopping 16Mhz, it doesn't even come close to being able to compete with modern laptop so it gets easily overflowed with data).
+
+The interface currently supports loading data in the form of both Intel HEX-files as well as the more ancient Paper-tape formats. For a complete listing of the supported commands, type **help** and press ENTER for a listing of the currently supported commands.

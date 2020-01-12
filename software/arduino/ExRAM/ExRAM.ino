@@ -55,16 +55,18 @@ void setup() {
 #ifdef COLORIZE
 void ansi_on() {
   colorize = true;
-  Serial.print(F("ANSI terminal codes "));
+  Serial.print(F("\033[1;31mA\033[1;32mN\033[1;33mS\033[1;34mI"));
+  ansi_default();
+  Serial.print(F(" terminal codes "));
   ansi_bright();
   Serial.print(F("ON"));
   ansi_default();
-  Serial.println("!");
+  Serial.println(F("!"));
 }
 
 void ansi_off() {
   colorize = false;
-  Serial.println("ANSI terminal codes OFF!");
+  Serial.println(F("ANSI terminal codes OFF!"));
 }
 #endif
 
@@ -82,7 +84,7 @@ void ansi_weak() {
 
 void ansi_notice() {
   #ifdef COLORIZE
-  if (colorize) Serial.print(F("\033[37m"));
+  if (colorize) Serial.print(F("\033[36m"));
   #endif
 }
 
@@ -220,8 +222,8 @@ void print_status() {
     ansi_default();
   }
   else {
-    ansi_error();
-    Serial.println(F("Host system online"));
+    ansi_notice();
+    Serial.println(F("Host system online!"));
     ansi_default();
   }
 }
@@ -473,22 +475,23 @@ void dump() {
  * to serial directly with a 16 byte record length along with the
  * correct checksum.
  */
-void hex_dump() {
+void dump_intel() {
   enable();
   set_read();
-  for (int base = 0; base < memory_size; base += 16) {
-    byte data[16];
+  int byte_count = 16;
+  for (int base = 0; base < memory_size; base += byte_count) {
+    byte data[byte_count];
     int hi = ((memory_base + base) & 0xFF00) >> 8;
     int lo = (memory_base + base) & 0x00FF;
 
     int sum = 0;
-    for (int offset = 0; offset <= 15; offset += 1) {
+    for (int offset = 0; offset < byte_count; offset += 1) {
       set_address(base + offset);
       data[offset] = read_byte();
       sum += data[offset];
     }
 
-    int checksum = hex_checksum(
+    int checksum = intel_checksum(
       0x10, 
       hi,
       lo,
@@ -498,7 +501,7 @@ void hex_dump() {
 
     char buf[80];
     sprintf(buf, ":%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X",
-            0x10, hi, lo, 0x00,
+            byte_count, hi, lo, 0x00,
             data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7],
             data[8], data[9], data[10], data[11], data[12], data[13], data[14], data[15], checksum);
 
@@ -508,7 +511,7 @@ void hex_dump() {
   disable();
 }
 
-int hex_checksum(int byte_count, int hi, int lo, int record_type, int data_sum) {
+int intel_checksum(int byte_count, int hi, int lo, int record_type, int data_sum) {
   int x = byte_count + hi + lo + record_type + data_sum;
   x = x % 256;
   x = ~x;
@@ -602,6 +605,10 @@ bool handle_record_error(String c, String e) {
 }
 
 /*
+ * Handle exporting of data to Intel HEX format, this data is printed 
+ * to serial directly with a 16 byte record length along with the
+ * correct checksum.
+ * 
  * KIM-1 paper tape format:
  *  Data record:
  *    ;bbaaaaddcccc
@@ -619,6 +626,53 @@ bool handle_record_error(String c, String e) {
  *       aaaa       = total records
  *           cccc   = record checksum
  */
+void dump_paper() {
+  enable();
+  set_read();
+
+  int byte_count = 16;
+  for (int base = 0; base < memory_size; base += byte_count) {
+    byte data[byte_count];
+    int hi = ((memory_base + base) & 0xFF00) >> 8;
+    int lo = (memory_base + base) & 0x00FF;
+
+    int data_sum = 0;
+    for (int offset = 0; offset < byte_count; offset += 1) {
+      set_address(base + offset);
+      data[offset] = read_byte();
+      data_sum += data[offset];
+    }
+    int checksum = paper_checksum(byte_count, hi, lo, data_sum);
+
+    char buf[80];
+    ansi_notice();
+    sprintf(buf, ";%02X%02X%02X", byte_count, hi, lo);
+    Serial.print(buf);
+    ansi_default();
+    
+    sprintf(buf, "%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X%02X",
+            data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7],
+            data[8], data[9], data[10], data[11], data[12], data[13], data[14], data[15]);
+    Serial.print(buf);
+
+    ansi_notice();
+    sprintf(buf, "%04X", checksum);
+    Serial.println(buf);
+    ansi_default();
+}
+  
+  disable();
+}
+
+int paper_checksum(int byte_count, int hi, int lo, int data_sum) {
+  return byte_count + hi + lo + data_sum;
+}
+
+/* Handle importing of paper tape files. Data is read and loaded
+ * on a line by line basis, so as far as error checking there is
+ * almost none implemented. For a description of the record format
+ * see dump_paper().
+  */
 bool handle_paper(String c) {
   if (c.length() < 11) return handle_record_error(c, F("record too short"));
 
@@ -678,8 +732,9 @@ void print_help() {
   Serial.println(F("base           Prints memory offset used"));
   Serial.println(F("base <block>   8k0-8k7 memory offset"));
   Serial.println(F("dump           Dump memory"));
+  Serial.println(F("dump intel     Intel HEX dump"));
+  Serial.println(F("dump paper     Paper tape memory dump"));
   Serial.println(F("help           Prints this screen"));
-  Serial.println(F("hex_dump       Intel HEX dump"));
   Serial.println(F("memory         Print memory dump size"));
   Serial.println(F("memory <size>  1k/2k/4k/8k memory dump size"));
   Serial.println(F("memory test    Test set memory"));
@@ -779,7 +834,8 @@ void select_command(String command) {
   else if (handle_command(command, F("base 8k6"), base_8k6));
   else if (handle_command(command, F("base 8k7"), base_8k7));
   else if (handle_command(command, F("dump"), dump));
-  else if (handle_command(command, F("hex_dump"), hex_dump));
+  else if (handle_command(command, F("dump intel"), dump_intel));
+  else if (handle_command(command, F("dump paper"), dump_paper));
   else if (command.charAt(0) == ':') handle_intel(command);
   else if (command.charAt(0) == ';') handle_paper(command);
   #ifdef COLORIZE
