@@ -18,7 +18,9 @@
 #define EX_CONTROL 5
 #define EX_RESET 17
 
+#define BAUD_RATE 115200
 #define MAX_MEMORY_SIZE 8192
+#define MAX_INPUT_SIZE 100
 
 /* Variables */
 int memory_bank = 0;
@@ -32,7 +34,7 @@ void setup() {
   pinMode(SHIFT_LATCH, OUTPUT);
   pinMode(EX_CONTROL, OUTPUT);
 
-  Serial.begin(115200);
+  Serial.begin(BAUD_RATE);
   disable();
   
   pinMode(EX_A13, OUTPUT);
@@ -43,14 +45,15 @@ void setup() {
   Serial.println(F("\nConfiguration:"));
   bank0();
   base_8k0();
-  memory_1k();
+  memory_2k();
 
   Serial.println();
   print_help();
 }
 
 /*
- * Assert control of the memory, locking out the system.
+ * Assert control, locking out the 6502-system from
+ * being able to access the memory.
  */
 void enable() {
   digitalWrite(EX_CONTROL, LOW);
@@ -64,7 +67,8 @@ void enable() {
 }
 
 /*
- * Release control of the memory, allowing the system access.
+ * Release control, allowing the 6502-system
+ * access to the memory again.
  */
 void disable() {
   for (int pin = EX_D0; pin <= EX_D7; pin += 1) {
@@ -82,7 +86,7 @@ void disable() {
 /*
  * Shift out the specified 16-bit address.
  */
-void setAddress(int address) {
+void set_address(int address) {
   shiftOut(SHIFT_DATA, SHIFT_CLK, MSBFIRST, (address >> 8));
   shiftOut(SHIFT_DATA, SHIFT_CLK, MSBFIRST, address);
 
@@ -91,7 +95,7 @@ void setAddress(int address) {
   digitalWrite(SHIFT_LATCH, LOW);
 }
 
-void setRead() {
+void set_read() {
   for (int pin = EX_D0; pin <= EX_D7; pin += 1) {
     pinMode(pin, INPUT);
   }
@@ -99,12 +103,12 @@ void setRead() {
 }
 
 /*
- * Read a byte from the data pings, use set_direction
+ * Read a byte from the data pins, use set_direction
  * to perform sequential steps without setting up every
  * time.
  */
-byte readByte(bool set_direction = false) {
-  if (set_direction) setRead();
+byte read_byte(bool set_direction = false) {
+  if (set_direction) set_read();
   
   byte value = 0;
   for (int pin = EX_D7; pin >= EX_D0; pin -= 1) {
@@ -113,7 +117,7 @@ byte readByte(bool set_direction = false) {
   return value;
 }
 
-void setWrite() {
+void set_write() {
   digitalWrite(EX_RnW, HIGH);
   for (int pin = EX_D0; pin <= EX_D7; pin += 1) {
     pinMode(pin, OUTPUT);
@@ -125,8 +129,8 @@ void setWrite() {
  * to perform sequential steps without setting up every
  * time.
  */
-void writeByte(byte value, bool set_direction = false) {
-  if (set_direction) setWrite();
+void write_byte(byte value, bool set_direction = false) {
+  if (set_direction) set_write();
   
   for (int pin = EX_D0; pin <= EX_D7; pin += 1) {
     digitalWrite(pin, value & 1);
@@ -136,28 +140,6 @@ void writeByte(byte value, bool set_direction = false) {
   delayMicroseconds(1);
   digitalWrite(EX_RnW, HIGH);
   delay(10);
-}
-
-/*
- * Handle serial commands, mainly just matches the name
- * and if it does the supplied function is run. Recognized
- * commands are echoed back to the user.
- */
-bool handle_command(String command, String name, void (*function)()) {
-  if (command == name) {
-    echo_command(command);
-    (*function)();
-    return true;
-  }
-  return false;
-}
-
-void echo_command(String command) {
-  Serial.println("> "+ command);
-}
-
-void echo_unknown(String command) {
-  Serial.println("? " + command);
 }
 
 /*
@@ -321,17 +303,17 @@ bool memory_test_pattern(char pass, unsigned char pattern) {
 
   bool passed = true;
   for (int base = 0; base < memory_size; base += 16) {
-    setWrite();
+    set_write();
     for (int offset = 0; offset <= 15; offset += 1) {
-      setAddress(base + offset);
-      writeByte(pattern);
+      set_address(base + offset);
+      write_byte(pattern);
     }
     
-    setRead();
+    set_read();
     bool block_passed = true;
     for (int offset = 0; offset <= 15; offset += 1) {
-      setAddress(base + offset);
-      if (readByte() != pattern) {
+      set_address(base + offset);
+      if (read_byte() != pattern) {
         passed = false;
         block_passed = false;
       }
@@ -357,11 +339,11 @@ void memory_zero() {
   Serial.print(F("K of memory "));
 
   enable();
-  setWrite();
+  set_write();
   for (int base = 0; base < memory_size; base += 16) {
     for (int offset = 0; offset <= 15; offset += 1) {
-      setAddress(base + offset);
-      writeByte(0x00);
+      set_address(base + offset);
+      write_byte(0x00);
     }
 
     Serial.print(".");
@@ -377,14 +359,14 @@ void memory_zero() {
  */
 void dump() {
   enable();
-  setRead();
+  set_read();
 
   Serial.println(F("        0  1  2  3  4  5  6  7    8  9  A  B  C  D  E  F "));
   for (int base = 0; base < memory_size; base += 16) {
     byte data[16];
     for (int offset = 0; offset <= 15; offset += 1) {
-      setAddress(base + offset);
-      data[offset] = readByte();
+      set_address(base + offset);
+      data[offset] = read_byte();
     }
 
     char buf[80];
@@ -405,7 +387,7 @@ void dump() {
  */
 void hex_dump() {
   enable();
-  setRead();
+  set_read();
   for (int base = 0; base < memory_size; base += 16) {
     byte data[16];
     int hi = ((memory_base + base) & 0xFF00) >> 8;
@@ -413,8 +395,8 @@ void hex_dump() {
 
     int sum = 0;
     for (int offset = 0; offset <= 15; offset += 1) {
-      setAddress(base + offset);
-      data[offset] = readByte();
+      set_address(base + offset);
+      data[offset] = read_byte();
       sum += data[offset];
     }
 
@@ -485,10 +467,10 @@ bool handle_intel(String c) {
     switch (record_type) {
       case 0x00: /* data */
         enable();
-        setWrite();
+        set_write();
         for (int i = 0; i < byte_count; i++) {
-          setAddress(address + i);
-          writeByte(data[i]);
+          set_address(address + i);
+          write_byte(data[i]);
         }
         disable();
       case 0x04: /* extended linear address */
@@ -582,10 +564,10 @@ bool handle_paper(String c) {
   );
   if (checksum == (byte_count + hi + lo + data_sum)) {
     enable();
-    setWrite();
+    set_write();
     for (int i = 0; i < byte_count; i++) {
-      setAddress(address + i);
-      writeByte(data[i]);
+      set_address(address + i);
+      write_byte(data[i]);
     }
     disable();
 
@@ -615,43 +597,109 @@ void print_help() {
   Serial.println(F(";<data>        Load paper tape data"));
 }
 
+/*
+ * Process a single received byte that was received over
+ * the serial connection to the Arduino Nano, the byte
+ * will be automatically echoed back to the terminal
+ * application. 
+ * 
+ * Each line will be processed by its own function, EOL
+ * will be interpreted as CR or NL as long as data has
+ * previously been received. Any leading spaces will be
+ * ignored.
+ */
+void process_serial(const byte byte_in) {
+  static char input_line[MAX_INPUT_SIZE];
+  static unsigned int input_pos = 0;
+
+  Serial.print((char) byte_in);
+  switch (byte_in) {
+    case '\n':
+    case '\r':
+      if (input_pos > 0) {
+        input_line[input_pos] = 0;
+        select_command(input_line);
+        input_pos = 0;
+      }
+      break;
+    
+    case ' ':
+      if (input_pos == 0) break;
+    default:
+      if (input_pos < (MAX_INPUT_SIZE - 1)) {
+        input_line[input_pos++] = byte_in;
+      }
+      break;
+  }
+}
+
+/*
+ * Run the command associated with the text command
+ * given, if one is currently supported by the sketch.
+ * Note that Intel HEX (:<data>) and Paper-tape
+ * (;<data>) are handled on a line-by-line basis instead
+ * of as a complete listing to keep things easy.
+ */
+void select_command(String command) {
+  if (handle_command(command, F("version"), print_version));
+  else if (handle_command(command, F("status"), print_status));
+  else if (handle_command(command, F("bank"), print_bank));
+  else if (handle_command(command, F("bank 0"), bank0));
+  else if (handle_command(command, F("bank 1"), bank1));
+  else if (handle_command(command, F("bank 2"), bank2));
+  else if (handle_command(command, F("bank 3"), bank3));
+  else if (handle_command(command, F("memory"), print_memory));
+  else if (handle_command(command, F("memory 1k"), memory_1k));
+  else if (handle_command(command, F("memory 2k"), memory_2k));
+  else if (handle_command(command, F("memory 4k"), memory_4k));
+  else if (handle_command(command, F("memory 8k"), memory_8k));
+  else if (handle_command(command, F("memory max"), memory_8k));
+  else if (handle_command(command, F("memory max?"), print_max_memory));
+  else if (handle_command(command, F("memory test"), memory_test));
+  else if (handle_command(command, F("memory zero"), memory_zero));
+  else if (handle_command(command, F("base"), print_memory_base));
+  else if (handle_command(command, F("base 8k0"), base_8k0));
+  else if (handle_command(command, F("base 8k1"), base_8k1));
+  else if (handle_command(command, F("base 8k2"), base_8k2));
+  else if (handle_command(command, F("base 8k3"), base_8k3));
+  else if (handle_command(command, F("base 8k4"), base_8k4));
+  else if (handle_command(command, F("base 8k5"), base_8k5));
+  else if (handle_command(command, F("base 8k6"), base_8k6));
+  else if (handle_command(command, F("base 8k7"), base_8k7));
+  else if (handle_command(command, F("dump"), dump));
+  else if (handle_command(command, F("hex_dump"), hex_dump));
+  else if (command.charAt(0) == ':') handle_intel(command);
+  else if (command.charAt(0) == ';') handle_paper(command);
+  else if (handle_command(command, F("help"), print_help));
+  else {
+    echo_unknown(command);
+  }
+}
+
+/*
+ * Handle serial commands, mainly just matches the name
+ * and if it does the supplied function is run. Recognized
+ * commands are echoed back to the user.
+ */
+bool handle_command(String command, String name, void (*function)()) {
+  if (command == name) {
+    echo_command(command);
+    (*function)();
+    return true;
+  }
+  return false;
+}
+
+void echo_command(String command) {
+  Serial.println("> "+ command);
+}
+
+void echo_unknown(String command) {
+  Serial.println("? " + command);
+}
+
 void loop() {
   while(Serial.available() > 0) {
-    command = Serial.readString();
-    command.trim();
-
-    if (handle_command(command, F("version"), print_version)) break;
-    else if (handle_command(command, F("status"), print_status)) break;
-    else if (handle_command(command, F("bank"), print_bank)) break;
-    else if (handle_command(command, F("bank 0"), bank0)) break;
-    else if (handle_command(command, F("bank 1"), bank1)) break;
-    else if (handle_command(command, F("bank 2"), bank2)) break;
-    else if (handle_command(command, F("bank 3"), bank3)) break;
-    else if (handle_command(command, F("memory"), print_memory)) break;
-    else if (handle_command(command, F("memory 1k"), memory_1k)) break;
-    else if (handle_command(command, F("memory 2k"), memory_2k)) break;
-    else if (handle_command(command, F("memory 4k"), memory_4k)) break;
-    else if (handle_command(command, F("memory 8k"), memory_8k)) break;
-    else if (handle_command(command, F("memory max"), memory_8k)) break;
-    else if (handle_command(command, F("memory max?"), print_max_memory)) break;
-    else if (handle_command(command, F("memory test"), memory_test)) break;
-    else if (handle_command(command, F("memory zero"), memory_zero)) break;
-    else if (handle_command(command, F("base"), print_memory_base)) break;
-    else if (handle_command(command, F("base 8k0"), base_8k0)) break;
-    else if (handle_command(command, F("base 8k1"), base_8k1)) break;
-    else if (handle_command(command, F("base 8k2"), base_8k2)) break;
-    else if (handle_command(command, F("base 8k3"), base_8k3)) break;
-    else if (handle_command(command, F("base 8k4"), base_8k4)) break;
-    else if (handle_command(command, F("base 8k5"), base_8k5)) break;
-    else if (handle_command(command, F("base 8k6"), base_8k6)) break;
-    else if (handle_command(command, F("base 8k7"), base_8k7)) break;
-    else if (handle_command(command, F("dump"), dump)) break;
-    else if (handle_command(command, F("hex_dump"), hex_dump)) break;
-    else if (command.charAt(0) == ':') handle_intel(command);
-    else if (command.charAt(0) == ';') handle_paper(command);
-    else if (handle_command(command, "help", print_help)) break;
-    else {
-      echo_unknown(command);
-    }
+    process_serial(Serial.read());
   }
 }
