@@ -18,6 +18,7 @@
 #define EX_CONTROL 5
 #define EX_RESET 17
 
+#define COLORIZE /* Comment out to remove ANSI-styling */
 #define BAUD_RATE 115200
 #define MAX_MEMORY_SIZE 8192
 #define MAX_INPUT_SIZE 100
@@ -26,6 +27,7 @@
 int memory_bank = 0;
 int memory_base = 0x2000;
 int memory_size = MAX_MEMORY_SIZE;
+bool colorize = true;
 String command;
 
 void setup() {
@@ -40,15 +42,54 @@ void setup() {
   pinMode(EX_A13, OUTPUT);
   pinMode(EX_A14, OUTPUT);
   pinMode(EX_RESET, INPUT);
-
-  print_version();
-  Serial.println(F("\nConfiguration:"));
+  
+  print_welcome();
   bank0();
   base_8k0();
   memory_2k();
 
   Serial.println();
   print_help();
+}
+
+#ifdef COLORIZE
+void ansi_on() {
+  colorize = true;
+  Serial.print(F("ANSI terminal codes "));
+  ansi_title();
+  Serial.print(F("ON"));
+  ansi_default();
+  Serial.println("!");
+}
+
+void ansi_off() {
+  colorize = false;
+  Serial.println("ANSI terminal codes OFF!");
+}
+#endif
+
+void ansi_title() {
+  #ifdef COLORIZE
+  if (colorize) Serial.print(F("\033[1;37m"));
+  #endif
+}
+
+void ansi_notice() {
+  #ifdef COLORIZE
+  if (colorize) Serial.print(F("\033[37m"));
+  #endif
+}
+
+void ansi_error() {
+  #ifdef COLORIZE
+  if (colorize) Serial.print(F("\033[1;31m"));
+  #endif  
+}
+
+void ansi_default() {
+  #ifdef COLORIZE
+  if (colorize) Serial.print(F("\033[0m"));
+  #endif
 }
 
 /*
@@ -147,20 +188,36 @@ void write_byte(byte value, bool set_direction = false) {
  * program version followed by the help message.
  */
 void print_welcome() {
+  ansi_title();
   print_version();
-  Serial.println();
-  print_help();
-  Serial.println();
+  ansi_default();
+  ansi_notice();
+  Serial.println(F("\nConfiguration:"));
+  ansi_default();
 }
 
 void print_version() {
   Serial.println(F("ExRAM 0.2"));
 }
 
+/*
+ * Prints out the status of the 6502-system, this is done
+ * by checking wether the reset lines has been pulled up.
+ * Might not be reliable as it'd be floating though it
+ * seems to be working anyway (famous last words).
+ */
 void print_status() {
   int val = digitalRead(EX_RESET);
-  if (val == 0) Serial.println(F("Host system offline."));
-  else Serial.println(F("Host system online"));
+  if (val == 0) {
+    ansi_error();
+    Serial.println(F("Host system offline."));
+    ansi_default();
+  }
+  else {
+    ansi_error();
+    Serial.println(F("Host system online"));
+    ansi_default();
+  }
 }
 
 void print_bank() {
@@ -281,13 +338,20 @@ void memory_test() {
 
   enable();
   Serial.print(F("Testing "));
+  ansi_title();
   Serial.print(memory_size / 1024);
-  Serial.println("K of memory:");
+  Serial.print('K');
+  ansi_default();
+  Serial.println(F(" of memory:"));
   for (char i = 0; i < (sizeof(patterns) / sizeof(patterns[0])); i++) {
     if (memory_test_pattern(i, patterns[i])) {
+      ansi_notice();
       Serial.println(F(" OK!"));
+      ansi_default();
     } else {
+      ansi_error();
       Serial.println(F(" failed!"));
+      ansi_default();
       break;
     }
   }
@@ -297,9 +361,11 @@ void memory_test() {
 
 bool memory_test_pattern(char pass, unsigned char pattern) {
   char tmp[10];
+  ansi_notice();
   Serial.print("Pass ");
   sprintf(tmp, "%d (0x%02X) ", pass, pattern);
   Serial.print(tmp);
+  ansi_default();
 
   bool passed = true;
   for (int base = 0; base < memory_size; base += 16) {
@@ -334,9 +400,12 @@ bool memory_test_pattern(char pass, unsigned char pattern) {
  * been filled with unknown data or simply junk.
  */
 void memory_zero() {
-  Serial.print(F("Zeroing out "));
+  Serial.print(F("Zeroing "));
+  ansi_title();
   Serial.print(memory_size / 1024);
-  Serial.print(F("K of memory "));
+  Serial.print('K');
+  ansi_default();
+  Serial.print(F(" of memory "));
 
   enable();
   set_write();
@@ -350,7 +419,9 @@ void memory_zero() {
   }
   disable();
 
+  ansi_notice();
   Serial.println(F(" done!"));
+  ansi_default();
 }
 
 /*
@@ -361,7 +432,9 @@ void dump() {
   enable();
   set_read();
 
+  ansi_notice();
   Serial.println(F("        0  1  2  3  4  5  6  7    8  9  A  B  C  D  E  F "));
+  ansi_default();
   for (int base = 0; base < memory_size; base += 16) {
     byte data[16];
     for (int offset = 0; offset <= 15; offset += 1) {
@@ -370,8 +443,13 @@ void dump() {
     }
 
     char buf[80];
-    sprintf(buf, "$%.4X- %02X %02X %02X %02X %02X %02X %02X %02X   %02X %02X %02X %02X %02X %02X %02X %02X",
-            base + memory_base, data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7],
+    ansi_notice();
+    sprintf(buf, "$%.4X- ", base + memory_base);
+    Serial.print(buf);
+    ansi_default();
+
+    sprintf(buf, "%02X %02X %02X %02X %02X %02X %02X %02X   %02X %02X %02X %02X %02X %02X %02X %02X",
+            data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7],
             data[8], data[9], data[10], data[11], data[12], data[13], data[14], data[15]);
 
     Serial.println(buf);
@@ -462,7 +540,7 @@ bool handle_intel(String c) {
 
   int checksum = convert_hex_pair(c[9 + (byte_count * 2)], c[10 + (byte_count * 2)]);
   if (0x00 != ((byte_count + hi + lo + record_type + data_sum + checksum) & 0xFF)) {
-    return handle_record_error(c, "checksum error");
+    return handle_record_error(c, F("checksum error"));
   } else {
     switch (record_type) {
       case 0x00: /* data */
@@ -579,7 +657,12 @@ bool handle_paper(String c) {
 }
 
 void print_help() {
+  ansi_notice();
   Serial.println(F("Commands supported:"));
+  ansi_default();
+  #ifdef COLORIZE
+  Serial.println(F("ansi <on|off>  Enable or disable ANSI terminal codes"));
+  #endif
   Serial.println(F("bank           Prints bank selection"));
   Serial.println(F("bank <num>     Select 8k bank"));
   Serial.println(F("base           Prints memory offset used"));
@@ -670,6 +753,10 @@ void select_command(String command) {
   else if (handle_command(command, F("hex_dump"), hex_dump));
   else if (command.charAt(0) == ':') handle_intel(command);
   else if (command.charAt(0) == ';') handle_paper(command);
+  #ifdef COLORIZE
+  else if (handle_command(command, F("ansi off"), ansi_off));
+  else if (handle_command(command, F("ansi on"), ansi_on));
+  #endif
   else if (handle_command(command, F("help"), print_help));
   else {
     echo_unknown(command);
@@ -691,11 +778,15 @@ bool handle_command(String command, String name, void (*function)()) {
 }
 
 void echo_command(String command) {
+  ansi_notice();
   Serial.println("> "+ command);
+  ansi_default();
 }
 
 void echo_unknown(String command) {
+  ansi_error();
   Serial.println("? " + command);
+  ansi_default();
 }
 
 void loop() {
