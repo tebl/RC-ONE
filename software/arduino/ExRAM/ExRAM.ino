@@ -216,16 +216,17 @@ void print_version() {
  */
 void print_status() {
   int val = digitalRead(EX_RESET);
+  Serial.print(F("Host system "));
   if (val == 0) {
     ansi_error();
-    Serial.println(F("Host system offline."));
-    ansi_default();
+    Serial.print(F("offline"));
   }
   else {
     ansi_notice();
-    Serial.println(F("Host system online!"));
-    ansi_default();
+    Serial.print(F("powered"));
   }
+  ansi_default();
+  Serial.println();
 }
 
 void print_bank() {
