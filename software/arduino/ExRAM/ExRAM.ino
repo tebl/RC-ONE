@@ -45,7 +45,7 @@ void setup() {
   
   print_welcome();
   bank0();
-  base_8k0();
+  base_8k1();
   memory_2k();
 
   Serial.println();
@@ -222,7 +222,7 @@ void print_status() {
     Serial.print(F("offline"));
   }
   else {
-    ansi_notice();
+    ansi_bright();
     Serial.print(F("powered"));
   }
   ansi_default();
@@ -722,6 +722,24 @@ bool handle_paper(String c) {
   }
 }
 
+void lock_on() {
+  enable();
+  Serial.print(F("ExRAM "));
+  ansi_error();
+  Serial.print(F("locked"));
+  ansi_default();
+  Serial.println();
+}
+
+void lock_off() {
+  disable();
+  Serial.print(F("ExRAM "));
+  ansi_bright();
+  Serial.print(F("unlocked"));
+  ansi_default();
+  Serial.println();
+}
+
 void print_help() {
   ansi_notice();
   Serial.println(F("Commands supported:"));
@@ -737,6 +755,7 @@ void print_help() {
   Serial.println(F("dump intel     Intel HEX dump"));
   Serial.println(F("dump paper     Paper tape memory dump"));
   Serial.println(F("help           Prints this screen"));
+  Serial.println(F("lock <on|off>  Lock 6502 ExRAM access"));
   Serial.println(F("memory         Print memory dump size"));
   Serial.println(F("memory <size>  1k/2k/4k/8k memory dump size"));
   Serial.println(F("memory test    Test set memory"));
@@ -817,6 +836,8 @@ void select_command(String command) {
   else if (handle_command(command, F("bank 1"), bank1));
   else if (handle_command(command, F("bank 2"), bank2));
   else if (handle_command(command, F("bank 3"), bank3));
+  else if (handle_command(command, F("lock on"), lock_on));
+  else if (handle_command(command, F("lock off"), lock_off));
   else if (handle_command(command, F("memory"), print_memory));
   else if (handle_command(command, F("memory 1k"), memory_1k));
   else if (handle_command(command, F("memory 2k"), memory_2k));
