@@ -15,75 +15,74 @@ Pass two
 0000-                  5       * DISPLAYS HHMMSS ON THE KIM-1 DISPLAYS. HOURS, MINUTES AND SECONDS
 0000-                  6       * MUST BE CONFIGURED BY ENTERING THE RELEVANT INFORMATION IN ADDRESSES
 0000-                  7       * $60 THROUGH $62. CHANGES HAVE BEEN MADE TO COMPLETE THE ASSEMBLY AS
-0000-                  8       * PARTS OF IT WERE ONLY INCLUDED IN THE SUPPLIED MACHINE CODE. RELEVANT
-0000-                  9       * CHANGES FOR 24 HOUR CLOCK HAVE ALSO BEEN IMPLEMENTED.
-0000-                 10       *
-0000-                 11               .CR     6502
-0000-                 12               .TF     clock.hex,INT
-0000-                 13
-0060-                 14       SET_HH  .EQ     $60     HOURS
-0061-                 15       SET_MM  .EQ     $61     MINUTES
-0062-                 16       SET_SS  .EQ     $62     SECONDS
-0063-                 17       RAM1    .EQ     $63
-0064-                 18       RAM2    .EQ     $64
-0000-                 19
-00FB-                 20       POINTH  .EQ     $FB     DIGITS 1-2
-00FA-                 21       POINTL  .EQ     $FA     DIGITS 3-4
-00F9-                 22       INH     .EQ     $F9     DIGITS 5-6
-0000-                 23
-1F1F-                 24       SCANDS  .EQ     $1F1F
-185C-                 25       BLANK   .EQ     $185C
-0000-                 26
-0200-                 27               .OR     $0200
-0200-                 28               .TA     $0000
-0200-                 29
-0200-A2 EA            30 (  2) START   LDX     #$EA    SET NO. OF LOOPS FOR 1 SECOND
-0202-CA               31 (  2) LOOP    DEX
-0203-A5 60            32 (  3)         LDA     SET_HH  STORE SET HOURS ON
-0205-85 FB            33 (  2)         STA     POINTH   DIGITS 1-2
-0207-A5 61            34 (  3)         LDA     SET_MM  STORE SET MINUTES ON
-0209-85 FA            35 (  2)         STA     POINTL   DIGITS 3-4
-020B-A5 62            36 (  3)         LDA     SET_SS  STORE SET SECONDS ON
-020D-85 F9            37 (  2)         STA     INH      DIGITS 5-6
-020F-86 63            38 (  3)         STX     RAM1    SAVE X
-0211-84 64            39 (  3)         STY     RAM2    SAVE Y (NOT NECESSARY, FILLER)
-0213-20 1F 1F         40 (  6)         JSR     SCANDS  DISPLAY TIME
-0216-A6 63            41 (  3)         LDX     RAM1    RESTORE X
-0218-A4 64            42 (  3)         LDY     RAM2    RESTORE Y
-021A-E0 00            43 (  2)         CPX     #$00
-021C-D0 E4            44 (2**)         BNE     LOOP
-021E-F8               45 (  2) SECONDS SED             SET DECIMAL MODE TO AVOID HEX DIGITS
-021F-38               46 (  2)         SEC             SET CARRY BIT
-0220-A9 00            47 (  2)         LDA     #$00
-0222-65 62            48 (  3)         ADC     SET_SS  ADD A+C+M -> (0+1+SEC -> ACC.)
-0224-85 62            49 (  2)         STA     SET_SS  STORE IN $62 (SEC) (ACC -> 62)
-0226-D8               50 (  2)         CLD             CLEAR DECIMAL MODE FOR "SCANDS"
-0227-C9 60            51 (  2)         CMP     #$60    TO START (TO 0200) (RESETTING LOOP FOR NEW SECOND)
-0229-D0 D5            52 (2**)         BNE     START
-022B-F8               53 (  2) MINUTES SED             SAME AS SECONDS
-022C-38               54 (  2)         SEC
-022D-A9 00            55 (  2)         LDA     #$00
-022F-85 62            56 (  2)         STA     SET_SS  RESET SECONDS TO 00
-0231-65 61            57 (  3)         ADC     SET_MM  ADD 0+1+MIN -> ACC
-0233-85 61            58 (  2)         STA     SET_MM  STORE IN $61 (MIN) (ACC -> 61)
-0235-D8               59 (  2)         CLD
-0236-C9 60            60 (  2)         CMP     #$60    CMP TO START (TO 0200)
-0238-D0 C6            61 (2**)         BNE     START
-023A-F8               62 (  2) HOURS   SED             SAME AS MINUTES
-023B-38               63 (  2)         SEC
-023C-A9 00            64 (  2)         LDA     #$00
-023E-85 62            65 (  2)         STA     SET_SS  RESET SECONDS TO 00
-0240-85 61            66 (  2)         STA     SET_MM  RESET MINUTS TO 00
-0242-65 60            67 (  3)         ADC     SET_HH  ADD 0+1+HRS -> ACC
-0244-85 60            68 (  2)         STA     SET_HH
-0246-D8               69 (  2)         CLD
-0247-C9 18            70 (  2)         CMP     #24
-0249-D0 B5            71 (2**)         BNE     START
-024B-A9 00            72 (  2)         LDA     #$00    WHEN HOURS REACH 24,
-024D-85 60            73 (  2)         STA     SET_HH   RESET HOURS TO 1
-024F-C9 00            74 (  2)         CMP     #$00    CMP TO START (TO 0200)
-0251-F0 AD            75 (2**)         BEQ     START
-0253-20 5C 18         76 (  6)         JSR     BLANK
+0000-                  8       * PARTS OF IT WERE ONLY INCLUDED IN THE SUPPLIED MACHINE CODE.
+0000-                  9       *
+0000-                 10               .CR     6502
+0000-                 11               .TF     clock.hex,INT
+0000-                 12
+0060-                 13       SET_HH  .EQ     $60     HOURS
+0061-                 14       SET_MM  .EQ     $61     MINUTES
+0062-                 15       SET_SS  .EQ     $62     SECONDS
+0063-                 16       RAM1    .EQ     $63
+0064-                 17       RAM2    .EQ     $64
+0000-                 18
+00FB-                 19       POINTH  .EQ     $FB     DIGITS 1-2
+00FA-                 20       POINTL  .EQ     $FA     DIGITS 3-4
+00F9-                 21       INH     .EQ     $F9     DIGITS 5-6
+0000-                 22
+1F1F-                 23       SCANDS  .EQ     $1F1F
+185C-                 24       BLANK   .EQ     $185C
+0000-                 25
+0200-                 26               .OR     $0200
+0200-                 27               .TA     $0000
+0200-                 28
+0200-A2 EA            29 (  2) START   LDX     #$EA    SET NO. OF LOOPS FOR 1 SECOND
+0202-CA               30 (  2) LOOP    DEX
+0203-A5 60            31 (  3)         LDA     SET_HH  STORE SET HOURS ON
+0205-85 FB            32 (  2)         STA     POINTH   DIGITS 1-2
+0207-A5 61            33 (  3)         LDA     SET_MM  STORE SET MINUTES ON
+0209-85 FA            34 (  2)         STA     POINTL   DIGITS 3-4
+020B-A5 62            35 (  3)         LDA     SET_SS  STORE SET SECONDS ON
+020D-85 F9            36 (  2)         STA     INH      DIGITS 5-6
+020F-86 63            37 (  3)         STX     RAM1    SAVE X
+0211-84 64            38 (  3)         STY     RAM2    SAVE Y (NOT NECESSARY, FILLER)
+0213-20 1F 1F         39 (  6)         JSR     SCANDS  DISPLAY TIME
+0216-A6 63            40 (  3)         LDX     RAM1    RESTORE X
+0218-A4 64            41 (  3)         LDY     RAM2    RESTORE Y
+021A-E0 00            42 (  2)         CPX     #$00
+021C-D0 E4            43 (2**)         BNE     LOOP
+021E-F8               44 (  2) SECONDS SED             SET DECIMAL MODE TO AVOID HEX DIGITS
+021F-38               45 (  2)         SEC             SET CARRY BIT
+0220-A9 00            46 (  2)         LDA     #$00
+0222-65 62            47 (  3)         ADC     SET_SS  ADD A+C+M -> (0+1+SEC -> ACC.)
+0224-85 62            48 (  2)         STA     SET_SS  STORE IN $62 (SEC) (ACC -> 62)
+0226-D8               49 (  2)         CLD             CLEAR DECIMAL MODE FOR "SCANDS"
+0227-C9 60            50 (  2)         CMP     #$60    TO START (TO 0200) (RESETTING LOOP FOR NEW SECOND)
+0229-D0 D5            51 (2**)         BNE     START
+022B-F8               52 (  2) MINUTES SED             SAME AS SECONDS
+022C-38               53 (  2)         SEC
+022D-A9 00            54 (  2)         LDA     #$00
+022F-85 62            55 (  2)         STA     SET_SS  RESET SECONDS TO 00
+0231-65 61            56 (  3)         ADC     SET_MM  ADD 0+1+MIN -> ACC
+0233-85 61            57 (  2)         STA     SET_MM  STORE IN $61 (MIN) (ACC -> 61)
+0235-D8               58 (  2)         CLD
+0236-C9 60            59 (  2)         CMP     #$60    CMP TO START (TO 0200)
+0238-D0 C6            60 (2**)         BNE     START
+023A-F8               61 (  2) HOURS   SED             SAME AS MINUTES
+023B-38               62 (  2)         SEC
+023C-A9 00            63 (  2)         LDA     #$00
+023E-85 62            64 (  2)         STA     SET_SS  RESET SECONDS TO 00
+0240-85 61            65 (  2)         STA     SET_MM  RESET MINUTS TO 00
+0242-65 60            66 (  3)         ADC     SET_HH  ADD 0+1+HRS -> ACC
+0244-85 60            67 (  2)         STA     SET_HH
+0246-D8               68 (  2)         CLD
+0247-C9 24            69 (  2)         CMP     #$24
+0249-D0 B5            70 (2**)         BNE     START
+024B-A9 00            71 (  2)         LDA     #$00    WHEN HOURS REACH 24,
+024D-85 60            72 (  2)         STA     SET_HH   RESET HOURS TO 1
+024F-C9 00            73 (  2)         CMP     #$00    CMP TO START (TO 0200)
+0251-F0 AD            74 (2**)         BEQ     START
+0253-20 5C 18         75 (  6)         JSR     BLANK
 
 0 Errors found during assembly.
 0 Warnings found during assembly.

@@ -1,0 +1,29 @@
+
+SB-Cross Assembler version 3.03.06
+Please visit www.sbprojects.net for a complete description.
+
+Assembling....
+
+Pass one
+Loaded 6502 overlay version 3.01.02
+
+Pass two
+0000-                  1       * ----------------------------------------------------------------------
+0000-                  2       * COPY SHORT PROGRAM FROM $2000 TO $0200.
+0000-                  3       *
+0000-                  4               .CR     6502
+0000-                  5               .TF     copy2000.hex,INT
+2400-                  6               .OR     $2400
+2400-                  7               .TA     $0400
+2400-                  8
+2400-A2 00             9 (  2) START   LDX     #$00
+2402-BD 00 20         10 ( 4*) NXTBYT  LDA     $2000,X
+2405-9D 00 02         11 (  5)         STA     $0200,X
+2408-E8               12 (  2)         INX
+2409-E0 FF            13 (  2)         CPX     #$FF
+240B-D0 F5            14 (2**)         BNE     NXTBYT
+240D-00               15 (  7) DONE    BRK
+
+0 Errors found during assembly.
+0 Warnings found during assembly.
+
