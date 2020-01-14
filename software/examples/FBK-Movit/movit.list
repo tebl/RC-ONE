@@ -3,92 +3,99 @@
 0000-                  6       * THIS IS A TYPE IN CALLED "MOVIT" BY LEW EDWARDS, I FOUND IT IN THE
 0000-                  7       * FIRST BOOK OF KIM AND THOUGHT IT A GOOD IDEA TO SUBVERT IT TO MY OWN
 0000-                  8       * PURPOSES. THE PROGRAM HAS BEEN ALTERED SO THAT IT RUNS FROM AN ADDRESS
-0000-                  9       * ASSOCIATED WITH THE EXRAM EXPANSION, RUNNING IT WILL COPY ENOUGH DATA
-0000-                 10       * FROM $2200 TO $0200 IN ORDER TO FILL THE ENTIRE 5K STATIC RAM SUPPORTED
-0000-                 11       * BY THE 65K EXPANSION.
+0000-                  9       * ASSOCIATED WITH THE EXRAM EXPANSION ($2770), RUNNING IT WILL COPY
+0000-                 10       * ENOUGH DATA FROM $2200 TO $0200 IN ORDER TO FILL THE ENTIRE 5K STATIC
+0000-                 11       * RAM SUPPORTED BY THE 65K EXPANSION.
 0000-                 12       *
-00D0-                 13       OSAL    .EQ     $D0         OLD START ADDRESS, LO BYTE
-00D1-                 14       OSAH    .EQ     $D1          AND HI BYTE
-00D2-                 15       OEAL    .EQ     $D2         OLD END ADDRESS, LO BYTE
-00D3-                 16       OEAH    .EQ     $D3          AND HI BYTE
-00D4-                 17       NSAL    .EQ     $D4         NEW START ADDRESS, LO BYTE
-00D5-                 18       NSAH    .EQ     $D5          AND HI BYTE
-00D6-                 19       NEAL    .EQ     $D6         NEW END ADDRESS, LO BYTE
-00D7-                 20       NEAH    .EQ     $D7          AND HI BYTE
-00D8-                 21       BCL     .EQ     $D8
-00D9-                 22       BCH     .EQ     $D9
-00FB-                 23       POINTH  .EQ     $FB         DIGITS 1-2
-00FA-                 24       POINTL  .EQ     $FA         DIGITS 3-4
-00F9-                 25       INH     .EQ     $F9         DIGITS 5-6
-1F1F-                 26       SCANDS  .EQ     $1F1F
-0000-                 27
-2F00-                 28               .OR     $2F00
-2F00-                 29               .TA     $0000
-2F00-A9 00            30 (  2) SETUP   LDA     #$00        SET THE OLD
-2F02-85 D0            31 (  2)         STA     OSAL         START
-2F04-A9 22            32 (  2)         LDA     #$22         ADDRESS
-2F06-85 D1            33 (  2)         STA     OSAH         TO $2200.
-2F08-A9 FF            34 (  2)         LDA     #$FF        SET THE OLD
-2F0A-85 D2            35 (  2)         STA     OEAL         END
-2F0C-A9 23            36 (  2)         LDA     #$23         ADDRESS
-2F0E-85 D3            37 (  2)         STA     OEAH         TO $2200.
-2F10-A9 00            38 (  2)         LDA     #$00        SET THE NEW
-2F12-85 D4            39 (  2)         STA     NSAL         START
-2F14-A9 02            40 (  2)         LDA     #$02         ADDRESS
-2F16-85 D5            41 (  2)         STA     NSAH         TO $0200.
-2F20-                 42               .OR     $2F20
-2F20-                 43               .TA     $0020
-2F20-D8               44 (  2) START   CLD
-2F21-A0 FF            45 (  2)         LDY     #$FF
-2F23-38               46 (  2)         SEC
-2F24-A5 D2            47 (  3)         LDA     OEAL        HOW MANY BYTES?
-2F26-E5 D0            48 (  3)         SBC     OSAL        TO MOVE?
-2F28-85 D8            49 (  2)         STA     BCL
-2F2A-A5 D3            50 (  3)         LDA     OEAH
-2F2C-E5 D1            51 (  3)         SBC     OSAH
-2F2E-85 D9            52 (  2)         STA     BCH
-2F30-18               53 (  2)         CLC
-2F31-A5 D8            54 (  3)         LDA     BCL         ADD THE COUNT TO
-2F33-65 D4            55 (  3)         ADC     NSAL         THE NEW START TO
-2F35-85 D6            56 (  2)         STA     NEAL         GET A NEW END
-2F37-85 FA            57 (  2)         STA     POINTL      PUT ON DISPLAY DIGITS 3-4
-2F39-A5 D9            58 (  3)         LDA     BCH
-2F3B-65 D5            59 (  3)         ADC     NSAH
-2F3D-85 D7            60 (  2)         STA     NEAH
-2F3F-85 FB            61 (  2)         STA     POINTH      PUT ON DISPLAY DIGITS 1-2
-2F41-E6 D8            62 (  5)         INC     BCL         ADJUST THE BYTE COUNT
-2F43-E6 D9            63 (  5)         INC     BCH          TO PERMIT ZERO TESTING
-2F45-38               64 (  2)         SEC
-2F46-A5 D4            65 (  3)         LDA     NSAL        IF NEW LOCATION
-2F48-E5 D0            66 (  3)         SBC     OSAL         HIGHER THAN OLD
-2F4A-A5 D5            67 (  3)         LDA     NSAH         CARRY-FLAG IS SET
-2F4C-E5 D1            68 (  3)         SBC     OSAH
-2F4E-A2 00            69 (  2) LOOP    LDX     #$00        HIGH POINTER INDEX
-2F50-90 02            70 (2**)         BCC     MOVE
-2F52-A2 02            71 (  2)         LDX     #$02        LOW POINTER INDEX
-2F54-A1 D0            72 (  6) MOVE    LDA     (OSAL,X)    MOVE OLD
-2F56-81 D4            73 (  6)         STA     (NSAL,X)     TO NEW
-2F58-90 14            74 (2**)         BCC     DOWN
-2F5A-C6 D2            75 (  5)         DEC     OEAL        ADJUST UP POINTER, (OLD)
-2F5C-98               76 (  2)         TYA                 BELOW ZERO?
-2F5D-45 D2            77 (  3)         EOR     OEAL
-2F5F-D0 02            78 (2**)         BNE     NOT         NO, ENOUGH
-2F61-C6 D3            79 (  5)         DEC     OEAH        YES, ADJUST THE HIGH BYTE
-2F63-C6 D6            80 (  5) NOT     DEC     NEAL        ADJUST THE OTHER ONE (NEW)
-2F65-98               81 (  2)         TYA
-2F66-45 D6            82 (  3)         EOR     NEAL        NEED HIGH BYTE ADJUSTED?
-2F68-D0 02            83 (2**)         BNE     NEIN        NO
-2F6A-C6 D7            84 (  5)         DEC     NEAH        YES, DO IT
-2F6C-B0 0C            85 (2**) NEIN    BCS     COUNT
-2F6E-E6 D0            86 (  5) DOWN    INC     OSAL        ADJUST "OLD" DOWN POINTER
-2F70-D0 02            87 (2**)         BNE     NYET
-2F72-E6 D1            88 (  5)         INC     OSAH        AND THE HIGH BYTE IF NEEDED
-2F74-E6 D4            89 (  5) NYET    INC     NSAL         AND THE "NEW" ONE
-2F76-D0 02            90 (2**)         BNE     COUNT
-2F78-E6 D5            91 (  5)         INC     NSAH
-2F7A-C6 D8            92 (  5) COUNT   DEC     BCL         TICK OFF THE BYTES,
-2F7C-D0 02            93 (2**)         BNE     ONE          ENOUGH FINGERS?
-2F7E-C6 D9            94 (  5)         DEC     BCH          USE THE OTHER HAND
-2F80-D0 CC            95 (2**) ONE     BNE     LOOP        'TIL THEY'RE ALL DONE
-2F82-20 1F 1F         96 (  6) DONE    JSR     SCANDS      SHOW BYTE COUNT ON
-2F85-4C 82 2F         97 (  3)         JMP     DONE         DISPLAYS... FOREVER!
+0000-                 13       * THE PROGRAM CAN STILL BE USED IN IT'S ORIGINAL FORM BY RUNNING IT FROM
+0000-                 14       * $2790; OLD START ADDRESS GOES IN $D0 & $D1, OLD END ADDRESS IN $D2 &
+0000-                 15       * $D3 AND FINALLY THE NEW START ADDRESS GOES IN $D4 & $D5.
+0000-                 16       *
+00D0-                 17       OSAL    .EQ     $D0         OLD START ADDRESS, LO BYTE
+00D1-                 18       OSAH    .EQ     $D1          AND HI BYTE
+00D2-                 19       OEAL    .EQ     $D2         OLD END ADDRESS, LO BYTE
+00D3-                 20       OEAH    .EQ     $D3          AND HI BYTE
+00D4-                 21       NSAL    .EQ     $D4         NEW START ADDRESS, LO BYTE
+00D5-                 22       NSAH    .EQ     $D5          AND HI BYTE
+00D6-                 23       NEAL    .EQ     $D6         NEW END ADDRESS, LO BYTE
+00D7-                 24       NEAH    .EQ     $D7          AND HI BYTE
+00D8-                 25       BCL     .EQ     $D8
+00D9-                 26       BCH     .EQ     $D9
+00FB-                 27       POINTH  .EQ     $FB         DIGITS 1-2
+00FA-                 28       POINTL  .EQ     $FA         DIGITS 3-4
+00F9-                 29       INH     .EQ     $F9         DIGITS 5-6
+1F1F-                 30       SCANDS  .EQ     $1F1F
+1C4F-                 31       MONITOR .EQ     $1C4F       KIM-1 MONITOR ENTRY
+0000-                 32
+2770-                 33               .OR     $2770
+2770-                 34               .TA     $0770
+2770-A9 00            35 (  2) SETUP   LDA     #$00        SET THE OLD
+2772-85 D0            36 (  2)         STA     OSAL         START
+2774-A9 22            37 (  2)         LDA     #$22         ADDRESS
+2776-85 D1            38 (  2)         STA     OSAH         TO $2200.
+2778-A9 FF            39 (  2)         LDA     #$FF        SET THE OLD
+277A-85 D2            40 (  2)         STA     OEAL         END
+277C-A9 23            41 (  2)         LDA     #$23         ADDRESS
+277E-85 D3            42 (  2)         STA     OEAH         TO $2200.
+2780-A9 00            43 (  2)         LDA     #$00        SET THE NEW
+2782-85 D4            44 (  2)         STA     NSAL         START
+2784-A9 02            45 (  2)         LDA     #$02         ADDRESS
+2786-85 D5            46 (  2)         STA     NSAH         TO $0200.
+2788-4C 90 27         47 (  3)         JMP     $2790
+2790-                 48               .OR     $2790
+2790-                 49               .TA     $0790
+2790-D8               50 (  2) START   CLD
+2791-A0 FF            51 (  2)         LDY     #$FF
+2793-38               52 (  2)         SEC
+2794-A5 D2            53 (  3)         LDA     OEAL        HOW MANY BYTES?
+2796-E5 D0            54 (  3)         SBC     OSAL        TO MOVE?
+2798-85 D8            55 (  2)         STA     BCL
+279A-A5 D3            56 (  3)         LDA     OEAH
+279C-E5 D1            57 (  3)         SBC     OSAH
+279E-85 D9            58 (  2)         STA     BCH
+27A0-18               59 (  2)         CLC
+27A1-A5 D8            60 (  3)         LDA     BCL         ADD THE COUNT TO
+27A3-65 D4            61 (  3)         ADC     NSAL         THE NEW START TO
+27A5-85 D6            62 (  2)         STA     NEAL         GET A NEW END
+27A7-85 FA            63 (  2)         STA     POINTL      PUT ON DISPLAY DIGITS 3-4
+27A9-A5 D9            64 (  3)         LDA     BCH
+27AB-65 D5            65 (  3)         ADC     NSAH
+27AD-85 D7            66 (  2)         STA     NEAH
+27AF-85 FB            67 (  2)         STA     POINTH      PUT ON DISPLAY DIGITS 1-2
+27B1-E6 D8            68 (  5)         INC     BCL         ADJUST THE BYTE COUNT
+27B3-E6 D9            69 (  5)         INC     BCH          TO PERMIT ZERO TESTING
+27B5-38               70 (  2)         SEC
+27B6-A5 D4            71 (  3)         LDA     NSAL        IF NEW LOCATION
+27B8-E5 D0            72 (  3)         SBC     OSAL         HIGHER THAN OLD
+27BA-A5 D5            73 (  3)         LDA     NSAH         CARRY-FLAG IS SET
+27BC-E5 D1            74 (  3)         SBC     OSAH
+27BE-A2 00            75 (  2) LOOP    LDX     #$00        HIGH POINTER INDEX
+27C0-90 02            76 (2**)         BCC     MOVE
+27C2-A2 02            77 (  2)         LDX     #$02        LOW POINTER INDEX
+27C4-A1 D0            78 (  6) MOVE    LDA     (OSAL,X)    MOVE OLD
+27C6-81 D4            79 (  6)         STA     (NSAL,X)     TO NEW
+27C8-90 14            80 (2**)         BCC     DOWN
+27CA-C6 D2            81 (  5)         DEC     OEAL        ADJUST UP POINTER, (OLD)
+27CC-98               82 (  2)         TYA                 BELOW ZERO?
+27CD-45 D2            83 (  3)         EOR     OEAL
+27CF-D0 02            84 (2**)         BNE     NOT         NO, ENOUGH
+27D1-C6 D3            85 (  5)         DEC     OEAH        YES, ADJUST THE HIGH BYTE
+27D3-C6 D6            86 (  5) NOT     DEC     NEAL        ADJUST THE OTHER ONE (NEW)
+27D5-98               87 (  2)         TYA
+27D6-45 D6            88 (  3)         EOR     NEAL        NEED HIGH BYTE ADJUSTED?
+27D8-D0 02            89 (2**)         BNE     NEIN        NO
+27DA-C6 D7            90 (  5)         DEC     NEAH        YES, DO IT
+27DC-B0 0C            91 (2**) NEIN    BCS     COUNT
+27DE-E6 D0            92 (  5) DOWN    INC     OSAL        ADJUST "OLD" DOWN POINTER
+27E0-D0 02            93 (2**)         BNE     NYET
+27E2-E6 D1            94 (  5)         INC     OSAH        AND THE HIGH BYTE IF NEEDED
+27E4-E6 D4            95 (  5) NYET    INC     NSAL         AND THE "NEW" ONE
+27E6-D0 02            96 (2**)         BNE     COUNT
+27E8-E6 D5            97 (  5)         INC     NSAH
+27EA-C6 D8            98 (  5) COUNT   DEC     BCL         TICK OFF THE BYTES,
+27EC-D0 02            99 (2**)         BNE     ONE          ENOUGH FINGERS?
+27EE-C6 D9           100 (  5)         DEC     BCH          USE THE OTHER HAND
+27F0-D0 CC           101 (2**) ONE     BNE     LOOP        'TIL THEY'RE ALL DONE
+27F2-A9 00           102 (  2)         LDA     #$00
+27F4-85 F9           103 (  2)         STA     INH
+27F6-4C 4F 1C        104 (  3) DONE    JMP     MONITOR     RETURN TO KIM-1 MONITOR
