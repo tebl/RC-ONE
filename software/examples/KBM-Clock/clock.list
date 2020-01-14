@@ -34,7 +34,7 @@ Pass two
 185C-                 24       BLANK   .EQ     $185C
 0000-                 25
 0200-                 26               .OR     $0200
-0200-                 27               .TA     $0000
+0200-                 27               .TA     $0200
 0200-                 28
 0200-A2 EA            29 (  2) START   LDX     #$EA    SET NO. OF LOOPS FOR 1 SECOND
 0202-CA               30 (  2) LOOP    DEX

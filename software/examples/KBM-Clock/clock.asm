@@ -24,7 +24,7 @@ SCANDS  .EQ     $1F1F
 BLANK   .EQ     $185C
 
         .OR     $0200
-        .TA     $0000
+        .TA     $0200
 
 START   LDX     #$EA    SET NO. OF LOOPS FOR 1 SECOND
 LOOP    DEX
