@@ -6,7 +6,7 @@
 * THIS IS A TYPE IN CALLED "MOVIT" BY LEW EDWARDS, I FOUND IT IN THE
 * FIRST BOOK OF KIM AND THOUGHT IT A GOOD IDEA TO SUBVERT IT TO MY OWN
 * PURPOSES. THE PROGRAM HAS BEEN ALTERED SO THAT IT RUNS FROM AN ADDRESS
-* ASSOCIATED WITH THE EXRAM EXPANSION ($2770), RUNNING IT WILL COPY 
+* ASSOCIATED WITH THE EXRAM EXPANSION ($3F70), RUNNING IT WILL COPY 
 * ENOUGH DATA FROM $2200 TO $0200 IN ORDER TO FILL THE ENTIRE 5K STATIC
 * RAM SUPPORTED BY THE 65K EXPANSION.
 *
@@ -30,23 +30,23 @@ INH     .EQ     $F9         DIGITS 5-6
 SCANDS  .EQ     $1F1F
 MONITOR .EQ     $1C4F       KIM-1 MONITOR ENTRY
 
-        .OR     $2770
-        .TA     $0770
+        .OR     $3F70
+        .TA     $1F70
 SETUP   LDA     #$00        SET THE OLD
         STA     OSAL         START
         LDA     #$22         ADDRESS
         STA     OSAH         TO $2200.
         LDA     #$FF        SET THE OLD
         STA     OEAL         END
-        LDA     #$23         ADDRESS
-        STA     OEAH         TO $2200.
+        LDA     #$33         ADDRESS
+        STA     OEAH         TO $23FF.
         LDA     #$00        SET THE NEW
         STA     NSAL         START
         LDA     #$02         ADDRESS
         STA     NSAH         TO $0200.   
-        JMP     $2790
-        .OR     $2790
-        .TA     $0790
+        JMP     $3F90
+        .OR     $3F90
+        .TA     $1F90
 START   CLD
         LDY     #$FF
         SEC
