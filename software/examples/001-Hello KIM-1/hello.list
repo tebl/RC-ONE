@@ -8,25 +8,32 @@ Pass one
 Loaded 6502 overlay version 3.01.02
 
 Pass two
-0000-                  1               .CR     6502
-0000-                  2               .TF     hello.hex,INT
-0000-                  3
-00FA-                  4       POINTL  .EQ     $FA     addressL on display
-00FB-                  5       POINTH  .EQ     $FB     addressH on display
-00F9-                  6       INH     .EQ     $F9     inputbuffer high
-1F1F-                  7       SCANDS  .EQ     $1F1F
-0000-                  8
-0200-                  9               .OR     $0200
-0200-                 10               .TA     $0000
-0200-                 11
-0200-A9 C0            12 (  2) START   LDA     #$C0
-0202-85 FB            13 (  2)         STA     POINTH
-0204-A9 0C            14 (  2)         LDA     #$0C
-0206-85 FA            15 (  2)         STA     POINTL
-0208-A9 00            16 (  2)         LDA     #$00
-020A-85 F9            17 (  2)         STA     INH
-020C-20 1F 1F         18 (  6) LOOP    JSR     SCANDS
-020F-4C 0C 02         19 (  3)         JMP     LOOP
+0000-                  1       * ----------------------------------------------------------------------
+0000-                  2       * ALL IMPRESSIVE PIECES OF SOFTWARE ENGINEERING STARTS WITH A SIMPLE
+0000-                  3       * "HELLO WORLD", THEN IT JUST BECOMES PROGRESSIVELY MORE ADVANCED
+0000-                  4       * VERSIONS OF THE SAME THING WHILE DOING SLIGHTLY MORE USEFUL THINGS.
+0000-                  5       * THE KIM-1 HAS TO ADAPT OR GO COOCOO FROM THE MOUNTING PRESSURES OF THE
+0000-                  6       * MODERN WORLD; TYPE IN THE LISTING, RUN AND SEE WHAT YOU GET!
+0000-                  7       *
+0000-                  8               .CR     6502
+0000-                  9               .TF     hello.hex,INT
+0000-                 10
+00FA-                 11       POINTL  .EQ     $FA     addressL on display
+00FB-                 12       POINTH  .EQ     $FB     addressH on display
+00F9-                 13       INH     .EQ     $F9     inputbuffer high
+1F1F-                 14       SCANDS  .EQ     $1F1F
+0000-                 15
+0200-                 16               .OR     $0200
+0200-                 17               .TA     $0000
+0200-                 18
+0200-A9 C0            19 (  2) START   LDA     #$C0
+0202-85 FB            20 (  2)         STA     POINTH
+0204-A9 0C            21 (  2)         LDA     #$0C
+0206-85 FA            22 (  2)         STA     POINTL
+0208-A9 00            23 (  2)         LDA     #$00
+020A-85 F9            24 (  2)         STA     INH
+020C-20 1F 1F         25 (  6) LOOP    JSR     SCANDS
+020F-4C 0C 02         26 (  3)         JMP     LOOP
 
 0 Errors found during assembly.
 0 Warnings found during assembly.

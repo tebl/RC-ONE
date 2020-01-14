@@ -1,11 +1,15 @@
+        .CR     6502
+        .TF     movit.hex,INT
+        .LF     movit.list
+        
 * ----------------------------------------------------------------------
 * THIS IS A TYPE IN CALLED "MOVIT" BY LEW EDWARDS, I FOUND IT IN THE
 * FIRST BOOK OF KIM AND THOUGHT IT A GOOD IDEA TO SUBVERT IT TO MY OWN
-* PURPOSES. 
+* PURPOSES. THE PROGRAM HAS BEEN ALTERED SO THAT IT RUNS FROM AN ADDRESS
+* ASSOCIATED WITH THE EXRAM EXPANSION, RUNNING IT WILL COPY ENOUGH DATA
+* FROM $2200 TO $0200 IN ORDER TO FILL THE ENTIRE 5K STATIC RAM SUPPORTED
+* BY THE 65K EXPANSION.
 *
-        .CR     6502
-        .TF     movit.hex,INT
-
 OSAL    .EQ     $D0         OLD START ADDRESS, LO BYTE
 OSAH    .EQ     $D1          AND HI BYTE
 OEAL    .EQ     $D2         OLD END ADDRESS, LO BYTE
@@ -21,9 +25,22 @@ POINTL  .EQ     $FA         DIGITS 3-4
 INH     .EQ     $F9         DIGITS 5-6
 SCANDS  .EQ     $1F1F
 
-        .OR     $0200
+        .OR     $2F00
         .TA     $0000
-
+SETUP   LDA     #$00        SET THE OLD
+        STA     OSAL         START
+        LDA     #$22         ADDRESS
+        STA     OSAH         TO $2200.
+        LDA     #$FF        SET THE OLD
+        STA     OEAL         END
+        LDA     #$23         ADDRESS
+        STA     OEAH         TO $2200.
+        LDA     #$00        SET THE NEW
+        STA     NSAL         START
+        LDA     #$02         ADDRESS
+        STA     NSAH         TO $0200.    
+        .OR     $2F20
+        .TA     $0020
 START   CLD
         LDY     #$FF
         SEC
