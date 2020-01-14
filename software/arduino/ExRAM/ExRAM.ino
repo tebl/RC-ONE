@@ -188,7 +188,6 @@ void write_byte(byte value, bool set_direction = false) {
   digitalWrite(EX_RnW, LOW);
   delayMicroseconds(1);
   digitalWrite(EX_RnW, HIGH);
-  delay(10);
 }
 
 /*
@@ -418,11 +417,15 @@ void memory_zero() {
 
   enable();
   set_write();
+
+  for (int pin = EX_D0; pin <= EX_D7; pin += 1) digitalWrite(pin, 0);
   for (int base = 0; base < memory_size; base += 16) {
     for (int offset = 0; offset <= 15; offset += 1) {
       set_address(base + offset);
-      write_byte(0x00);
-    }
+      digitalWrite(EX_RnW, LOW);
+      delayMicroseconds(1);
+      digitalWrite(EX_RnW, HIGH);
+  }
 
     Serial.print(".");
   }
