@@ -11,7 +11,7 @@ CLK8T   .EQ     SAD+5       DIV BY 8 TIME
 CLK64T  .EQ     SAD+6       DIV BY 64 TIME
 CLKKT   .EQ     SAD+7       DIV BY 1024 TIME
 CLKRDI  .EQ     SAD+7       READ TIME OUT BIT
-CLKRDT  .EQ     SAD+7       READ TIME
+CLKRDT  .EQ     SAD+6       READ TIME
 ;
 ;       MPU REG. SAVX AREA IN PAGE 0        
 ;

@@ -1,0 +1,512 @@
+0000-                  4       ;              666666  555555  333333  000000
+0000-                  5       ;              6       5            3  0    0
+0000-                  6       ;              6       5            3  0    0
+0000-                  7       ;              666666  555555  333333  0    0
+0000-                  8       ;              6    6       5       3  0    0
+0000-                  9       ;              6    6       5       3  0    0
+0000-                 10       ;              666666  666666  666666  000000
+0000-                 11       ;
+0000-                 12       ;
+0000-                 13       ;
+0000-                 14       ;                      000000  000000  333333
+0000-                 15       ;                      0    0  0    0       3
+0000-                 16       ;              ------  0    0  0    0       3
+0000-                 17       ;              ------  0    0  0    0  333333
+0000-                 18       ;              ------  0    0  0    0       3
+0000-                 19       ;                      0    0  0    0       3
+0000-                 20       ;                      000000  000000  333333
+0000-                 21       ;
+0000-                 22       ;
+0000-                 23       ;
+0000-                 24       ;
+0000-                 25       ;
+0000-                 26       ;      COPYRIGHT
+0000-                 27       ;      MOS TECHNOLOGY, INC
+0000-                 28       ;      DATE: OCT 18, 1975 REV-D
+0000-                 29       ;
+0000-                 30       ;
+0000-                 31       ;
+0000-                 32       ;      6530-003 I.C. IS AN AUDIO CASSETT TAPE
+0000-                 33       ;      RECORDER ENTENSION OF THE BASIC
+0000-                 34       ;      KIM MONITOR
+0000-                 35       ;
+0000-                 36       ;      IT FEATURES TWO BASIC ROUTINES
+0000-                 37       ;      LOADT-LOAD MEM FROM AUDIO TAPE
+0000-                 38       ;      DUMPT-STOR MEM ONTO AUDIO TAPE
+0000-                 39       ;
+0000-                 40       ;      LOADT
+0000-                 41       ;        ID=00     IGNORE ID
+0000-                 42       ;        ID=FF     IGN. ID USE SA FOR START ADDR
+0000-                 43       ;        ID=01-FE  IGN.ID USE ADDRESS ON TAPE
+0000-                 44       ;
+0000-                 45       ;      DUMPT
+0000-                 46       ;        ID=00     SHOULD NOT BE USED
+0000-                 47       ;        ID=FF     SHOULD NOT BE USED
+0000-                 48       ;        ID=01-FE  NORMAL ID RANGE
+0000-                 49       ;        SAL       LSB STARTING ADDRESS OF PROGRAM
+0000-                 50       ;        SAH       MSB
+0000-                 51       ;        EAL       ENDING ADDRESS OF PROGRAM
+0000-                 52       ;        EAH       MSB
+0000-                 53       ;
+0000-                 54               .IN     equates.asm
+0000-            I     1       ;
+0000-            I     2       ;       EQUATES
+0000-            I     3       ;       SET UP FOR 6530-002 I/O
+0000-            I     4       ;
+1740-            I     5       SAD     .EQ     $1740       6530 A DATA
+1741-            I     6       PADD    .EQ     SAD+1       6530 A DATA DIRECTION
+1742-            I     7       SBD     .EQ     SAD+2       6530 B DATA
+1743-            I     8       PBDD    .EQ     SAD+3       6530 B DATA DIRECTION
+1744-            I     9       CLK1T   .EQ     SAD+4       DIV BY 1 TIME
+1745-            I    10       CLK8T   .EQ     SAD+5       DIV BY 8 TIME
+1746-            I    11       CLK64T  .EQ     SAD+6       DIV BY 64 TIME
+1747-            I    12       CLKKT   .EQ     SAD+7       DIV BY 1024 TIME
+1747-            I    13       CLKRDI  .EQ     SAD+7       READ TIME OUT BIT
+1746-            I    14       CLKRDT  .EQ     SAD+6       READ TIME
+0000-            I    15       ;
+0000-            I    16       ;       MPU REG. SAVX AREA IN PAGE 0
+0000-            I    17       ;
+00EF-            I    18       PCL     .EQ     $EF         PROGRAMCOUNTER LO
+00F0-            I    19       PCH     .EQ     $F0         PROGRAMCOUNTER HI
+00F1-            I    20       PREG    .EQ     $F1         CURRENT STATUS REG
+00F2-            I    21       SPUSER  .EQ     $F2         CURRENT STACK POINTER
+00F3-            I    22       ACC     .EQ     $F3         ACCUMULATOR
+00F4-            I    23       YREG    .EQ     $F4         Y INDEX
+00F5-            I    24       XREG    .EQ     $F5         X INDEX
+0000-            I    25       ;
+0000-            I    26       ;       KIM FIXED AREA IN PAGE 0
+0000-            I    27       ;
+00F6-            I    28       CHKHI   .EQ     $F6
+00F7-            I    29       CHKSUM  .EQ     $F7
+00F8-            I    30       INL     .EQ     $F8         INPUT BUFFER LO
+00F9-            I    31       INH     .EQ     $F9         INPUT BUFFER HI
+00FA-            I    32       POINTL  .EQ     $FA         LSB OF OPEN CELL
+00FB-            I    33       POINTH  .EQ     $FB         MSB OF OPEN CELL
+00FC-            I    34       TEMP    .EQ     $FC
+00FD-            I    35       TMPX    .EQ     $FD
+00FE-            I    36       CHAR    .EQ     $FE
+00FF-            I    37       MODE    .EQ     $FF
+0000-            I    38       ;
+0000-            I    39       ;       KIM FIXED AREA IN PAGE 23
+0000-            I    40       ;
+17E7-            I    41       CHKL    .EQ     $17E7
+17E8-            I    42       CHKH    .EQ     CHKL+1      CHKSUM
+17E9-            I    43       SAVX    .EQ     CHKL+2
+17EC-            I    44       VEB     .EQ     CHKL+5      VOLATILE EXECUTION BLOCK
+17F2-            I    45       CNTL30  .EQ     CHKL+11     TTY DELAY
+17F3-            I    46       CNTH30  .EQ     CHKL+12     TTY DELAY
+17F4-            I    47       TIMH    .EQ     CHKL+13
+17F5-            I    48       SAL     .EQ     CHKL+14     STARTING ADDRESS LO
+17F6-            I    49       SAH     .EQ     CHKL+15     STARTING ADDRESS HI
+17F7-            I    50       EAL     .EQ     CHKL+16     ENDING ADDRESS LO
+17F8-            I    51       EAH     .EQ     CHKL+17     ENDING ADDRESS HI
+17F9-            I    52       ID      .EQ     CHKL+18     TAPE PROGRAM ID NUMBER
+0000-            I    53       ;
+0000-            I    54       ;       INTERRUPT VECTORS
+0000-            I    55       ;
+17FA-            I    56       NMIV    .EQ     CHKL+19     STOP VECTOR (STOP=1C00)
+17FC-            I    57       RSTV    .EQ     CHKL+21     RST VECTOR
+17FE-            I    58       IRQV    .EQ     CHKL+23     IRQ VECTOR (BRK=1C00)
+1800-                 55               .OR     $1800
+1800-                 56               .TA     $0000
+1800-                 57
+1C4F-                 58       START   .EQ     $1C4F
+1800-                 59
+1800-                 60       ;
+1800-                 61       ;       INIT VOLATILE EXECUTION BLOCK
+1800-                 62       ;       DUMP MEM TO TAPE
+1800-                 63       ;
+1800-A9 AD            64 (  2) DUMPT   LDA     #$AD        LOAD ABSOLUTE INST
+1802-8D EC 17         65 (  4)         STA     VEB
+1805-20 32 19         66 (  6)         JSR     INTVEB
+1808-                 67       ;
+1808-A9 27            68 (  2)         LDA     #$27        TURN OFF DATAIN PB5
+180A-8D 42 17         69 (  4)         STA     SBD
+180D-A9 BF            70 (  2)         LDA     #$BF        CONVERT PB7 TO OUTPUT
+180F-8D 43 17         71 (  4)         STA     PBDD
+1812-                 72       ;
+1812-A2 64            73 (  2)         LDX     #$64        100 CHARS
+1814-A9 16            74 (  2) DUMPT1  LDA     #$16        SYNC CHAR'S
+1816-20 7A 19         75 (  6)         JSR     OUTCHT
+1819-CA               76 (  2)         DEX
+181A-D0 F8            77 (2**)         BNE     DUMPT1
+181C-A9 2A            78 (  2)         LDA     #$2A        START CHAR
+181E-20 7A 19         79 (  6)         JSR     OUTCHT
+1821-                 80       ;
+1821-AD F9 17         81 (  4)         LDA     ID          OUTPUT ID
+1824-20 61 19         82 (  6)         JSR     OUTBT
+1827-                 83       ;
+1827-AD F5 17         84 (  4)         LDA     SAL         OUTPUT STARTING
+182A-20 5E 19         85 (  6)         JSR     OUTBTC       ADDRESS
+182D-AD F6 17         86 (  4)         LDA     SAH
+1830-20 5E 19         87 (  6)         JSR     OUTBTC
+1833-                 88       ;
+1833-AD ED 17         89 (  4) DUMPT2  LDA     VEB+1       CHECK FOR LAST
+1836-CD F7 17         90 (  4)         CMP     EAL         DATA BYTE
+1839-AD EE 17         91 (  4)         LDA     VEB+2
+183C-ED F8 17         92 (  4)         SBC     EAH
+183F-90 24            93 (2**)         BCC     DUMPT4
+1841-                 94       ;
+1841-A9 2F            95 (  2)         LDA     #'/         OUTPUT END OF DATA CHAR
+1843-20 7A 19         96 (  6)         JSR     OUTCHT
+1846-AD E7 17         97 (  4)         LDA     CHKL        LAST BYTE HAS BEEN
+1849-20 61 19         98 (  6)         JSR     OUTBT       OUTPUT    NOW OUTPUT
+184C-AD E8 17         99 (  4)         LDA     CHKH        CHKSUM
+184F-20 61 19        100 (  6)         JSR     OUTBT
+1852-                101       ;
+1852-                102       ;
+1852-A2 02           103 (  2)         LDX     #$02        2 CHAR'S
+1854-A9 04           104 (  2) DUMPT3  LDA     #$04        EOT CHAR
+1856-20 7A 19        105 (  6)         JSR     OUTCHT
+1859-CA              106 (  2)         DEX
+185A-D0 F8           107 (2**)         BNE     DUMPT3
+185C-                108       ;
+185C-A9 00           109 (  2)         LDA     #$00        DISPLAY 0000
+185E-85 FA           110 (  2)         STA     POINTL       FOR NORMAL EXIT
+1860-85 FB           111 (  2)         STA     POINTH
+1862-4C 4F 1C        112 (  3)         JMP     START
+1865-                113       ;
+1865-20 EC 17        114 (  6) DUMPT4  JSR     VEB         DATA BYTE OUTPUT
+1868-20 5E 19        115 (  6)         JSR     OUTBTC
+186B-                116       ;
+186B-20 EA 19        117 (  6)         JSR     INCVEB
+186E-4C 33 18        118 (  3)         JMP     DUMPT2
+1871-                119       ;
+1871-                120       ;       LOAD MEMORY FROM TAPE
+1871-                121       ;
+1871-                122       ;
+1871-0F 19           123       TAB     .DA     LOAD12
+1873-A9 8D           124 (  2) LOADT   LDA     #$8D        INIT VOLATILE EXECUTION
+1875-8D EC 17        125 (  4)         STA     VEB         BLOCK WITH STA ABS.
+1878-20 32 19        126 (  6)         JSR     INTVEB
+187B-                127       ;
+187B-A9 4C           128 (  2)         LDA     #$4C        JUMP TYPE RTRN
+187D-8D EF 17        129 (  4)         STA     VEB+3
+1880-AD 71 18        130 (  4)         LDA     TAB
+1883-8D F0 17        131 (  4)         STA     VEB+4
+1886-AD 72 18        132 (  4)         LDA     TAB+1
+1889-8D F1 17        133 (  4)         STA     VEB+5
+188C-                134       ;
+188C-A9 07           135 (  2)         LDA     #$07        RESET PB5=0 (DATA-IN)
+188E-8D 42 17        136 (  4)         STA     SBD
+1891-                137       ;
+1891-A9 FF           138 (  2) SYNC    LDA     #$FF        CLEAR SAVX FOR SYNC CHAR
+1893-8D E9 17        139 (  4)         STA     SAVX
+1896-                140       ;
+1896-20 41 1A        141 (  6) SYNC1   JSR     RDBIT       GET A BIT
+1899-4E E9 17        142 (  6)         LSR     SAVX        SHIFT BIT INTO CHAR
+189C-0D E9 17        143 (  4)         ORA     SAVX
+189F-8D E9 17        144 (  4)         STA     SAVX
+18A2-AD E9 17        145 (  4)         LDA     SAVX        GET NEW CHAR
+18A5-C9 16           146 (  2)         CMP     #$16        SYNC CHAR
+18A7-D0 ED           147 (2**)         BNE     SYNC1
+18A9-                148       ;
+18A9-A2 0A           149 (  2)         LDX     #$0A        TEST FOR 10 SYNC CHARS
+18AB-20 24 1A        150 (  6) SYNC2   JSR     RDCHT
+18AE-C9 16           151 (  2)         CMP     #$16
+18B0-D0 DF           152 (2**)         BNE     SYNC        IF NOT 10 CHAR, RE-SYNC
+18B2-CA              153 (  2)         DEX
+18B3-D0 F6           154 (2**)         BNE     SYNC2
+18B5-                155       ;
+18B5-                156       ;
+18B5-20 24 1A        157 (  6) LOADT4  JSR     RDCHT       LOOK FOR START OF
+18B8-C9 2A           158 (  2)         CMP     #$2A        DATA CHAR
+18BA-F0 06           159 (2**)         BEQ     LOAD11
+18BC-C9 16           160 (  2)         CMP     #$16        IF NOT, SHOULD BE SYN
+18BE-D0 D1           161 (2**)         BNE     SYNC
+18C0-F0 F3           162 (2**)         BEQ     LOADT4
+18C2-                163       ;
+18C2-20 F3 19        164 (  6) LOAD11  JSR     RDBYT       READ ID FROM TAPE
+18C5-CD F9 17        165 (  4)         CMP     ID           COMPARE WITH REQUESTED ID
+18C8-F0 0D           166 (2**)         BEQ     LOADT5
+18CA-AD F9 17        167 (  4)         LDA     ID          DEFAULT 00, READ RECORD
+18CD-C9 00           168 (  2)         CMP     #$00         ANYWAY
+18CF-F0 06           169 (2**)         BEQ     LOADT5
+18D1-C9 FF           170 (  2)         CMP     #$FF        DEFAULT FF, IGNORE SA ON
+18D3-F0 17           171 (2**)         BEQ     LOADT6       TAPE
+18D5-D0 9C           172 (2**)         BNE     LOADT
+18D7-                173       ;
+18D7-20 F3 19        174 (  6) LOADT5  JSR     RDBYT       GET SA FROM TAPE
+18DA-20 4C 19        175 (  6)         JSR     CHKT
+18DD-8D ED 17        176 (  4)         STA     VEB+1       SAVX IN VEB+1,2
+18E0-20 F3 19        177 (  6)         JSR     RDBYT
+18E3-20 4C 19        178 (  6)         JSR     CHKT
+18E6-8D EE 17        179 (  4)         STA     VEB+2
+18E9-4C F8 18        180 (  3)         JMP     LOADT7
+18EC-                181       ;
+18EC-20 F3 19        182 (  6) LOADT6  JSR     RDBYT       GET SA BUT IGNORE
+18EF-20 4C 19        183 (  6)         JSR     CHKT
+18F2-20 F3 19        184 (  6)         JSR     RDBYT
+18F5-20 4C 19        185 (  6)         JSR     CHKT
+18F8-                186       ;
+18F8-                187       ;
+18F8-A2 02           188 (  2) LOADT7  LDX     #$02        GET 2 CHARS
+18FA-20 24 1A        189 (  6) LOAD13  JSR     RDCHT       GET CHAR (X)
+18FD-C9 2F           190 (  2)         CMP     #$2F        LOOK FOR LAST CHAR
+18FF-F0 14           191 (2**)         BEQ     LOADT8
+1901-20 00 1A        192 (  6)         JSR     PACKT       CONVERT TO HEX
+1904-D0 23           193 (2**)         BNE     LOADT9      Y=1 NON-HEX CHAR
+1906-CA              194 (  2)         DEX
+1907-D0 F1           195 (2**)         BNE     LOAD13
+1909-                196       ;
+1909-20 4C 19        197 (  6)         JSR     CHKT        COMPUTE CHECKSUM
+190C-4C EC 17        198 (  3)         JMP     VEB         SAVX DATA IN MEMORY
+190F-20 EA 19        199 (  6) LOAD12  JSR     INCVEB      INCREMENT DATA POINTER
+1912-4C F8 18        200 (  3)         JMP     LOADT7
+1915-                201       ;
+1915-20 F3 19        202 (  6) LOADT8  JSR     RDBYT       END OF DATA, COMPARE CHKSUM
+1918-CD E7 17        203 (  4)         CMP     CHKL
+191B-D0 0C           204 (2**)         BNE     LOADT9
+191D-20 F3 19        205 (  6)         JSR     RDBYT
+1920-CD E8 17        206 (  4)         CMP     CHKH
+1923-D0 04           207 (2**)         BNE     LOADT9
+1925-A9 00           208 (  2)         LDA     #$00        NORMAL EXIT
+1927-F0 02           209 (2**)         BEQ     LOAD10
+1929-                210       ;
+1929-A9 FF           211 (  2) LOADT9  LDA     #$FF        ERROR EXIT
+192B-85 FA           212 (  2) LOAD10  STA     POINTL
+192D-85 FB           213 (  2)         STA     POINTH
+192F-4C 4F 1C        214 (  3)         JMP     START
+1932-                215       ;
+1932-                216       ;
+1932-                217       ;       SUBROUTINES FOLLOW
+1932-                218       ;
+1932-                219       ;       SUB TO MOVE SA TO VEB+1,2
+1932-                220       ;
+1932-AD F5 17        221 (  4) INTVEB  LDA     SAL         MOVE SA TO VEB+1,2
+1935-8D ED 17        222 (  4)         STA     VEB+1
+1938-AD F6 17        223 (  4)         LDA     SAH
+193B-8D EE 17        224 (  4)         STA     VEB+2
+193E-A9 60           225 (  2)         LDA     #$60        RTS INST
+1940-8D EF 17        226 (  4)         STA     VEB+3
+1943-A9 00           227 (  2)         LDA     #$00        CLEAR CHKSUM AREA
+1945-8D E7 17        228 (  4)         STA     CHKL
+1948-8D E8 17        229 (  4)         STA     CHKH
+194B-60              230 (  6)         RTS
+194C-                231       ;
+194C-                232       ;       COMPUTE CHKSUM FOR TAPE LOAD
+194C-                233       ;       RTN USES Y TO SAVEX A
+194C-                234       ;
+194C-A8              235 (  2) CHKT    TAY
+194D-18              236 (  2)         CLC
+194E-6D E7 17        237 (  4)         ADC     CHKL
+1951-8D E7 17        238 (  4)         STA     CHKL
+1954-AD E8 17        239 (  4)         LDA     CHKH
+1957-69 00           240 (  2)         ADC     #$00
+1959-8D E8 17        241 (  4)         STA     CHKH
+195C-98              242 (  2)         TYA
+195D-60              243 (  6)         RTS
+195E-                244       ;
+195E-                245       ;       OUTPUT ONE BYTE USE Y
+195E-                246       ;       TO SAVX BYTE
+195E-                247       ;
+195E-20 4C 19        248 (  6) OUTBTC  JSR     CHKT        COMPARE CHKSUM
+1961-A8              249 (  2) OUTBT   TAY                 SAVX DATA BYTE
+1962-4A              250 (  2)         LSR     A           SHIFT OFF LSD
+1963-4A              251 (  2)         LSR     A
+1964-4A              252 (  2)         LSR     A
+1965-4A              253 (  2)         LSR     A
+1966-20 6F 19        254 (  6)         JSR     HEXOUT      OUTPUT MSD
+1969-98              255 (  2)         TYA
+196A-20 6F 19        256 (  6)         JSR     HEXOUT      OUTPUT LSD
+196D-98              257 (  2)         TYA
+196E-60              258 (  6)         RTS
+196F-                259       ;
+196F-                260       ;       CONVERT LSD OF A TO ASCII
+196F-                261       ;       OUTPUT TO TAPE
+196F-                262       ;
+196F-29 0F           263 (  2) HEXOUT  AND     #$0F
+1971-C9 0A           264 (  2)         CMP     #$0A
+1973-18              265 (  2)         CLC
+1974-30 02           266 (2**)         BMI     HEX1
+1976-69 07           267 (  2)         ADC     #$07
+1978-69 30           268 (  2) HEX1    ADC     #$30
+197A-                269       ;
+197A-                270       ;       OUTPUT TO TAPE ONE ASCII
+197A-                271       ;       CHAR  USE SUB'S ONE + ZRO
+197A-                272       ;
+197A-8E E9 17        273 (  4) OUTCHT  STX     SAVX
+197D-8C EA 17        274 (  4)         STY     SAVX+1
+1980-A0 08           275 (  2)         LDY     #$08        START BIT
+1982-20 9E 19        276 (  6) CHT1    JSR     ONE
+1985-4A              277 (  2)         LSR     A           GET DATA BIT
+1986-B0 06           278 (2**)         BCS     CHT2
+1988-20 9E 19        279 (  6)         JSR     ONE         DATA BIT=1
+198B-4C 91 19        280 (  3)         JMP     CHT3
+198E-20 C4 19        281 (  6) CHT2    JSR     ZRO         DATA BIT=0
+1991-20 C4 19        282 (  6) CHT3    JSR     ZRO
+1994-88              283 (  2)         DEY
+1995-D0 EB           284 (2**)         BNE     CHT1
+1997-AE E9 17        285 (  4)         LDX     SAVX
+199A-AC EA 17        286 (  4)         LDY     SAVX+1
+199D-60              287 (  6)         RTS
+199E-                288       ;
+199E-                289       ;
+199E-                290       ;       OUTPUT 1 TO TAPE
+199E-                291       ;       9 PULSES, 138 MICROSEC EACH
+199E-                292       ;
+199E-A2 09           293 (  2) ONE     LDX     #$09
+19A0-48              294 (  3)         PHA                 SAVX A
+19A1-2C 47 17        295 (  4) ONE1    BIT     CLKRDI      WAIT FOR TIME OUT
+19A4-10 FB           296 (2**)         BPL     ONE1
+19A6-A9 7E           297 (  2)         LDA     #126
+19A8-8D 44 17        298 (  4)         STA     CLK1T
+19AB-A9 A7           299 (  2)         LDA     #$A7
+19AD-8D 42 17        300 (  4)         STA     SBD         SET PB7=1
+19B0-2C 47 17        301 (  4) ONE2    BIT     CLKRDI
+19B3-10 FB           302 (2**)         BPL     ONE2
+19B5-A9 7E           303 (  2)         LDA     #126
+19B7-8D 44 17        304 (  4)         STA     CLK1T
+19BA-A9 27           305 (  2)         LDA     #$27
+19BC-8D 42 17        306 (  4)         STA     SBD         RESET PB7=0
+19BF-CA              307 (  2)         DEX
+19C0-D0 DF           308 (2**)         BNE     ONE1
+19C2-68              309 (  4)         PLA
+19C3-60              310 (  6)         RTS
+19C4-                311       ;
+19C4-                312       ;
+19C4-                313       ;       OUTPUT 0 TO TAPE
+19C4-                314       ;       6 PULSES, 207 MICROSEC EACH
+19C4-                315       ;
+19C4-A2 06           316 (  2) ZRO     LDX     #$06
+19C6-48              317 (  3)         PHA                 SAVX A
+19C7-2C 47 17        318 (  4) ZRO1    BIT     CLKRDI
+19CA-10 FB           319 (2**)         BPL     ZRO1
+19CC-A9 C3           320 (  2)         LDA     #$C3
+19CE-8D 44 17        321 (  4)         STA     CLK1T
+19D1-A9 A7           322 (  2)         LDA     #$A7
+19D3-8D 42 17        323 (  4)         STA     SBD         SET PB7=1
+19D6-2C 47 17        324 (  4) ZRO2    BIT     CLKRDI
+19D9-10 FB           325 (2**)         BPL     ZRO2
+19DB-A9 C3           326 (  2)         LDA     #195
+19DD-8D 44 17        327 (  4)         STA     CLK1T
+19E0-A9 27           328 (  2)         LDA     #$27
+19E2-8D 42 17        329 (  4)         STA     SBD         RESET PB7=0
+19E5-CA              330 (  2)         DEX
+19E6-D0 DF           331 (2**)         BNE     ZRO1
+19E8-68              332 (  4)         PLA                 RESTORE A
+19E9-60              333 (  6)         RTS
+19EA-                334       ;
+19EA-                335       ;       SUB TO INC VEB+1,2
+19EA-                336       ;
+19EA-EE ED 17        337 (  6) INCVEB  INC     VEB+1
+19ED-D0 03           338 (2**)         BNE     INCVE1
+19EF-EE EE 17        339 (  6)         INC     VEB+2
+19F2-60              340 (  6) INCVE1  RTS
+19F3-                341       ;
+19F3-                342       ;       SUB TO READ BYTE FROM TAPE
+19F3-                343       ;
+19F3-20 24 1A        344 (  6) RDBYT   JSR     RDCHT
+19F6-20 00 1A        345 (  6)         JSR     PACKT
+19F9-20 24 1A        346 (  6)         JSR     RDCHT
+19FC-20 00 1A        347 (  6)         JSR     PACKT
+19FF-60              348 (  6)         RTS
+1A00-                349       ;
+1A00-                350       ;       PACK A=ASCII INTO SAVX
+1A00-                351       ;       AS HEX DATA
+1A00-                352       ;
+1A00-C9 30           353 (  2) PACKT   CMP     #$30
+1A02-30 1E           354 (2**)         BMI     PACKT3
+1A04-C9 47           355 (  2)         CMP     #$47
+1A06-10 1A           356 (2**)         BPL     PACKT3
+1A08-C9 40           357 (  2)         CMP     #$40
+1A0A-30 03           358 (2**)         BMI     PACKT1
+1A0C-18              359 (  2)         CLC
+1A0D-69 09           360 (  2)         ADC     #$09
+1A0F-2A              361 (  2) PACKT1  ROL     A
+1A10-2A              362 (  2)         ROL     A
+1A11-2A              363 (  2)         ROL     A
+1A12-2A              364 (  2)         ROL     A
+1A13-A0 04           365 (  2)         LDY     #$04
+1A15-2A              366 (  2) PACKT2  ROL     A
+1A16-2E E9 17        367 (  6)         ROL     SAVX
+1A19-88              368 (  2)         DEY
+1A1A-D0 F9           369 (2**)         BNE     PACKT2
+1A1C-AD E9 17        370 (  4)         LDA     SAVX
+1A1F-A0 00           371 (  2)         LDY     #$00        Y=0 VALID HEX CHAR
+1A21-60              372 (  6)         RTS
+1A22-C8              373 (  2) PACKT3  INY                 Y=1 NOT HEX
+1A23-60              374 (  6)         RTS
+1A24-                375       ;
+1A24-                376       ;       GET 1 CHAR FROM TAPE AND RETURN
+1A24-                377       ;       WITH CHAR IN A  USE SAVX+1 TO ASM CHAR
+1A24-                378       ;
+1A24-8E EB 17        379 (  4) RDCHT   STX     SAVX+2
+1A27-A2 08           380 (  2)         LDX     #$08        READ 8 BITS
+1A29-20 41 1A        381 (  6) RDCHT1  JSR     RDBIT       GET NEXT DATA BIT
+1A2C-4E EA 17        382 (  6)         LSR     SAVX+1      RIGHT SHIFT CHAR
+1A2F-0D EA 17        383 (  4)         ORA     SAVX+1      OR IN SIGN BIT
+1A32-8D EA 17        384 (  4)         STA     SAVX+1      REPLACE CHAR
+1A35-CA              385 (  2)         DEX
+1A36-D0 F1           386 (2**)         BNE     RDCHT1
+1A38-                387       ;
+1A38-AD EA 17        388 (  4)         LDA     SAVX+1      MOVE CHAR INTO A
+1A3B-2A              389 (  2)         ROL     A           SHIFT OFF PARITY
+1A3C-4A              390 (  2)         LSR     A
+1A3D-AE EB 17        391 (  4)         LDX     SAVX+2
+1A40-60              392 (  6)         RTS
+1A41-                393       ;
+1A41-                394       ;       THIS SUB GETS ONE BIT FROM
+1A41-                395       ;       TAPE AND RETURNS IT IN SIGN OF A
+1A41-                396       ;
+1A41-2C 42 17        397 (  4) RDBIT   BIT     SBD         WAIT FOR END OF START BIT
+1A44-10 FB           398 (2**)         BPL     RDBIT
+1A46-AD 46 17        399 (  4)         LDA     CLKRDT      GET START BIT TIME
+1A49-A0 FF           400 (  2)         LDY     #$FF        A=256-T1
+1A4B-8C 46 17        401 (  4)         STY     CLK64T      SET UP TIMER
+1A4E-                402       ;
+1A4E-A0 14           403 (  2)         LDY     #$14
+1A50-88              404 (  2) RDBIT3  DEY                 DELAY 100 MICROSEC
+1A51-D0 FD           405 (2**)         BNE     RDBIT3
+1A53-                406       ;
+1A53-2C 42 17        407 (  4) RDBIT2  BIT     SBD
+1A56-30 FB           408 (2**)         BMI     RDBIT2      WAIT FOR NEXT START BIT
+1A58-38              409 (  2)         SEC
+1A59-ED 46 17        410 (  4)         SBC     CLKRDT      (256-T1)-(256-T2)=T2-T1
+1A5C-A0 FF           411 (  2)         LDY     #$FF
+1A5E-8C 46 17        412 (  4)         STY     CLK64T      SET UP TIMER FOR NEXT BIT
+1A61-A0 07           413 (  2)         LDY     #$07
+1A63-88              414 (  2) RDBIT4  DEY                 DELAY 50 MICROSEC
+1A64-D0 FD           415 (2**)         BNE     RDBIT4
+1A66-                416       ;
+1A66-49 FF           417 (  2)         EOR     #$FF        COMPLEMENT SIGN OF A
+1A68-29 80           418 (  2)         AND     #$80         MASK ALL EXCEPT SIGN
+1A6A-60              419 (  6)         RTS
+1A6B-                420       ;
+1A6B-                421       ;       DIAGNOSTICS
+1A6B-                422       ;          MEMORY
+1A6B-                423       ;          PLLCAL
+1A6B-                424       ;
+1A6B-                425       ;
+1A6B-                426       ;
+1A6B-                427       ;       PLLCAL OUTPUT 166 MICROSEC
+1A6B-                428       ;       PULSE STRING
+1A6B-                429       ;
+1A6B-A9 27           430 (  2) PLLCAL  LDA     #$27
+1A6D-8D 42 17        431 (  4)         STA     SBD         TURN OFF DATIN PB5=1
+1A70-A9 BF           432 (  2)         LDA     #$BF        CONVERT PB7 TO OUTPUT
+1A72-8D 43 17        433 (  4)         STA     PBDD
+1A75-                434       ;
+1A75-2C 47 17        435 (  4) PLL1    BIT     CLKRDI
+1A78-10 FB           436 (2**)         BPL     PLL1
+1A7A-A9 9A           437 (  2)         LDA     #154        WAIT 166 MICROSEC
+1A7C-8D 44 17        438 (  4)         STA     CLK1T
+1A7F-A9 A7           439 (  2)         LDA     #$A7        OUTPUT PB7=1
+1A81-8D 42 17        440 (  4)         STA     SBD
+1A84-                441       ;
+1A84-2C 47 17        442 (  4) PLL2    BIT     CLKRDI
+1A87-10 FB           443 (2**)         BPL     PLL2
+1A89-A9 9A           444 (  2)         LDA     #154
+1A8B-8D 44 17        445 (  4)         STA     CLK1T
+1A8E-A9 27           446 (  2)         LDA     #$27        PB7=0
+1A90-8D 42 17        447 (  4)         STA     SBD
+1A93-4C 75 1A        448 (  3)         JMP     PLL1
+1A96-                449       ;
+1A96-                450       ;
+1A96-                451       ;       INTERRUPTS PAGE 27
+1A96-                452       ;
+1A96-                453               .BS     356,$FF
+1BFA-6B 1A           454       NMIP27  .DA     PLLCAL
+1BFC-6B 1A           455       RSTP27  .DA     PLLCAL
+1BFE-6B 1A           456       IRQP27  .DA     PLLCAL
+1C00-                457       ;
