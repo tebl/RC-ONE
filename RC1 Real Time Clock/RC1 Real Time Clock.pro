@@ -1,4 +1,4 @@
-update=25/09/2019 15:54:40
+update=23/01/2020 16:15:35
 version=1
 last_client=kicad
 [pcbnew]
@@ -64,6 +64,8 @@ LibName34=D:/owncloud/Documents/Projects/RC1/common/library/rc1_backplane
 LibName35=mos_6581
 LibName36=trs_3.5mm
 LibName37=ds12885
+[general]
+version=1
 [schematic_editor]
 version=1
 PageLayoutDescrFile=
@@ -74,5 +76,3 @@ NetFmtName=Pcbnew
 SpiceForceRefPrefix=0
 SpiceUseNetNumbers=0
 LabSize=60
-[general]
-version=1
