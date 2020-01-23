@@ -10,3 +10,25 @@ $1400	0001 0100 0000 0000 	unused (256 addr.)
 U7 dec.    c ba			c=A12, b=A11, a=A10
 \_ K5      1 01            
 U8 dec.        1c ba		1, c=A8, b=A7, a=A6
+
+
+I/O decoding scheme #1:
+Base    F  C B  8 7  4 3  0
+		0001 xxxx xxxx xxxx (not usable)
+3		0011 				$3000 - $3FFF
+5		0101 				$5000 - $5FFF
+7		0111 				$7000 - $7FFF
+9		1001 				$9000 - $9FFF
+B		1011 				$B000 - $BFFF
+D		1101 				$D000 - $DFFF
+		1111 				(not usable)
+
+Segment F  C B  8 7  4 3  0
+ 0		     000x xxxx xxxx $x000 - $x1FF
+ 2		     001			$x200 - $x3FF
+ 4		     010			$x400 - $x5FF
+ 6		     011			$x600 - $x7FF
+ 8		     100			$x800 - $x9FF
+ A		     101            $xA00 - $xBFF
+ C		     110			$xC00 - $xDFF
+ E		     111			$xE00 - $xFFF

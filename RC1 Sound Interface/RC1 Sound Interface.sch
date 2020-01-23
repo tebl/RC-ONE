@@ -43,7 +43,7 @@ encoding utf-8
 Sheet 1 1
 Title ""
 Date ""
-Rev ""
+Rev "B"
 Comp ""
 Comment1 ""
 Comment2 ""
@@ -187,11 +187,11 @@ F 3 "" H 1250 3075 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 Text Label 2550 2400 0    60   ~ 0
-8K1
+4K3
 Text Label 2550 2500 0    60   ~ 0
-8K2
+4K5
 Text Label 2550 2600 0    60   ~ 0
-8K3
+4K7
 Entry Wire Line
 	825  2200 925  2300
 Entry Wire Line
@@ -199,17 +199,17 @@ Entry Wire Line
 Entry Wire Line
 	825  2400 925  2500
 Text Notes 2800 2400 0    60   ~ 0
-$2000
+$3000
 Text Notes 2800 2500 0    60   ~ 0
-$4000
+$5000
 Text Notes 2800 2600 0    60   ~ 0
-$6000
+$7000
 Text Notes 2800 2700 0    60   ~ 0
-$8000
+$9000
 Text Notes 2800 2800 0    60   ~ 0
-$A000
+$B000
 Text Notes 2800 2900 0    60   ~ 0
-$C000
+$D000
 $Comp
 L C C6
 U 1 1 5D7FC460
@@ -282,11 +282,11 @@ Entry Wire Line
 Entry Wire Line
 	14250 7075 14350 7175
 Text Label 2550 2700 0    60   ~ 0
-8K4
+4K9
 Text Label 2550 2800 0    60   ~ 0
-8K5
+4KB
 Text Label 2550 2900 0    60   ~ 0
-8K6
+4KD
 NoConn ~ 14750 5675
 NoConn ~ 14750 5375
 NoConn ~ 14750 6975
@@ -652,7 +652,7 @@ Text Notes 8125 2300 0    60   ~ 0
 0000 
 Text Notes 8125 2000 0    60   ~ 0
 0
-Text Notes 8675 2600 0    60   ~ 0
+Text Notes 8650 2650 0    60   ~ 0
 LLL L H H H H H H H\nLLH H L H H H H H H\nLHL H H L H H H H H\nLHH H H H L H H H H\nHLL H H H H L H H H\nHLH H H H H H L H H\nHHL H H H H H H L H\nHHH H H H H H H H L
 Text Notes 7550 2425 0    60   ~ 0
 0XXX
