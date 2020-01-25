@@ -1,4 +1,4 @@
-update=24/01/2020 02:50:08
+update=25/01/2020 16:04:08
 version=1
 last_client=kicad
 [pcbnew]
@@ -66,6 +66,8 @@ LibName36=trs_3.5mm
 LibName37=r6551
 LibName38=C:/Program Files/KiCad/share/kicad/library/Oscillators
 LibName39=ftdi
+[general]
+version=1
 [schematic_editor]
 version=1
 PageLayoutDescrFile=
@@ -76,5 +78,3 @@ NetFmtName=Pcbnew
 SpiceForceRefPrefix=0
 SpiceUseNetNumbers=0
 LabSize=60
-[general]
-version=1
