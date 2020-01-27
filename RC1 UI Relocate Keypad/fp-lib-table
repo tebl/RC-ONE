@@ -1,0 +1,5 @@
+(fp_lib_table
+  (lib (name Mounting)(type KiCad)(uri $KIPRJMOD/../common/modules/mounting.pretty)(options "")(descr ""))
+  (lib (name TRS)(type KiCad)(uri $KIPRJMOD/../common/modules/TRS.pretty)(options "")(descr ""))
+  (lib (name Keypad)(type KiCad)(uri $KIPRJMOD/modules/keypad.pretty)(options "")(descr ""))
+)
