@@ -188,11 +188,11 @@ F 3 "" H 1425 3250 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 Text Label 2725 2575 0    60   ~ 0
-4K3
+4K2
 Text Label 2725 2675 0    60   ~ 0
-4K5
+4K4
 Text Label 2725 2775 0    60   ~ 0
-4K7
+4K6
 Entry Wire Line
 	1000 2375 1100 2475
 Entry Wire Line
@@ -267,11 +267,11 @@ Entry Wire Line
 Entry Wire Line
 	14250 7075 14350 7175
 Text Label 2725 2875 0    60   ~ 0
-4K9
+4K8
 Text Label 2725 2975 0    60   ~ 0
-4KB
+4KA
 Text Label 2725 3075 0    60   ~ 0
-4KD
+4KC
 NoConn ~ 14750 5675
 NoConn ~ 14750 5375
 NoConn ~ 2700 2475
@@ -529,9 +529,9 @@ Entry Wire Line
 	4225 5875 4125 5975
 Entry Wire Line
 	4225 5975 4125 6075
-Text Label 4100 5975 2    60   ~ 0
-~NMI
 Text Label 4100 6075 2    60   ~ 0
+~NMI
+Text Label 4100 5975 2    60   ~ 0
 ~IRQ
 $Comp
 L D_Small D1
@@ -648,7 +648,7 @@ F 1 "33pF" V 4425 6050 50  0000 L CNN
 F 2 "Capacitors_THT:C_Disc_D4.7mm_W2.5mm_P5.00mm" H 4375 6275 50  0001 C CNN
 F 3 "" H 4375 6275 50  0001 C CNN
 	1    4375 6275
-	0    1    1    0   
+	0    -1   -1   0   
 $EndComp
 $Comp
 L C_Small C10
@@ -659,7 +659,7 @@ F 1 "33pF" V 4425 6450 50  0000 L CNN
 F 2 "Capacitors_THT:C_Disc_D4.7mm_W2.5mm_P5.00mm" H 4375 6675 50  0001 C CNN
 F 3 "" H 4375 6675 50  0001 C CNN
 	1    4375 6675
-	0    1    1    0   
+	0    -1   -1   0   
 $EndComp
 $Comp
 L C C5
@@ -1013,7 +1013,7 @@ U 1 1 5E33D024
 P 2225 7975
 F 0 "L1" H 2300 8025 50  0000 L CNN
 F 1 "BEAD" H 2300 7925 50  0000 L CNN
-F 2 "Inductors_THT:L_Axial_L6.6mm_D2.7mm_P10.16mm_Horizontal_Vishay_IM-2" V 2155 7975 50  0001 C CNN
+F 2 "Inductors_THT:L_Axial_L7.0mm_D3.3mm_P10.16mm_Horizontal_Fastron_MICC" V 2155 7975 50  0001 C CNN
 F 3 "" H 2225 7975 50  0001 C CNN
 	1    2225 7975
 	1    0    0    -1  
@@ -1611,4 +1611,50 @@ F 3 "" H 3200 9125 50  0001 C CNN
 	1    3200 9125
 	1    0    0    -1  
 $EndComp
+Text Label 6600 4275 2    60   ~ 0
+VA0
+Text Label 6600 4375 2    60   ~ 0
+VA1
+Text Label 6600 4475 2    60   ~ 0
+VA2
+Text Label 6600 4575 2    60   ~ 0
+VA3
+Text Label 6600 4675 2    60   ~ 0
+VA4
+Text Label 6600 4775 2    60   ~ 0
+VA5
+Text Label 6600 4875 2    60   ~ 0
+VA6
+Text Label 6600 4975 2    60   ~ 0
+VA7
+Text Label 10050 4375 2    60   ~ 0
+ROW0
+Text Label 10050 4475 2    60   ~ 0
+ROW1
+Text Label 10050 4575 2    60   ~ 0
+ROW2
+Text Label 10050 4675 2    60   ~ 0
+ROW3
+Text Label 10050 4775 2    60   ~ 0
+ROW4
+Text Label 10050 4875 2    60   ~ 0
+ROW5
+Text Label 10050 4975 2    60   ~ 0
+ROW6
+Text Label 10050 5075 2    60   ~ 0
+COL0
+Text Label 10050 5175 2    60   ~ 0
+COL1
+Text Label 10050 5275 2    60   ~ 0
+COL2
+Text Label 10050 5375 2    60   ~ 0
+COL3
+Text Label 10050 5475 2    60   ~ 0
+COL4
+Text Label 10050 5575 2    60   ~ 0
+COL5
+Text Label 10050 5675 2    60   ~ 0
+COL6
+Text Notes 11825 10250 0    60   ~ 0
+Video Display Controller based on the TMS9918 chip from Texas Instruments, schematic\nbased on an earlier 6809-based build called Ultim809 with changes for 6502 CPU and\naddress decoding scheme for RC-ONE.
 $EndSCHEMATC

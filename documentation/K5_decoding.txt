@@ -50,7 +50,7 @@ Segment F  C B  8 7  4 3  0
  2		     001			$x200 - $x3FF
  4		     011			$x400 - $x5FF
  6		     011			$x600 - $x7FF
- 8		     101			$x800 - $x9FF
+ 8		     101			$xA00 - $x9FF
  A		     101            $xA00 - $xBFF
  C		     111			$xC00 - $xDFF
- E		     111			$xE00 - $xFFF
+ E		     111			$xC00 - $xFFF
