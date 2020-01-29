@@ -12,7 +12,7 @@ U7 dec.    c ba			c=A12, b=A11, a=A10
 U8 dec.        1c ba		1, c=A8, b=A7, a=A6
 
 
-I/O decoding scheme #1:
+I/O decoding scheme #1 (A12=HI):
 Base    F  C B  8 7  4 3  0
 		0001 xxxx xxxx xxxx (not usable)
 3		0011 				$3000 - $3FFF
@@ -31,4 +31,26 @@ Segment F  C B  8 7  4 3  0
  8		     100			$x800 - $x9FF
  A		     101            $xA00 - $xBFF
  C		     110			$xC00 - $xDFF
+ E		     111			$xE00 - $xFFF
+
+
+I/O decoding scheme #2 (PHI2=HI, A12=LO):
+Base    F  C B  8 7  4 3  0
+		0000 xxxx xxxx xxxx (not usable)
+3		0010 				$2000 - $2FFF
+5		0100 				$4000 - $4FFF
+7		0110 				$6000 - $6FFF
+9		1000 				$8000 - $8FFF
+B		1010 				$A000 - $AFFF
+D		1100 				$C000 - $CFFF
+		1110 				(not usable)
+
+Segment F  C B  8 7  4 3  0
+ 0		     001x xxxx xxxx $x000 - $x1FF
+ 2		     001			$x200 - $x3FF
+ 4		     011			$x400 - $x5FF
+ 6		     011			$x600 - $x7FF
+ 8		     101			$x800 - $x9FF
+ A		     101            $xA00 - $xBFF
+ C		     111			$xC00 - $xDFF
  E		     111			$xE00 - $xFFF
