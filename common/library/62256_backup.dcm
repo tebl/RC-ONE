@@ -1,0 +1,8 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP 62256_backup
+D SRAM 32K x  8 bits, DIP28 600mil, 70ns
+K SRAM 32KB High Speed CMOS Static RAM
+$ENDCMP
+#
+#End Doc Library

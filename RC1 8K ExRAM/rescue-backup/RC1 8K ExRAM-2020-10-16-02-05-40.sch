@@ -1,12 +1,46 @@
-EESchema Schematic File Version 4
-EELAYER 30 0
+EESchema Schematic File Version 2
+LIBS:power
+LIBS:device
+LIBS:switches
+LIBS:relays
+LIBS:motors
+LIBS:transistors
+LIBS:conn
+LIBS:linear
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:valves
+LIBS:modules
+LIBS:RC1 8K ExRAM-cache
+EELAYER 25 0
 EELAYER END
 $Descr A3 16535 11693
 encoding utf-8
 Sheet 1 1
-Title "RC-ONE 8K ExRAM"
+Title ""
 Date ""
-Rev "B"
+Rev ""
 Comp ""
 Comment1 ""
 Comment2 ""
@@ -14,7 +48,7 @@ Comment3 ""
 Comment4 ""
 $EndDescr
 $Comp
-L RC1-8K-ExRAM-rescue:RC1_Backplane J1
+L RC1_Backplane J1
 U 1 1 5D7FC445
 P 14950 7375
 F 0 "J1" H 14950 9375 50  0000 C CNN
@@ -25,7 +59,7 @@ F 3 "" H 14950 7375 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:GND #PWR01
+L GND #PWR01
 U 1 1 5D7FC446
 P 14100 7150
 F 0 "#PWR01" H 14100 6900 50  0001 C CNN
@@ -36,7 +70,7 @@ F 3 "" H 14100 7150 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:VCC #PWR02
+L VCC #PWR02
 U 1 1 5D7FC447
 P 14150 6975
 F 0 "#PWR02" H 14150 6825 50  0001 C CNN
@@ -73,7 +107,7 @@ A15
 Text GLabel 14675 9075 0    60   Output ~ 0
 K7_EXT
 $Comp
-L Device:C C1
+L C C1
 U 1 1 5D7FC44B
 P 9650 10575
 F 0 "C1" H 9675 10675 50  0000 L CNN
@@ -84,7 +118,7 @@ F 3 "" H 9650 10575 50  0001 C CNN
 	-1   0    0    -1  
 $EndComp
 $Comp
-L power:GND #PWR03
+L GND #PWR03
 U 1 1 5D7FC44C
 P 11575 10875
 F 0 "#PWR03" H 11575 10625 50  0001 C CNN
@@ -95,7 +129,7 @@ F 3 "" H 11575 10875 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:VCC #PWR04
+L VCC #PWR04
 U 1 1 5D7FC44D
 P 9650 10275
 F 0 "#PWR04" H 9650 10125 50  0001 C CNN
@@ -106,7 +140,7 @@ F 3 "" H 9650 10275 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Device:C C2
+L C C2
 U 1 1 5D7FC44E
 P 9925 10575
 F 0 "C2" H 9950 10675 50  0000 L CNN
@@ -117,7 +151,7 @@ F 3 "" H 9925 10575 50  0001 C CNN
 	-1   0    0    -1  
 $EndComp
 $Comp
-L Device:C C3
+L C C3
 U 1 1 5D7FC44F
 P 10200 10575
 F 0 "C3" H 10225 10675 50  0000 L CNN
@@ -127,13 +161,15 @@ F 3 "" H 10200 10575 50  0001 C CNN
 	1    10200 10575
 	-1   0    0    -1  
 $EndComp
+Text Notes 12175 10925 0    60   ~ 0
+RC-ONE 8K ExRAM
 NoConn ~ 14750 9275
 NoConn ~ 14750 7475
 NoConn ~ 14750 7675
 NoConn ~ 14750 7875
 NoConn ~ 14750 7975
 $Comp
-L RC1-8K-ExRAM-rescue:74LS138 U1
+L 74LS138 U1
 U 1 1 5D7FC450
 P 1925 2250
 F 0 "U1" H 1925 2250 50  0000 C CNN
@@ -150,7 +186,7 @@ A13
 Text Label 950  2000 0    60   ~ 0
 A14
 $Comp
-L power:GND #PWR05
+L GND #PWR05
 U 1 1 5D7FC452
 P 1250 2675
 F 0 "#PWR05" H 1250 2425 50  0001 C CNN
@@ -189,7 +225,7 @@ $A000
 Text Notes 2800 2500 0    60   ~ 0
 $C000
 $Comp
-L Device:C C4
+L C C4
 U 1 1 5D7FC460
 P 10475 10575
 F 0 "C4" H 10500 10675 50  0000 L CNN
@@ -292,7 +328,7 @@ RAM SELECT
 Text Notes 2275 2850 0    60   ~ 0
 ROM SELECT
 $Comp
-L conn:Conn_02x09_Odd_Even J2
+L Conn_02x09_Odd_Even J2
 U 1 1 5D80326C
 P 3425 2400
 F 0 "J2" H 3475 2900 50  0000 C CNN
@@ -307,7 +343,7 @@ PHI2
 Entry Wire Line
 	825  2300 925  2400
 $Comp
-L RC1-8K-ExRAM-rescue:74LS00 U2
+L 74LS00 U2
 U 1 1 5D80500C
 P 4550 2000
 F 0 "U2" H 4550 2050 50  0000 C CNN
@@ -318,7 +354,7 @@ F 3 "" H 4550 2000 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L RC1-8K-ExRAM-rescue:74LS00 U2
+L 74LS00 U2
 U 3 1 5D805063
 P 5900 1825
 F 0 "U2" H 5900 1875 50  0000 C CNN
@@ -329,7 +365,7 @@ F 3 "" H 5900 1825 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L RC1-8K-ExRAM-rescue:74LS00 U2
+L 74LS00 U2
 U 2 1 5D8050B2
 P 5900 1325
 F 0 "U2" H 5900 1375 50  0000 C CNN
@@ -340,7 +376,7 @@ F 3 "" H 5900 1325 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L RC1-8K-ExRAM-rescue:74LS00 U2
+L 74LS00 U2
 U 4 1 5D80510C
 P 8950 10125
 F 0 "U2" H 8950 10175 50  0000 C CNN
@@ -366,12 +402,14 @@ Wire Wire Line
 	14350 5875 14750 5875
 Wire Wire Line
 	14350 5975 14750 5975
+Wire Bus Line
+	14250 600  14250 8675
 Wire Wire Line
 	14675 9075 14750 9075
 Wire Wire Line
 	9650 10800 9650 10725
 Wire Wire Line
-	9650 10275 9650 10350
+	9650 10275 9650 10425
 Wire Wire Line
 	925  2100 1325 2100
 Wire Wire Line
@@ -383,7 +421,7 @@ Wire Wire Line
 Wire Wire Line
 	1325 2500 1250 2500
 Wire Wire Line
-	1250 2500 1250 2600
+	1250 2500 1250 2675
 Wire Wire Line
 	1250 2600 1325 2600
 Connection ~ 1250 2600
@@ -396,9 +434,11 @@ Wire Wire Line
 Wire Wire Line
 	2525 2600 3225 2600
 Wire Bus Line
+	825  600  825  2300
+Wire Bus Line
 	825  600  14250 600 
 Wire Wire Line
-	9650 10800 9925 10800
+	9650 10800 11575 10800
 Wire Wire Line
 	14350 6375 14750 6375
 Wire Wire Line
@@ -458,9 +498,9 @@ Wire Wire Line
 Wire Wire Line
 	3800 2800 3725 2800
 Wire Wire Line
-	3800 2000 3800 2100
+	3800 2000 3800 2800
 Wire Wire Line
-	3725 2000 3800 2000
+	3725 2000 3875 2000
 Wire Wire Line
 	3725 2100 3800 2100
 Connection ~ 3800 2100
@@ -484,7 +524,7 @@ Wire Wire Line
 Connection ~ 3800 2700
 Connection ~ 3800 2000
 Wire Wire Line
-	3875 1900 3875 2000
+	3875 1900 3875 2100
 Wire Wire Line
 	3875 1900 3950 1900
 Wire Wire Line
@@ -499,10 +539,10 @@ Wire Wire Line
 Wire Wire Line
 	5225 1925 5300 1925
 $Comp
-L 62256_backup:62256_backup U5
+L HM62256BLP-7 U5
 U 1 1 5D8091A3
 P 11700 3425
-F 0 "U5" H 11375 4325 50  0000 C CNN
+F 0 "U5" H 11700 4150 50  0000 C CNN
 F 1 "HM62256BLP-7" V 11700 3425 50  0000 C CNN
 F 2 "Housings_DIP:DIP-28_W15.24mm_Socket" H 11700 3425 50  0001 C CIN
 F 3 "" H 11700 3425 50  0001 C CNN
@@ -596,7 +636,7 @@ Entry Wire Line
 Text Notes 4850 1250 2    60   ~ 0
 HI allows 6502\naccess to RAM
 $Comp
-L RC1-8K-ExRAM-rescue:74LS245 U8
+L 74LS245 U8
 U 1 1 5D80D01B
 P 11700 7675
 F 0 "U8" H 11700 7800 50  0000 C BNN
@@ -700,8 +740,10 @@ Wire Bus Line
 	10525 7975 10525 8325
 Wire Bus Line
 	10525 8325 12975 8325
+Wire Bus Line
+	10525 2400 10525 7775
 $Comp
-L RC1-8K-ExRAM-rescue:74LS244 U7
+L 74LS244 U7
 U 1 1 5D810BD9
 P 11700 6450
 F 0 "U7" H 11700 6600 50  0000 C CNN
@@ -712,12 +754,14 @@ F 3 "" H 11700 6450 50  0001 C CNN
 	-1   0    0    -1  
 $EndComp
 Wire Wire Line
-	12400 6950 12475 6950
+	12400 6950 12550 6950
 Wire Wire Line
 	12400 6850 12475 6850
 Wire Wire Line
 	12475 6850 12475 6950
 Connection ~ 12475 6950
+Wire Bus Line
+	12975 8325 12975 4650
 Wire Wire Line
 	12400 7275 12875 7275
 Wire Wire Line
@@ -799,7 +843,7 @@ Entry Wire Line
 Entry Wire Line
 	10525 6250 10625 6350
 $Comp
-L RC1-8K-ExRAM-rescue:74LS244 U6
+L 74LS244 U6
 U 1 1 5D813AAA
 P 11700 5225
 F 0 "U6" H 11700 5375 50  0000 C CNN
@@ -810,7 +854,7 @@ F 3 "" H 11700 5225 50  0001 C CNN
 	-1   0    0    -1  
 $EndComp
 Wire Wire Line
-	12400 5725 12475 5725
+	12400 5725 12550 5725
 Wire Wire Line
 	12400 5625 12475 5625
 Wire Wire Line
@@ -881,7 +925,7 @@ Entry Wire Line
 Entry Wire Line
 	10525 5325 10625 5425
 $Comp
-L power:GND #PWR06
+L GND #PWR06
 U 1 1 5D8144E9
 P 12475 6650
 F 0 "#PWR06" H 12475 6400 50  0001 C CNN
@@ -933,12 +977,12 @@ Text GLabel 12550 6950 2    60   Input ~ 0
 Wire Wire Line
 	12200 3525 12275 3525
 Wire Wire Line
-	12275 3525 12275 3775
+	12275 3525 12275 3850
 Wire Wire Line
 	12200 3775 12275 3775
 Connection ~ 12275 3775
 $Comp
-L power:GND #PWR07
+L GND #PWR07
 U 1 1 5D8183EE
 P 12275 3850
 F 0 "#PWR07" H 12275 3600 50  0001 C CNN
@@ -948,6 +992,10 @@ F 3 "" H 12275 3850 50  0001 C CNN
 	1    12275 3850
 	1    0    0    -1  
 $EndComp
+Wire Bus Line
+	10525 2475 12975 2475
+Wire Bus Line
+	12975 2475 12975 3725
 Wire Wire Line
 	12200 3375 12875 3375
 Wire Wire Line
@@ -993,7 +1041,7 @@ Wire Wire Line
 Text Notes 7175 1725 2    60   ~ 0
 RC-ONE is accessing\ndata from memory.
 $Comp
-L RC1-8K-ExRAM-rescue:74HC595 U3
+L 74HC595 U3
 U 1 1 5D81EA35
 P 7500 6975
 F 0 "U3" H 7500 7575 50  0000 C CNN
@@ -1004,7 +1052,7 @@ F 3 "" H 7500 6975 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L RC1-8K-ExRAM-rescue:74HC595 U4
+L 74HC595 U4
 U 1 1 5D81ED7E
 P 7500 8275
 F 0 "U4" H 7500 8875 50  0000 C CNN
@@ -1080,7 +1128,7 @@ BUSY
 Wire Wire Line
 	5225 1225 5300 1225
 Wire Wire Line
-	5775 7025 6050 7025
+	5775 7025 6800 7025
 Wire Wire Line
 	6050 7025 6050 8325
 Wire Wire Line
@@ -1088,9 +1136,9 @@ Wire Wire Line
 Wire Wire Line
 	5950 6825 5950 8125
 Wire Wire Line
-	5750 8125 5950 8125
+	5750 8125 6800 8125
 Wire Wire Line
-	5775 6725 5850 6725
+	5775 6725 6800 6725
 Wire Wire Line
 	5850 6725 5850 8025
 Entry Wire Line
@@ -1130,7 +1178,7 @@ SHIFT_CLK
 Connection ~ 5850 6725
 Connection ~ 6050 7025
 $Comp
-L power:VCC #PWR08
+L VCC #PWR08
 U 1 1 5D824758
 P 5750 8025
 F 0 "#PWR08" H 5750 7875 50  0001 C CNN
@@ -1144,7 +1192,7 @@ Wire Wire Line
 	5750 8125 5750 8025
 Connection ~ 5950 8125
 $Comp
-L modules:Arduino_Nano_v3.x A1
+L Arduino_Nano_v3.x A1
 U 1 1 5D828922
 P 7375 4225
 F 0 "A1" H 7175 5250 50  0000 R CNN
@@ -1225,10 +1273,10 @@ Wire Wire Line
 Wire Wire Line
 	7275 5300 7375 5300
 Wire Wire Line
-	7375 5225 7375 5300
+	7375 5225 7375 5375
 Connection ~ 7375 5300
 $Comp
-L power:GND #PWR09
+L GND #PWR09
 U 1 1 5D82C835
 P 7375 5375
 F 0 "#PWR09" H 7375 5125 50  0001 C CNN
@@ -1245,7 +1293,7 @@ NoConn ~ 6875 4825
 NoConn ~ 7475 3225
 NoConn ~ 7275 3225
 $Comp
-L Device:Jumper_NO_Small JP1
+L Jumper_NO_Small JP1
 U 1 1 5D82D2DF
 P 7000 2800
 F 0 "JP1" H 7000 2880 50  0000 C CNN
@@ -1256,9 +1304,9 @@ F 3 "" H 7000 2800 50  0001 C CNN
 	-1   0    0    1   
 $EndComp
 Wire Wire Line
-	7175 2800 7175 3075
+	7175 2800 7175 3225
 $Comp
-L power:VCC #PWR010
+L VCC #PWR010
 U 1 1 5D82D75B
 P 6750 2725
 F 0 "#PWR010" H 6750 2575 50  0001 C CNN
@@ -1269,7 +1317,7 @@ F 3 "" H 6750 2725 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Device:R R1
+L R R1
 U 1 1 5D82E4A3
 P 2825 4550
 F 0 "R1" V 2905 4550 50  0000 C CNN
@@ -1280,7 +1328,7 @@ F 3 "" H 2825 4550 50  0001 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L Device:LED_Small D1
+L LED_Small D1
 U 1 1 5D82E674
 P 3150 4550
 F 0 "D1" H 3100 4675 50  0000 L CNN
@@ -1293,7 +1341,7 @@ $EndComp
 Wire Wire Line
 	2975 4550 3050 4550
 $Comp
-L Device:LED_Small D2
+L LED_Small D2
 U 1 1 5D82EB2C
 P 3150 4825
 F 0 "D2" H 3100 4950 50  0000 L CNN
@@ -1314,12 +1362,12 @@ Wire Wire Line
 Wire Wire Line
 	3250 4550 3325 4550
 Wire Wire Line
-	3325 4550 3325 4825
+	3325 4550 3325 5175
 Wire Wire Line
 	3325 4825 3250 4825
 Connection ~ 3325 4825
 $Comp
-L power:GND #PWR011
+L GND #PWR011
 U 1 1 5D82F716
 P 3325 5175
 F 0 "#PWR011" H 3325 4925 50  0001 C CNN
@@ -1371,10 +1419,12 @@ Wire Wire Line
 	5850 8025 6800 8025
 Wire Wire Line
 	6050 8325 6800 8325
+Wire Bus Line
+	8675 2400 8675 8325
 Text GLabel 2600 5100 0    60   Input ~ 0
 SHIFT_CLK
 $Comp
-L Device:LED_Small D3
+L LED_Small D3
 U 1 1 5D83AAED
 P 3150 5100
 F 0 "D3" H 3100 5225 50  0000 L CNN
@@ -1392,7 +1442,7 @@ Connection ~ 3325 5100
 Wire Wire Line
 	2600 5100 2675 5100
 $Comp
-L Device:R R2
+L R R2
 U 1 1 5D83BA21
 P 2825 4825
 F 0 "R2" V 2905 4825 50  0000 C CNN
@@ -1403,7 +1453,7 @@ F 3 "" H 2825 4825 50  0001 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L Device:R R3
+L R R3
 U 1 1 5D83BAA5
 P 2825 5100
 F 0 "R3" V 2905 5100 50  0000 C CNN
@@ -1418,7 +1468,18 @@ Wire Bus Line
 Wire Bus Line
 	12975 4650 14250 4650
 $Comp
-L Device:C C6
+L C C5
+U 1 1 5D8412CC
+P 10750 10575
+F 0 "C5" H 10775 10675 50  0000 L CNN
+F 1 "100nF" H 10775 10475 50  0000 L CNN
+F 2 "Capacitors_THT:C_Disc_D4.7mm_W2.5mm_P5.00mm" H 10788 10425 50  0001 C CNN
+F 3 "" H 10750 10575 50  0001 C CNN
+	1    10750 10575
+	-1   0    0    -1  
+$EndComp
+$Comp
+L C C6
 U 1 1 5D841332
 P 11025 10575
 F 0 "C6" H 11050 10675 50  0000 L CNN
@@ -1429,7 +1490,7 @@ F 3 "" H 11025 10575 50  0001 C CNN
 	-1   0    0    -1  
 $EndComp
 $Comp
-L Device:C C7
+L C C7
 U 1 1 5D8413A3
 P 11300 10575
 F 0 "C7" H 11325 10675 50  0000 L CNN
@@ -1440,7 +1501,7 @@ F 3 "" H 11300 10575 50  0001 C CNN
 	-1   0    0    -1  
 $EndComp
 $Comp
-L Device:C C8
+L C C8
 U 1 1 5D841411
 P 11575 10575
 F 0 "C8" H 11600 10675 50  0000 L CNN
@@ -1453,13 +1514,13 @@ $EndComp
 Wire Wire Line
 	9925 10425 9925 10350
 Wire Wire Line
-	9650 10350 9925 10350
+	9650 10350 11575 10350
 Connection ~ 9650 10350
 Wire Wire Line
 	11575 10350 11575 10425
 Connection ~ 9925 10350
 Wire Wire Line
-	11575 10725 11575 10800
+	11575 10725 11575 10875
 Connection ~ 11575 10800
 Wire Wire Line
 	11300 10725 11300 10800
@@ -1467,6 +1528,9 @@ Connection ~ 11300 10800
 Wire Wire Line
 	11025 10725 11025 10800
 Connection ~ 11025 10800
+Wire Wire Line
+	10750 10725 10750 10800
+Connection ~ 10750 10800
 Wire Wire Line
 	10475 10725 10475 10800
 Connection ~ 10475 10800
@@ -1483,6 +1547,9 @@ Wire Wire Line
 	10475 10425 10475 10350
 Connection ~ 10475 10350
 Wire Wire Line
+	10750 10425 10750 10350
+Connection ~ 10750 10350
+Wire Wire Line
 	11025 10425 11025 10350
 Connection ~ 11025 10350
 Wire Wire Line
@@ -1491,14 +1558,14 @@ Connection ~ 11300 10350
 Wire Wire Line
 	8850 10725 8850 10800
 Wire Wire Line
-	8850 10800 8950 10800
+	8850 10800 9050 10800
 Wire Wire Line
 	9050 10800 9050 10725
 Wire Wire Line
 	8950 10800 8950 10875
 Connection ~ 8950 10800
 $Comp
-L power:GND #PWR012
+L GND #PWR012
 U 1 1 5D84379D
 P 8950 10875
 F 0 "#PWR012" H 8950 10625 50  0001 C CNN
@@ -1528,21 +1595,21 @@ A8
 Text Label 14725 6075 2    60   ~ 0
 A9
 Wire Wire Line
-	5225 1225 5225 1325
+	5225 1225 5225 1425
 Wire Wire Line
 	5225 1425 5300 1425
 Wire Wire Line
-	4850 1325 5075 1325
+	4850 1325 5225 1325
 Connection ~ 5225 1325
 Wire Wire Line
 	5150 1725 5150 1325
 Connection ~ 5150 1325
 $Comp
-L Device:R R4
+L R R4
 U 1 1 5D8475FE
 P 5075 1100
 F 0 "R4" V 5155 1100 50  0000 C CNN
-F 1 "3k3" V 5075 1100 50  0000 C CNN
+F 1 "10k" V 5075 1100 50  0000 C CNN
 F 2 "Resistors_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" V 5005 1100 50  0001 C CNN
 F 3 "" H 5075 1100 50  0001 C CNN
 	1    5075 1100
@@ -1552,7 +1619,7 @@ Wire Wire Line
 	5075 1250 5075 1325
 Connection ~ 5075 1325
 $Comp
-L power:VCC #PWR013
+L VCC #PWR013
 U 1 1 5D847B4C
 P 5075 875
 F 0 "#PWR013" H 5075 725 50  0001 C CNN
@@ -1567,7 +1634,7 @@ Wire Wire Line
 Text Notes 11825 10350 0    60   ~ 0
 Based on an idea for an EEPROM programmer by Ben Eater, this adapts the idea to \nloading data into static RAM via an Arduino Nano. The Nano can block the 6502 from\naccessing the memory while data is being loaded, ReadOnly jumper can be used to keep\n6502 from being able to change the data.
 $Comp
-L Device:D_Small D4
+L D_Small D4
 U 1 1 5D84C314
 P 7000 3075
 F 0 "D4" H 6950 3155 50  0000 L CNN
@@ -1587,12 +1654,12 @@ Wire Wire Line
 Wire Wire Line
 	6825 3075 6825 2800
 Wire Wire Line
-	6750 2800 6825 2800
+	6750 2800 6900 2800
 Wire Wire Line
 	6750 2800 6750 2725
 Connection ~ 6825 2800
 $Comp
-L Device:Jumper_NC_Dual JP2
+L Jumper_NC_Dual JP2
 U 1 1 5D850265
 P 9925 6375
 F 0 "JP2" H 9975 6275 50  0000 L CNN
@@ -1607,7 +1674,7 @@ EX_R/~W
 Wire Wire Line
 	9925 6150 10425 6150
 $Comp
-L power:VCC #PWR014
+L VCC #PWR014
 U 1 1 5D851CA4
 P 12675 6650
 F 0 "#PWR014" H 12675 6500 50  0001 C CNN
@@ -1662,29 +1729,29 @@ Wire Wire Line
 Wire Wire Line
 	6625 5850 8575 5850
 $Comp
-L Device:R R6
+L R R6
 U 1 1 5D86140F
 P 6625 4000
 F 0 "R6" V 6705 4000 50  0000 C CNN
-F 1 "3k3" V 6625 4000 50  0000 C CNN
+F 1 "10k" V 6625 4000 50  0000 C CNN
 F 2 "Resistors_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" V 6555 4000 50  0001 C CNN
 F 3 "" H 6625 4000 50  0001 C CNN
 	1    6625 4000
 	-1   0    0    1   
 $EndComp
 $Comp
-L Device:R R5
+L R R5
 U 1 1 5D8616F5
 P 6425 4000
 F 0 "R5" V 6505 4000 50  0000 C CNN
-F 1 "3k3" V 6425 4000 50  0000 C CNN
+F 1 "10k" V 6425 4000 50  0000 C CNN
 F 2 "Resistors_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" V 6355 4000 50  0001 C CNN
 F 3 "" H 6425 4000 50  0001 C CNN
 	1    6425 4000
 	-1   0    0    1   
 $EndComp
 $Comp
-L power:VCC #PWR015
+L VCC #PWR015
 U 1 1 5D861871
 P 6425 3700
 F 0 "#PWR015" H 6425 3550 50  0001 C CNN
@@ -1695,28 +1762,28 @@ F 3 "" H 6425 3700 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	6425 3700 6425 3775
+	6425 3700 6425 3850
 Wire Wire Line
 	6625 3775 6625 3850
 Wire Wire Line
-	6225 3775 6425 3775
+	6225 3775 6625 3775
 Connection ~ 6425 3775
 Wire Wire Line
 	6875 4225 6625 4225
 Wire Wire Line
-	6625 4150 6625 4225
+	6625 4150 6625 5850
 Wire Wire Line
 	6875 4325 6425 4325
 Wire Wire Line
-	6425 4150 6425 4325
+	6425 4150 6425 5950
 Connection ~ 6625 4225
 Connection ~ 6425 4325
 $Comp
-L Device:R R7
+L R R7
 U 1 1 5D8647E9
 P 6225 4000
 F 0 "R7" V 6305 4000 50  0000 C CNN
-F 1 "3k3" V 6225 4000 50  0000 C CNN
+F 1 "10k" V 6225 4000 50  0000 C CNN
 F 2 "Resistors_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" V 6155 4000 50  0001 C CNN
 F 3 "" H 6225 4000 50  0001 C CNN
 	1    6225 4000
@@ -1725,7 +1792,7 @@ $EndComp
 Wire Wire Line
 	6875 4425 6225 4425
 Wire Wire Line
-	6225 4150 6225 4425
+	6225 4150 6225 6050
 Wire Wire Line
 	6225 3850 6225 3775
 Wire Wire Line
@@ -1759,226 +1826,4 @@ Text GLabel 6800 8425 0    60   Input ~ 0
 CONTROL
 Text Notes 6875 1250 2    60   ~ 0
 ExRAM is\ncontrolling\nmemory
-Wire Wire Line
-	1250 2600 1250 2675
-Wire Wire Line
-	3800 2100 3800 2200
-Wire Wire Line
-	3800 2200 3800 2300
-Wire Wire Line
-	3800 2300 3800 2400
-Wire Wire Line
-	3800 2400 3800 2500
-Wire Wire Line
-	3800 2500 3800 2600
-Wire Wire Line
-	3800 2600 3800 2700
-Wire Wire Line
-	3800 2700 3800 2800
-Wire Wire Line
-	3800 2000 3875 2000
-Wire Wire Line
-	3875 2000 3875 2100
-Wire Wire Line
-	12475 6950 12550 6950
-Wire Wire Line
-	12475 5725 12550 5725
-Wire Wire Line
-	12275 3775 12275 3850
-Wire Wire Line
-	5850 6725 6800 6725
-Wire Wire Line
-	6050 7025 6800 7025
-Wire Wire Line
-	5950 8125 6800 8125
-Wire Wire Line
-	7375 5300 7375 5375
-Wire Wire Line
-	3325 4825 3325 5100
-Wire Wire Line
-	3325 5100 3325 5175
-Wire Wire Line
-	9650 10350 9650 10425
-Wire Wire Line
-	9925 10350 10200 10350
-Wire Wire Line
-	11575 10800 11575 10875
-Wire Wire Line
-	11300 10800 11575 10800
-Wire Wire Line
-	11025 10800 11300 10800
-Wire Wire Line
-	10200 10800 10475 10800
-Wire Wire Line
-	9925 10800 10200 10800
-Wire Wire Line
-	10200 10350 10475 10350
-Wire Wire Line
-	11025 10350 11300 10350
-Wire Wire Line
-	11300 10350 11575 10350
-Wire Wire Line
-	8950 10800 9050 10800
-Wire Wire Line
-	5225 1325 5225 1425
-Wire Wire Line
-	5150 1325 5225 1325
-Wire Wire Line
-	5075 1325 5150 1325
-Wire Wire Line
-	7175 3075 7175 3225
-Wire Wire Line
-	6825 2800 6900 2800
-Wire Wire Line
-	6425 3775 6425 3850
-Wire Wire Line
-	6425 3775 6625 3775
-Wire Wire Line
-	6625 4225 6625 5850
-Wire Wire Line
-	6425 4325 6425 5950
-Wire Wire Line
-	6225 4425 6225 6050
-$Comp
-L Diode:1N4001 D5
-U 1 1 5F8B63C2
-P 12300 1525
-F 0 "D5" H 12300 1741 50  0000 C CNN
-F 1 "1N4001" H 12300 1650 50  0000 C CNN
-F 2 "Diodes_THT:D_DO-41_SOD81_P10.16mm_Horizontal" H 12300 1350 50  0001 C CNN
-F 3 "http://www.vishay.com/docs/88503/1n4001.pdf" H 12300 1525 50  0001 C CNN
-	1    12300 1525
-	1    0    0    -1  
-$EndComp
-$Comp
-L conn:Conn_01x04 J3
-U 1 1 5F8DDE54
-P 12925 1800
-F 0 "J3" H 13005 1792 50  0000 L CNN
-F 1 "BATTERY" H 13005 1701 50  0000 L CNN
-F 2 "Pin_Headers:Pin_Header_Angled_1x04_Pitch2.54mm" H 12925 1800 50  0001 C CNN
-F 3 "~" H 12925 1800 50  0001 C CNN
-	1    12925 1800
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	12450 1700 12725 1700
-NoConn ~ 12725 1800
-$Comp
-L power:GND #PWR017
-U 1 1 5F92EA3F
-P 12650 2175
-F 0 "#PWR017" H 12650 1925 50  0001 C CNN
-F 1 "GND" H 12650 2025 50  0000 C CNN
-F 2 "" H 12650 2175 50  0001 C CNN
-F 3 "" H 12650 2175 50  0001 C CNN
-	1    12650 2175
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	12650 2000 12725 2000
-Wire Wire Line
-	12650 2000 12650 1900
-Wire Wire Line
-	12650 1900 12725 1900
-Wire Bus Line
-	12975 4425 10525 4425
-Connection ~ 10525 4425
-Wire Wire Line
-	12150 1525 11700 1525
-$Comp
-L power:VCC #PWR016
-U 1 1 5FB6267F
-P 12650 1450
-F 0 "#PWR016" H 12650 1300 50  0001 C CNN
-F 1 "VCC" H 12650 1600 50  0000 C CNN
-F 2 "" H 12650 1450 50  0001 C CNN
-F 3 "" H 12650 1450 50  0001 C CNN
-	1    12650 1450
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	12450 1525 12650 1525
-Wire Wire Line
-	12650 1525 12650 1450
-Wire Notes Line
-	13375 2350 13375 875 
-Wire Notes Line
-	13375 875  11575 875 
-Wire Notes Line
-	11575 875  11575 2350
-Wire Notes Line
-	11575 2350 13375 2350
-Text Notes 11575 875  0    60   ~ 0
-External battery backup
-Text Notes 11625 1100 0    39   ~ 0
-Old school CMOS battery backup, use 3xAA batteries.\nShould utilize system power as long as it is available.\nUse pin 2 as a key indicator if possible.
-Text Label 12700 1700 2    39   ~ 0
-BATTERY
-Text Label 11700 2325 1    39   ~ 0
-SRAM_VCC
-Text Notes 11825 10575 0    60   ~ 0
-Revision B adds a battery pack that should keep data intact, this should function as long\nas the voltage does not exceed 4.5v.
-$Comp
-L Diode:1N4001 D6
-U 1 1 5F8B70C2
-P 12300 1700
-F 0 "D6" H 12300 1916 50  0000 C CNN
-F 1 "1N4001" H 12300 1825 50  0000 C CNN
-F 2 "Diodes_THT:D_DO-41_SOD81_P10.16mm_Horizontal" H 12300 1525 50  0001 C CNN
-F 3 "http://www.vishay.com/docs/88503/1n4001.pdf" H 12300 1700 50  0001 C CNN
-	1    12300 1700
-	1    0    0    1   
-$EndComp
-Wire Wire Line
-	11700 1700 11700 1525
-Wire Wire Line
-	11700 1700 11700 2475
-Connection ~ 11700 1700
-Wire Wire Line
-	11700 1700 11975 1700
-$Comp
-L Device:C C5
-U 1 1 5D8412CC
-P 11975 1925
-F 0 "C5" H 12000 2025 50  0000 L CNN
-F 1 "100nF" H 12000 1825 50  0000 L CNN
-F 2 "Capacitors_THT:C_Disc_D4.7mm_W2.5mm_P5.00mm" H 12013 1775 50  0001 C CNN
-F 3 "" H 11975 1925 50  0001 C CNN
-	1    11975 1925
-	-1   0    0    -1  
-$EndComp
-Wire Wire Line
-	11975 1775 11975 1700
-Connection ~ 11975 1700
-Wire Wire Line
-	11975 1700 12150 1700
-Wire Wire Line
-	11975 2075 11975 2125
-Wire Wire Line
-	12650 2175 12650 2125
-Connection ~ 12650 2000
-Wire Wire Line
-	11975 2125 12650 2125
-Connection ~ 12650 2125
-Wire Wire Line
-	12650 2125 12650 2000
-Wire Wire Line
-	10475 10350 11025 10350
-Wire Wire Line
-	10475 10800 11025 10800
-Wire Bus Line
-	825  600  825  2300
-Wire Bus Line
-	12975 2775 12975 4425
-Wire Bus Line
-	10525 4425 10525 7775
-Wire Bus Line
-	10525 2400 10525 4425
-Wire Bus Line
-	14250 600  14250 8675
-Wire Bus Line
-	12975 4650 12975 8325
-Wire Bus Line
-	8675 2400 8675 8325
 $EndSCHEMATC
