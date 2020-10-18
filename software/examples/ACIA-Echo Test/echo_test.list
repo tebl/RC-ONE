@@ -1,0 +1,80 @@
+0000-                  4       ;
+0000-                  5       ; SIMPLE ASYNCHRONOUS COMMUNICATIONS INTERFACE ADAPTER (ACIA) TEST PROGRAM THAT
+0000-                  6       ; JUST READS BACK DATA RECEIVED VIA THE SERIAL PORT, THEN ECHOES THE DATA BACK
+0000-                  7       ; TO THE TERMINAL.
+0000-                  8       ;
+D600-                  9       ACIA    .EQ     $D600
+0000-                 10
+0200-                 11               .OR     $0200
+0200-                 12               .TA     $0200
+0200-                 13               .IN     program.asm
+00D0-            I     1       CHR     .EQ     $D0         ; INCOMING DATA BUFFER
+00D1-            I     2       POS     .EQ     $D1         ; STRING POSITION
+00FA-            I     3       POINTL  .EQ     $FA         ; ADDRESS_L ON DISPLAY
+00FB-            I     4       POINTH  .EQ     $FB         ; ADDRESS_H ON DISPLAY
+00F9-            I     5       INH     .EQ     $F9         ; INPUTBUFFER HIGH
+1F1F-            I     6       SCANDS  .EQ     $1F1F       ; KIM-1 DISPLAY ROUTINE
+0200-            I     7
+D600-            I     8       AC_DAT  .EQ     ACIA        ; ACIA DATA
+D601-            I     9       AC_STA  .EQ     ACIA+1      ;      STATUS
+D602-            I    10       AC_CMD  .EQ     ACIA+2      ;      COMMAND
+D603-            I    11       AC_CTL  .EQ     ACIA+3      ;      CONTROL
+0200-            I    12
+0200-20 5E 02    I    13 (  6) START   JSR     CLEARSS     ; CLEAR KIM-1 DISPLAY
+0203-20 1F 1F    I    14 (  6)         JSR     SCANDS      ; SHOW THE VALUES
+0206-            I    15
+0206-A9 00       I    16 (  2)         LDA     #0
+0208-8D 01 D6    I    17 (  4)         STA     AC_STA      ; RESET ACIA
+020B-A9 0B       I    18 (  2)         LDA     #%00001011  ; NO PARITY, NO ECHO, NO INTERRUPT
+020D-8D 02 D6    I    19 (  4)         STA     AC_CMD
+0210-A9 1E       I    20 (  2)         LDA     #%00011110  ; 8-N-1, 9600 BAUD
+0212-8D 03 D6    I    21 (  4)         STA     AC_CTL
+0215-            I    22
+0215-A2 00       I    23 (  2) WELCOME LDX     #$0
+0217-20 36 02    I    24 (  6) NEXTCHR JSR     WAITCLR
+021A-BD 6B 02    I    25 ( 4*)         LDA     TEXT,X      ; LOAD A CHR.
+021D-F0 07       I    26 (2**)         BEQ     DONE        ; DONE YET?
+021F-20 53 02    I    27 (  6)         JSR     PUTBYTE     :  SEND CHARACTER
+0222-E8          I    28 (  2)         INX                 ;  INCREMENT POSITION
+0223-4C 17 02    I    29 (  3)         JMP     NEXTCHR     ; DO NEXT CHARACTER
+0226-A9 00       I    30 (  2) DONE    LDA     #$0
+0228-85 D0       I    31 (  2)         STA     CHR
+022A-20 5E 02    I    32 (  6)         JSR     CLEARSS
+022D-            I    33
+022D-20 3E 02    I    34 (  6) ECHO    JSR     GETBYTE     ; GET A BYTE
+0230-20 53 02    I    35 (  6)         JSR     PUTBYTE     ; ECHO IT.
+0233-4C 2D 02    I    36 (  3)         JMP     ECHO        ; DO IT FOREVER.
+0236-            I    37
+0236-AD 01 D6    I    38 (  4) WAITCLR LDA     AC_STA      ; GET STATUS
+0239-29 10       I    39 (  2)         AND     #%00010000  ; BUFFER FULL?
+023B-F0 F9       I    40 (2**)         BEQ     WAITCLR     ;  WAIT FOR TX BUFFER TO CLEAR
+023D-60          I    41 (  6)         RTS
+023E-            I    42
+023E-AD 01 D6    I    43 (  4) GETBYTE LDA     AC_STA      ; GET STATUS
+0241-29 08       I    44 (  2)         AND     #%00001000  : BYTE WAITING?
+0243-D0 0A       I    45 (2**)         BNE     GOTBYTE     ;  YES, THEN PROCESS IT INSTEAD
+0245-A5 D0       I    46 (  3) DISPLAY LDA     CHR         ;  NO, OUTPUT OLD CHR ON DISPLAY
+0247-85 F9       I    47 (  2)         STA     INH
+0249-20 1F 1F    I    48 (  6)         JSR     SCANDS
+024C-4C 3E 02    I    49 (  3)         JMP     GETBYTE     ; TRY AGAIN
+024F-AD 00 D6    I    50 (  4) GOTBYTE LDA     AC_DAT      ; RECEIVE CHARACTER
+0252-60          I    51 (  6)         RTS
+0253-            I    52
+0253-85 D0       I    53 (  2) PUTBYTE STA     CHR
+0255-20 36 02    I    54 (  6)         JSR     WAITCLR     ; WAIT FOR TX BUFFER TO CLEAR
+0258-A5 D0       I    55 (  3)         LDA     CHR         ; RESTORE CHR
+025A-8D 00 D6    I    56 (  4)         STA     AC_DAT      ; SEND CHR
+025D-60          I    57 (  6)         RTS
+025E-            I    58
+025E-A9 00       I    59 (  2) CLEARSS LDA     #0
+0260-85 F9       I    60 (  2)         STA     INH
+0262-A9 AC       I    61 (  2)         LDA     #$AC
+0264-85 FB       I    62 (  2)         STA     POINTH
+0266-A9 1A       I    63 (  2)         LDA     #$1A
+0268-85 FA       I    64 (  2)         STA     POINTL
+026A-60          I    65 (  6)         RTS
+026B-            I    66
+026B-45 43 48 4F 
+     20 54 45 53 
+     54          I    67       TEXT    .AS     "ECHO TEST"
+0274-0D 0A 00    I    68               .HS     0D.0A.00
