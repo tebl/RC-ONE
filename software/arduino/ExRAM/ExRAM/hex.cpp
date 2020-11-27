@@ -28,9 +28,9 @@ int convert_hex_address(char a3, char a2, char a1, char a0) {
    );
 }
 
-void print_hex_address(int number, bool prefix = true) {
+void print_hex_address(int number, bool prefix) {
   if (prefix) Serial.print('$');
-  char tmp[4];
+  char tmp[5];
   sprintf(tmp, "%04X", number);
   Serial.print(tmp);
 }
