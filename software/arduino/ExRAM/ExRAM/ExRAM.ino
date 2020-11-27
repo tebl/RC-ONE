@@ -10,6 +10,7 @@
 #include "ansi.h"
 #include "process_serial.h"
 #include "commands.h"
+#include "cmd_memory.h"
 #include "help.h"
 
 /* Able to use VT100 commands on serial, disable if you get weird characters

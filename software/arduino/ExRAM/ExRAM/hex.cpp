@@ -2,7 +2,8 @@
 
 /*
  * Converts a single hex digit in ascii format to a numeric value. Foregoes
- * most sanity checks by assuming it isn't a random character.
+ * most sanity checks by assuming it isn't a random character and just force
+ * it to a value between 0 and 15.
  */
 int convert_hex_digit(char digit) {
   digit = (digit > '9' ? digit - 87 : digit - 48);
@@ -25,4 +26,11 @@ int convert_hex_address(char a3, char a2, char a1, char a0) {
       (convert_hex_digit(a1) << 4) +
       (convert_hex_digit(a0))
    );
+}
+
+void print_hex_address(int number, bool prefix = true) {
+  if (prefix) Serial.print('$');
+  char tmp[4];
+  sprintf(tmp, "%04X", number);
+  Serial.print(tmp);
 }

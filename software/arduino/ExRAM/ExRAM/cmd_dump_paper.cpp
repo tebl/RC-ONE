@@ -6,12 +6,16 @@
 extern int memory_base;
 extern int memory_size;
 
+/*
+ * Calculates the checksum used with paper tape files, this is used as the two
+ * last hex digits in each record. 
+ */
 int paper_checksum(int byte_count, int hi, int lo, int data_sum) {
   return byte_count + hi + lo + data_sum;
 }
 
 /*
- * Handle exporting of data to Intel HEX format, this data is printed 
+ * Handle exporting of data to paper tape format, this data is printed 
  * to serial directly with a 16 byte record length along with the
  * correct checksum.
  * 
