@@ -12,7 +12,7 @@ extern int memory_size;
 /*
  * Placeholder to initialize any variables, just in case I need them later.
  */
-void commands_init() {
+void init_commands() {
 }
 
 /*
@@ -167,13 +167,13 @@ void write_byte(byte value, bool set_direction = false) {
   digitalWrite(EX_RnW, HIGH);
 }
 
-void print_bank() {
+void print_memory_bank() {
   Serial.print(F("Bank "));
   Serial.print(memory_bank);
   Serial.println(F(" enabled"));
 }
 
-void set_bank(int num) {
+void set_memory_bank(int num) {
   memory_bank = num;
   switch (memory_bank) {
     case 0:
@@ -199,47 +199,47 @@ void set_bank(int num) {
   }
 }
 
-void bank0() {
-  set_bank(0);
+void set_memory_bank0() {
+  set_memory_bank(0);
 }
 
-void bank1() {
-  set_bank(1);
+void set_memory_bank1() {
+  set_memory_bank(1);
 }
 
-void bank2() {
-  set_bank(2);
+void set_memory_bank2() {
+  set_memory_bank(2);
 }
 
-void bank3() {
-  set_bank(3);
+void set_memory_bank3() {
+  set_memory_bank(3);
 }
 
-void print_memory() {
+void print_memory_size() {
   Serial.print(memory_size / 1024);
   Serial.println("K");
 }
 
-void set_memory(int num_bytes) {
+void set_memory_size(int num_bytes) {
   memory_size = num_bytes;
   Serial.print(num_bytes / 1024);
   Serial.println("K");
 }
 
-void memory_1k() {
-  set_memory(1024 * 1);
+void set_memory_size_1k() {
+  set_memory_size(1024 * 1);
 }
 
-void memory_2k() {
-  set_memory(1024 * 2);
+void set_memory_size_2k() {
+  set_memory_size(1024 * 2);
 }
 
-void memory_4k() {
-  set_memory(1024 * 4);
+void set_memory_size_4k() {
+  set_memory_size(1024 * 4);
 }
 
-void memory_8k() {
-  set_memory(1024 * 8);
+void set_memory_size_8k() {
+  set_memory_size(1024 * 8);
 }
 
 void print_max_memory() {
@@ -261,19 +261,19 @@ void print_memory_base() {
 
 
 
-void set_base(int value){ 
+void set_memory_base(int value){ 
   memory_base = value;
   print_memory_base();
 }
 
-void base_8k0() { set_base(0x0000); }
-void base_8k1() { set_base(0x2000); }
-void base_8k2() { set_base(0x4000); }
-void base_8k3() { set_base(0x6000); }
-void base_8k4() { set_base(0x8000); }
-void base_8k5() { set_base(0xA000); }
-void base_8k6() { set_base(0xC000); }
-void base_8k7() { set_base(0xE000); }
+void base_8k0() { set_memory_base(0x0000); }
+void base_8k1() { set_memory_base(0x2000); }
+void base_8k2() { set_memory_base(0x4000); }
+void base_8k3() { set_memory_base(0x6000); }
+void base_8k4() { set_memory_base(0x8000); }
+void base_8k5() { set_memory_base(0xA000); }
+void base_8k6() { set_memory_base(0xC000); }
+void base_8k7() { set_memory_base(0xE000); }
 
 bool memory_test_pattern(char pass, unsigned char pattern) {
   char tmp[10];
@@ -327,7 +327,7 @@ void memory_test() {
   Serial.print('K');
   ansi_default();
   Serial.println(F(" of memory:"));
-  for (char i = 0; i < (sizeof(patterns) / sizeof(patterns[0])); i++) {
+  for (unsigned char i = 0; i < (sizeof(patterns) / sizeof(patterns[0])); i++) {
     if (memory_test_pattern(i, patterns[i])) {
       ansi_notice();
       Serial.println(F(" OK!"));
@@ -504,7 +504,7 @@ bool handle_record_error(String c, String e) {
 bool handle_intel(String c) {
   if (c.length() < 11) return handle_record_error(c, F("record too short"));
 
-  int byte_count = convert_hex_pair(c[1], c[2]);
+  unsigned int byte_count = convert_hex_pair(c[1], c[2]);
   if (c.length() != (11 + (byte_count * 2))) return handle_record_error(c, F("length does not match data"));
   if (byte_count > 32) return handle_record_error(c, F("buffer overflow"));
 
@@ -516,7 +516,7 @@ bool handle_intel(String c) {
   byte data[32];
   int data_sum = 0;
   int d = 0;
-  for (int i = 0; i < (byte_count * 2); i+=2) {
+  for (unsigned int i = 0; i < (byte_count * 2); i+=2) {
       data[d] = convert_hex_pair(
         c.charAt(9 + i),
         c.charAt(10 + i)
@@ -534,7 +534,7 @@ bool handle_intel(String c) {
       case 0x00: /* data */
         enable();
         set_write();
-        for (int i = 0; i < byte_count; i++) {
+        for (unsigned int i = 0; i < byte_count; i++) {
           set_address(address + i);
           write_byte(data[i]);
         }
@@ -621,7 +621,7 @@ void dump_paper() {
 bool handle_paper(String c) {
   if (c.length() < 11) return handle_record_error(c, F("record too short"));
 
-  int byte_count = convert_hex_pair(c[1], c[2]);
+  unsigned int byte_count = convert_hex_pair(c[1], c[2]);
   if (c.length() != (11 + (byte_count * 2))) return handle_record_error(c, F("length does not match data"));
   if (byte_count > 24) return handle_record_error(c, F("buffer overflow"));
 
@@ -633,7 +633,7 @@ bool handle_paper(String c) {
   int data_sum = 0;
   int d = 0;
 
-  for (int i = 0; i < (byte_count * 2); i+=2) {
+  for (unsigned int i = 0; i < (byte_count * 2); i+=2) {
     data[d] = convert_hex_pair(
       c.charAt(7 + i),
       c.charAt(8 + i)
@@ -643,7 +643,7 @@ bool handle_paper(String c) {
     d++;
   }
 
-  int checksum = convert_hex_address(
+  unsigned int checksum = convert_hex_address(
     c[7 + (byte_count * 2)], 
     c[8 + (byte_count * 2)],
     c[9 + (byte_count * 2)],
@@ -652,7 +652,7 @@ bool handle_paper(String c) {
   if (checksum == (byte_count + hi + lo + data_sum)) {
     enable();
     set_write();
-    for (int i = 0; i < byte_count; i++) {
+    for (unsigned int i = 0; i < byte_count; i++) {
       set_address(address + i);
       write_byte(data[i]);
     }
@@ -706,19 +706,19 @@ void select_command(String command) {
   else if (handle_command(command, F("ansi test"), ansi_test));
   else if (handle_command(command, F("version"), print_version));
   else if (handle_command(command, F("status"), print_status));
-  else if (handle_command(command, F("bank"), print_bank));
-  else if (handle_command(command, F("bank 0"), bank0));
-  else if (handle_command(command, F("bank 1"), bank1));
-  else if (handle_command(command, F("bank 2"), bank2));
-  else if (handle_command(command, F("bank 3"), bank3));
+  else if (handle_command(command, F("bank"), print_memory_bank));
+  else if (handle_command(command, F("bank 0"), set_memory_bank0));
+  else if (handle_command(command, F("bank 1"), set_memory_bank1));
+  else if (handle_command(command, F("bank 2"), set_memory_bank2));
+  else if (handle_command(command, F("bank 3"), set_memory_bank3));
   else if (handle_command(command, F("lock on"), lock_on));
   else if (handle_command(command, F("lock off"), lock_off));
-  else if (handle_command(command, F("memory"), print_memory));
-  else if (handle_command(command, F("memory 1k"), memory_1k));
-  else if (handle_command(command, F("memory 2k"), memory_2k));
-  else if (handle_command(command, F("memory 4k"), memory_4k));
-  else if (handle_command(command, F("memory 8k"), memory_8k));
-  else if (handle_command(command, F("memory max"), memory_8k));
+  else if (handle_command(command, F("memory"), print_memory_size));
+  else if (handle_command(command, F("memory 1k"), set_memory_size_1k));
+  else if (handle_command(command, F("memory 2k"), set_memory_size_2k));
+  else if (handle_command(command, F("memory 4k"), set_memory_size_4k));
+  else if (handle_command(command, F("memory 8k"), set_memory_size_8k));
+  else if (handle_command(command, F("memory max"), set_memory_size_8k));
   else if (handle_command(command, F("memory max?"), print_max_memory));
   else if (handle_command(command, F("memory test"), memory_test));
   else if (handle_command(command, F("memory zero"), memory_zero));

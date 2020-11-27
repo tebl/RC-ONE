@@ -3,11 +3,11 @@
 void enable();
 void disable();
 
-void set_bank(int num);
-void set_memory(int num_bytes);
-void set_base(int value);
+void set_memory_bank(int num);
+void set_memory_size(int num_bytes);
+void set_memory_base(int value);
 
-void commands_init();
+void init_commands();
 void print_status();
 void print_version();
 void print_welcome();
