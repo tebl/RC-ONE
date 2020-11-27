@@ -1,104 +1,81 @@
+#include <Arduino.h>
+#include "constants.h"
+#include "debug.h"
+#include "ansi.h"
+#include "help.h"
+
+extern bool ansi_enabled;
+extern int memory_bank;
+extern int memory_base;
+extern int memory_size;
+
 /*
- * Originally based on the Arduino EEPROM programmer as
- * featured in a video by Ben Eater. I started with his
- * code, then adapted it to serve as a way to load data
- * into a 62256 static RAM chip before adding functions
- * for handling Intel HEX and papertape formats.
+ * Placeholder to initialize any variables, just in case I need them later.
  */
-#define SHIFT_DATA 2
-#define SHIFT_CLK 3
-#define SHIFT_LATCH 4
-
-#define EX_D0 6
-#define EX_D7 13
-#define EX_A13 14
-#define EX_A14 15
-#define EX_RnW 16
-
-#define EX_CONTROL 5
-#define EX_RESET 17
-
-#define COLORIZE /* Comment out to remove ANSI-styling */
-#define BAUD_RATE 115200
-#define MAX_MEMORY_SIZE 8192
-#define MAX_INPUT_SIZE 100
-
-/* Variables */
-int memory_bank = 0;
-int memory_base = 0x2000;
-int memory_size = MAX_MEMORY_SIZE;
-bool colorize = true;
-String command;
-
-void setup() {
-  pinMode(SHIFT_DATA, OUTPUT);
-  pinMode(SHIFT_CLK, OUTPUT);
-  pinMode(SHIFT_LATCH, OUTPUT);
-  pinMode(EX_CONTROL, OUTPUT);
-
-  Serial.begin(BAUD_RATE);
-  disable();
-  
-  pinMode(EX_A13, OUTPUT);
-  pinMode(EX_A14, OUTPUT);
-  pinMode(EX_RESET, INPUT);
-  
-  print_welcome();
-  bank0();
-  base_8k1();
-  memory_2k();
-
-  Serial.println();
-  print_help();
+void commands_init() {
 }
 
-#ifdef COLORIZE
-void ansi_on() {
-  colorize = true;
-  Serial.print(F("\033[1;31mA\033[1;32mN\033[1;33mS\033[1;34mI"));
+/*
+ * Prints out the status of the 6502-system, this is done by checking wether
+ * the reset lines has been pulled up. Might not be reliable as it'd be
+ * floating though it somehow seems to be working anyway (famous last words
+ * and all that).
+ */
+void print_status() {
+  int val = digitalRead(EX_RESET);
+  Serial.print(F("Host system "));
+  if (val == 0) {
+    ansi_error_ln(F("offline"));
+  }
+  else {
+    ansi_notice_ln(F("powered"));
+  }
+}
+
+void print_version() {
+  Serial.print(F("ExRAM "));
+  Serial.println(VERSION);
+}
+
+void print_welcome() {
+  ansi_clear();
+  ansi_highlight();
+  print_version();
   ansi_default();
-  Serial.print(F(" terminal codes "));
-  ansi_bright();
-  Serial.print(F("ON"));
+
+  ansi_notice();
+  Serial.println(F("\nConfiguration:"));
   ansi_default();
-  Serial.println(F("!"));
 }
 
-void ansi_off() {
-  colorize = false;
-  Serial.println(F("ANSI terminal codes OFF!"));
-}
-#endif
-
-void ansi_bright() {
-  #ifdef COLORIZE
-  if (colorize) Serial.print(F("\033[1;37m"));
-  #endif
+/* Called when a recognized command has been recognized, but before the
+ * function is actually called.
+ */
+void echo_command(String command) {
+  ansi_colour(COLOUR_CYAN);
+  Serial.println("> "+ command);
+  ansi_default();
 }
 
-void ansi_weak() {
-  #ifdef COLORIZE
-  if (colorize) Serial.print(F("\033[34m"));
-  #endif
+/* Called when the entered command has not been recognized, we don't know
+ * what to do next so we'll just print it as an error instead.
+ */
+void echo_unknown(String command) {
+  ansi_error();
+  Serial.println("? " + command);
+  ansi_default();
 }
 
-void ansi_notice() {
-  #ifdef COLORIZE
-  if (colorize) Serial.print(F("\033[36m"));
-  #endif
+/* Clear the serial terminal screen, but note that this won't actually do
+ * anything unless ANSI terminal codes are supported by the client and
+ * have not been explicitly disabled. Does a second echo of the command
+ * as the first one will disappear upon execution.
+ */
+void do_clear() {
+  ansi_clear();
+  if (ansi_enabled) echo_command(F("clear"));
 }
 
-void ansi_error() {
-  #ifdef COLORIZE
-  if (colorize) Serial.print(F("\033[1;31m"));
-  #endif  
-}
-
-void ansi_default() {
-  #ifdef COLORIZE
-  if (colorize) Serial.print(F("\033[0m"));
-  #endif
-}
 
 /*
  * Assert control, locking out the 6502-system from
@@ -190,64 +167,10 @@ void write_byte(byte value, bool set_direction = false) {
   digitalWrite(EX_RnW, HIGH);
 }
 
-/*
- * Prints the welcome message to serial output, essentially
- * program version followed by the help message.
- */
-void print_welcome() {
-  ansi_bright();
-  print_version();
-  ansi_default();
-  ansi_notice();
-  Serial.println(F("\nConfiguration:"));
-  ansi_default();
-}
-
-void print_version() {
-  Serial.println(F("ExRAM 0.2"));
-}
-
-/*
- * Prints out the status of the 6502-system, this is done
- * by checking wether the reset lines has been pulled up.
- * Might not be reliable as it'd be floating though it
- * seems to be working anyway (famous last words).
- */
-void print_status() {
-  int val = digitalRead(EX_RESET);
-  Serial.print(F("Host system "));
-  if (val == 0) {
-    ansi_error();
-    Serial.print(F("offline"));
-  }
-  else {
-    ansi_bright();
-    Serial.print(F("powered"));
-  }
-  ansi_default();
-  Serial.println();
-}
-
 void print_bank() {
   Serial.print(F("Bank "));
   Serial.print(memory_bank);
   Serial.println(F(" enabled"));
-}
-
-void bank0() {
-  set_bank(0);
-}
-
-void bank1() {
-  set_bank(1);
-}
-
-void bank2() {
-  set_bank(2);
-}
-
-void bank3() {
-  set_bank(3);
 }
 
 void set_bank(int num) {
@@ -276,8 +199,30 @@ void set_bank(int num) {
   }
 }
 
+void bank0() {
+  set_bank(0);
+}
+
+void bank1() {
+  set_bank(1);
+}
+
+void bank2() {
+  set_bank(2);
+}
+
+void bank3() {
+  set_bank(3);
+}
+
 void print_memory() {
   Serial.print(memory_size / 1024);
+  Serial.println("K");
+}
+
+void set_memory(int num_bytes) {
+  memory_size = num_bytes;
+  Serial.print(num_bytes / 1024);
   Serial.println("K");
 }
 
@@ -297,17 +242,16 @@ void memory_8k() {
   set_memory(1024 * 8);
 }
 
-void set_memory(int num_bytes) {
-  memory_size = num_bytes;
-  Serial.print(num_bytes / 1024);
-  Serial.println("K");
-}
-
 void print_max_memory() {
   Serial.print(MAX_MEMORY_SIZE / 1024);
   Serial.println("K");
 }
 
+void print_address(int number) {
+  char tmp[10];
+  sprintf(tmp, "$%04X", number);
+  Serial.print(tmp);
+}
 void print_memory_base() {
   print_address(memory_base);
   Serial.print(" - ");
@@ -315,10 +259,11 @@ void print_memory_base() {
   Serial.println();
 }
 
-void print_address(int number) {
-  char tmp[10];
-  sprintf(tmp, "$%04X", number);
-  Serial.print(tmp);
+
+
+void set_base(int value){ 
+  memory_base = value;
+  print_memory_base();
 }
 
 void base_8k0() { set_base(0x0000); }
@@ -329,43 +274,6 @@ void base_8k4() { set_base(0x8000); }
 void base_8k5() { set_base(0xA000); }
 void base_8k6() { set_base(0xC000); }
 void base_8k7() { set_base(0xE000); }
-
-void set_base(int value){
-  memory_base = value;
-  print_memory_base();
-}
-
-/*
- * Perform a test of the configured amount of memory, this
- * section of memory has different patterns written to it
- * in 16 byte blocks before comparing the value to what is
- * read back.
- */
-void memory_test() {
-  unsigned char patterns[] = {0x00, 0xFF, 0x55, 0xAA};
-
-  enable();
-  Serial.print(F("Testing "));
-  ansi_bright();
-  Serial.print(memory_size / 1024);
-  Serial.print('K');
-  ansi_default();
-  Serial.println(F(" of memory:"));
-  for (char i = 0; i < (sizeof(patterns) / sizeof(patterns[0])); i++) {
-    if (memory_test_pattern(i, patterns[i])) {
-      ansi_notice();
-      Serial.println(F(" OK!"));
-      ansi_default();
-    } else {
-      ansi_error();
-      Serial.println(F(" failed!"));
-      ansi_default();
-      break;
-    }
-  }
-  Serial.println(F("Testing completed!"));
-  disable();
-}
 
 bool memory_test_pattern(char pass, unsigned char pattern) {
   char tmp[10];
@@ -404,12 +312,44 @@ bool memory_test_pattern(char pass, unsigned char pattern) {
 }
 
 /*
+ * Perform a test of the configured amount of memory, this
+ * section of memory has different patterns written to it
+ * in 16 byte blocks before comparing the value to what is
+ * read back.
+ */
+void memory_test() {
+  unsigned char patterns[] = {0x00, 0xFF, 0x55, 0xAA};
+
+  enable();
+  Serial.print(F("Testing "));
+  ansi_highlight();
+  Serial.print(memory_size / 1024);
+  Serial.print('K');
+  ansi_default();
+  Serial.println(F(" of memory:"));
+  for (char i = 0; i < (sizeof(patterns) / sizeof(patterns[0])); i++) {
+    if (memory_test_pattern(i, patterns[i])) {
+      ansi_notice();
+      Serial.println(F(" OK!"));
+      ansi_default();
+    } else {
+      ansi_error();
+      Serial.println(F(" failed!"));
+      ansi_default();
+      break;
+    }
+  }
+  Serial.println(F("Testing completed!"));
+  disable();
+}
+
+/*
  * Zero out the contents of memory, this is handy when it has
  * been filled with unknown data or simply junk.
  */
 void memory_zero() {
   Serial.print(F("Zeroing "));
-  ansi_bright();
+  ansi_highlight();
   Serial.print(memory_size / 1024);
   Serial.print('K');
   ansi_default();
@@ -474,6 +414,15 @@ void dump() {
   disable();
 }
 
+int intel_checksum(int byte_count, int hi, int lo, int record_type, int data_sum) {
+  int x = byte_count + hi + lo + record_type + data_sum;
+  x = x % 256;
+  x = ~x;
+  x = x + 1;
+  x = x & 0xFF;
+  return x;
+}
+
 /*
  * Handle exporting of data to Intel HEX format, this data is printed 
  * to serial directly with a 16 byte record length along with the
@@ -515,13 +464,35 @@ void dump_intel() {
   disable();
 }
 
-int intel_checksum(int byte_count, int hi, int lo, int record_type, int data_sum) {
-  int x = byte_count + hi + lo + record_type + data_sum;
-  x = x % 256;
-  x = ~x;
-  x = x + 1;
-  x = x & 0xFF;
-  return x;
+int convert_hex_digit(char digit) {
+  digit = (digit > '9' ? digit - 87 : digit - 48);
+  if (digit < 0) return digit + 32;
+  if (digit > 15) return 15;
+  return digit;
+}
+
+int convert_hex_pair(char a1, char a0) {
+  return (
+      (convert_hex_digit(a1) << 4) +
+      (convert_hex_digit(a0))
+  );
+}
+
+int convert_hex_address(char a3, char a2, char a1, char a0) {
+  return (
+      (convert_hex_digit(a3) << 12) +
+      (convert_hex_digit(a2) << 8) +
+      (convert_hex_digit(a1) << 4) +
+      (convert_hex_digit(a0))
+   );
+}
+
+bool handle_record_error(String c, String e) {
+  Serial.print(c);
+  Serial.print(" (");
+  Serial.print(e);
+  Serial.println(")");
+  return false;
 }
 
 /*
@@ -578,35 +549,8 @@ bool handle_intel(String c) {
   }
 }
 
-int convert_hex_pair(char a1, char a0) {
-  return (
-      (convert_hex_digit(a1) << 4) +
-      (convert_hex_digit(a0))
-  );
-}
-
-int convert_hex_digit(char digit) {
-  digit = (digit > '9' ? digit - 87 : digit - 48);
-  if (digit < 0) return digit + 32;
-  if (digit > 15) return 15;
-  return digit;
-}
-
-int convert_hex_address(char a3, char a2, char a1, char a0) {
-  return (
-      (convert_hex_digit(a3) << 12) +
-      (convert_hex_digit(a2) << 8) +
-      (convert_hex_digit(a1) << 4) +
-      (convert_hex_digit(a0))
-   );
-}
-
-bool handle_record_error(String c, String e) {
-  Serial.print(c);
-  Serial.print(" (");
-  Serial.print(e);
-  Serial.println(")");
-  return false;
+int paper_checksum(int byte_count, int hi, int lo, int data_sum) {
+  return byte_count + hi + lo + data_sum;
 }
 
 /*
@@ -669,10 +613,6 @@ void dump_paper() {
   disable();
 }
 
-int paper_checksum(int byte_count, int hi, int lo, int data_sum) {
-  return byte_count + hi + lo + data_sum;
-}
-
 /* Handle importing of paper tape files. Data is read and loaded
  * on a line by line basis, so as far as error checking there is
  * almost none implemented. For a description of the record format
@@ -728,111 +668,43 @@ bool handle_paper(String c) {
 void lock_on() {
   enable();
   Serial.print(F("ExRAM "));
-  ansi_error();
-  Serial.print(F("locked"));
-  ansi_default();
-  Serial.println();
+  ansi_error_ln(F("locked"));
 }
 
 void lock_off() {
   disable();
   Serial.print(F("ExRAM "));
-  ansi_bright();
-  Serial.print(F("unlocked"));
-  ansi_default();
+  ansi_highlight_ln(F("unlocked"));
   Serial.println();
 }
 
-void print_help() {
-  ansi_notice();
-  Serial.println(F("Commands supported:"));
-  ansi_default();
-  #ifdef COLORIZE
-  Serial.println(F("ansi <on|off>  Enable or disable ANSI terminal codes"));
-  #endif
-  Serial.println(F("bank           Prints bank selection"));
-  Serial.println(F("bank <num>     Select 8k bank"));
-  Serial.println(F("base           Prints memory offset used"));
-  Serial.println(F("base <block>   8k0-8k7 memory offset"));
-  Serial.println(F("dump           Dump memory"));
-  Serial.println(F("dump intel     Intel HEX dump"));
-  Serial.println(F("dump paper     Paper tape memory dump"));
-  Serial.println(F("help           Prints this screen"));
-  Serial.println(F("lock <on|off>  Lock 6502 ExRAM access"));
-  Serial.println(F("memory         Print memory dump size"));
-  Serial.println(F("memory <size>  1k/2k/4k/8k memory dump size"));
-  Serial.println(F("memory test    Test set memory"));
-  Serial.println(F("memory zero    Zero out set memory"));
-  Serial.println(F("status         Prints system status"));
-  Serial.println(F("version        Prints ExRAM software version"));
-  Serial.println(F(":<data>        Load Intel HEX data"));
-  Serial.println(F(";<data>        Load paper tape data"));
-}
-
 /*
- * Process a single received byte that was received over
- * the serial connection to the Arduino Nano, the byte
- * will be automatically echoed back to the terminal
- * application. 
- * 
- * Each line will be processed by its own function, EOL
- * will be interpreted as CR or NL as long as data has
- * previously been received. Any leading spaces will be
- * ignored.
+ * Handle serial commands, mainly just matches the name and if it does the
+ * supplied function is run. Recognized commands are echoed back to the user.
  */
-void process_serial(const byte byte_in) {
-  static char input_line[MAX_INPUT_SIZE];
-  static unsigned int input_pos = 0;
-
-  Serial.print((char) byte_in);
-  switch (byte_in) {
-    /* Handle backspace character. Echoing will already have
-     * moved the cursor back one position, but we'll need to
-     * output a space and then move cursor back  again to
-     * actually clear the character that was rubbed out.
-     */
-    case '\b':
-      if (input_pos > 0) {
-        input_pos--;
-        Serial.print(F(" \b"));
-      }
-      break;
-
-    /* Handle end-of-line, ignore when one of them comes at the
-     * start of a line to gracefully handle differences between
-     * client platforms differences.
-     */
-    case '\n':
-    case '\r':
-      if (input_pos > 0) {
-        input_line[input_pos] = 0;
-        select_command(input_line);
-        input_pos = 0;
-      }
-      break;
-
-    /* Ignore any leading zeroes */
-    case ' ':
-      if (input_pos == 0) break;
-      
-    /* Add character to current command */
-    default:
-      if (input_pos < (MAX_INPUT_SIZE - 1)) {
-        input_line[input_pos++] = byte_in;
-      }
-      break;
+bool handle_command(String command, String name, void (*function)(), bool suppress_echo = false) {
+  if (command == name) {
+    echo_command(command);
+    (*function)();
+    return true;
   }
+  return false;
 }
 
 /*
- * Run the command associated with the text command
- * given, if one is currently supported by the sketch.
- * Note that Intel HEX (:<data>) and Paper-tape
- * (;<data>) are handled on a line-by-line basis instead
- * of as a complete listing to keep things easy.
+ * Run the command associated with the text command given, if one is currently 
+ * supported by the sketch.
+ * 
+ * Note that Intel HEX (:<data>) and Paper-tape (;<data>) are handled on a
+ * line-by-line basis instead of as a complete listing to keep memory usage
+ * at a minimum.
  */
 void select_command(String command) {
-  if (handle_command(command, F("version"), print_version));
+       if (handle_command(command, F("ansi"), ansi_status));
+  else if (handle_command(command, F("ansi on"), ansi_on));
+  else if (handle_command(command, F("ansi off"), ansi_off));
+  else if (handle_command(command, F("ansi test"), ansi_test));
+  else if (handle_command(command, F("version"), print_version));
   else if (handle_command(command, F("status"), print_status));
   else if (handle_command(command, F("bank"), print_bank));
   else if (handle_command(command, F("bank 0"), bank0));
@@ -864,44 +736,8 @@ void select_command(String command) {
   else if (handle_command(command, F("dump paper"), dump_paper));
   else if (command.charAt(0) == ':') handle_intel(command);
   else if (command.charAt(0) == ';') handle_paper(command);
-  #ifdef COLORIZE
-  else if (handle_command(command, F("ansi off"), ansi_off));
-  else if (handle_command(command, F("ansi on"), ansi_on));
-  #endif
   else if (handle_command(command, F("help"), print_help));
   else {
     echo_unknown(command);
-  }
-}
-
-/*
- * Handle serial commands, mainly just matches the name
- * and if it does the supplied function is run. Recognized
- * commands are echoed back to the user.
- */
-bool handle_command(String command, String name, void (*function)()) {
-  if (command == name) {
-    echo_command(command);
-    (*function)();
-    return true;
-  }
-  return false;
-}
-
-void echo_command(String command) {
-  ansi_notice();
-  Serial.println("> "+ command);
-  ansi_default();
-}
-
-void echo_unknown(String command) {
-  ansi_error();
-  Serial.println("? " + command);
-  ansi_default();
-}
-
-void loop() {
-  while(Serial.available() > 0) {
-    process_serial(Serial.read());
   }
 }
