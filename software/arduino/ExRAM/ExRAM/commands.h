@@ -17,3 +17,4 @@ bool handle_command(String command, String name, void (*function)());
 void select_command(String command);
 void echo_command(String command);
 void echo_unknown(String command);
+bool parser_error(String c, String e);

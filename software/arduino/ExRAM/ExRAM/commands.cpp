@@ -68,6 +68,17 @@ void echo_unknown(String command) {
   ansi_default();
 }
 
+bool parser_error(String command, String error) {
+  ansi_error();
+  Serial.print("? " + command);
+  Serial.print(" (");
+  Serial.print(error);
+  Serial.println(")");
+  ansi_default();
+
+  return false;
+}
+
 /* Clear the serial terminal screen, but note that this won't actually do
  * anything unless ANSI terminal codes are supported by the client and
  * have not been explicitly disabled. Does a second echo of the command
@@ -134,6 +145,8 @@ void select_command(String command) {
   else if (handle_command(command, F("dump"), dump));
   else if (handle_command(command, F("dump intel"), dump_intel));
   else if (handle_command(command, F("dump paper"), dump_paper));
+  else if (command.startsWith(F("peek"))) handle_peek(command);
+  else if (command.startsWith(F("poke"))) handle_poke(command);
   else if (command.charAt(0) == ':') handle_intel(command);
   else if (command.charAt(0) == ';') handle_paper(command);
   else if (handle_command(command, F("help"), print_help));

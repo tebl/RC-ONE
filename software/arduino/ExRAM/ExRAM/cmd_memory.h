@@ -28,3 +28,6 @@ void set_memory_base_8k7();
 
 void memory_test();
 void memory_zero();
+
+bool handle_peek(String c);
+bool handle_poke(String c);

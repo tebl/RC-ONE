@@ -7,7 +7,7 @@ extern int memory_base;
 extern int memory_size;
 
 /*
- * Calculates the checksum used with paper tape files, this is used as the two
+ * Calculates the checksum used with paper tape files, this is used as the four
  * last hex digits in each record. 
  */
 int paper_checksum(int byte_count, int hi, int lo, int data_sum) {
@@ -80,11 +80,11 @@ void dump_paper() {
  * see dump_paper().
   */
 bool handle_paper(String c) {
-  if (c.length() < 11) return handle_record_error(c, F("record too short"));
+  if (c.length() < 11) return parser_error(c, F("record too short"));
 
   unsigned int byte_count = convert_hex_pair(c[1], c[2]);
-  if (c.length() != (11 + (byte_count * 2))) return handle_record_error(c, F("length does not match data"));
-  if (byte_count > 24) return handle_record_error(c, F("buffer overflow"));
+  if (c.length() != (11 + (byte_count * 2))) return parser_error(c, F("length does not match data"));
+  if (byte_count > 24) return parser_error(c, F("buffer overflow"));
 
   int address = convert_hex_address(c[3], c[4], c[5], c[6]);
   int hi = (address & 0xFF00) >> 8;
@@ -122,6 +122,6 @@ bool handle_paper(String c) {
     echo_command(c);
     return true;
   } else {
-    return handle_record_error(c, F("checksum error"));
+    return parser_error(c, F("checksum error"));
   }
 }

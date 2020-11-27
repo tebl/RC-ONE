@@ -58,7 +58,7 @@ void set_read() {
  * to perform sequential steps without setting up every
  * time.
  */
-byte read_byte(bool set_direction = false) {
+byte read_byte(bool set_direction) {
   if (set_direction) set_read();
   
   byte value = 0;
@@ -80,7 +80,7 @@ void set_write() {
  * to perform sequential steps without setting up every
  * time.
  */
-void write_byte(byte value, bool set_direction = false) {
+void write_byte(byte value, bool set_direction) {
   if (set_direction) set_write();
   
   for (int pin = EX_D0; pin <= EX_D7; pin += 1) {

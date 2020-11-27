@@ -2,6 +2,7 @@
 #include "constants.h"
 #include "ansi.h"
 #include "hex.h"
+#include "commands.h"
 #include "cmd_exram.h"
 
 extern int memory_bank;
@@ -208,4 +209,60 @@ void memory_zero() {
   ansi_notice();
   Serial.println(F(" done!"));
   ansi_default();
+}
+
+/*
+ * Peek memory address and print it.
+ */
+void peek_address(int address) {
+  ansi_notice();
+  print_hex_address(address, true);
+
+  enable();
+  set_address(address);
+  int value = read_byte(true);
+  disable();
+
+  Serial.print(' ');
+  if (value == 0x00 || value == 0xff) ansi_weak();
+  else ansi_default();
+  print_hex_pair(value, true);
+  ansi_default();
+  Serial.println();
+}
+
+/* 
+ * Handle memory peek command by extracting the contents of the specified
+ * address (specified by four hex digits).
+ * 
+ * peek 0000
+ */
+bool handle_peek(String c) {
+  if (c.length() != 9) return parser_error(c, F("argument format"));
+  echo_command(c);
+  int address = convert_hex_address(c[5], c[6], c[7], c[8]);
+  peek_address(address);
+  return true;
+}
+
+/*
+ * Handle memory poke command, allowing the user to write the specified
+ * hex digit pair into a specified address (four hex digits). 
+ * 
+ * poke 0000 ff
+ */
+bool handle_poke(String c) {
+  if (c.length() != 12) return parser_error(c, F("argument format"));
+  echo_command(c);
+  int address = convert_hex_address(c[5], c[6], c[7], c[8]);
+  int value = convert_hex_pair(c[10], c[11]);
+
+  enable();
+  set_address(address);
+  write_byte(value, true);
+  set_read();
+  disable();
+
+  peek_address(address);
+  return true;
 }

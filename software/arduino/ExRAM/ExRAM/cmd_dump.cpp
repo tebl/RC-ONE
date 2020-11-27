@@ -61,12 +61,3 @@ void dump() {
 
   disable();
 }
-
-bool handle_record_error(String c, String e) {
-  Serial.print(c);
-  Serial.print(" (");
-  Serial.print(e);
-  Serial.println(")");
-  return false;
-}
-

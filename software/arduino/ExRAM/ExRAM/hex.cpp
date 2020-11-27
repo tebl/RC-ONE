@@ -28,6 +28,13 @@ int convert_hex_address(char a3, char a2, char a1, char a0) {
    );
 }
 
+void print_hex_pair(int value, bool prefix) {
+  if (prefix) Serial.print('$');
+  char tmp[3];
+  sprintf(tmp, "%02X", value);
+  Serial.print(tmp);
+}
+
 void print_hex_address(int number, bool prefix) {
   if (prefix) Serial.print('$');
   char tmp[5];

@@ -64,7 +64,7 @@ void print_help() {
   help_command(F("ansi"),           F("ANSI terminal code usage"),                                 F("<on|off>"));
   help_command(F("ansi test"),      F("Test ANSI terminal codes on terminal"));
   help_command(F("bank"),           F("Prints bank selection"));
-  help_command(F("bank"),           F("Select 8k bank"),                                           F("<num>"));
+  help_command(F("bank"),           F("Select 8k bank (0-3)"),                                     F("<num>"));
   help_command(F("base"),           F("Prints memory offset used"));
   help_command(F("base"),           F("8k0-8k7 memory offset"),                                    F("<block>"));
   help_command(F("dump"),           F("Dump memory"));
@@ -76,6 +76,8 @@ void print_help() {
   help_command(F("memory"),         F("1k/2k/4k/8k memory dump size"),                             F("<size>"));
   help_command(F("memory test"),    F("Test set memory"));
   help_command(F("memory zero"),    F("Zero out set memory"));
+  help_command(F("peek"),           F("Peek memory address contents (ie. peek 0000)"),             F("<addr>"));
+  help_command(F("poke"),           F("Poke value into memory address (ie. poke 0000 FF)"),        F("<addr> <val>"));
   help_command(F("status"),         F("Prints system status"));
   help_command(F("version"),        F("Prints ExRAM software version"));
   help_command(F(":<data>"),        F("Load Intel HEX data"));
