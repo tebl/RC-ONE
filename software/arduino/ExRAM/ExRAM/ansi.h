@@ -1,3 +1,5 @@
+#include <Arduino.h>
+
 #define COLOUR_BLACK 30
 #define COLOUR_RED 31
 #define COLOUR_GREEN 32

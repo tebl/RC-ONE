@@ -2,7 +2,11 @@
 
 void enable();
 void disable();
-
+void set_read();
+void set_write();
+void set_address(int address);
+byte read_byte(bool set_direction = false);
+void write_byte(byte value, bool set_direction = false);
 void set_memory_bank(int num);
 void set_memory_size(int num_bytes);
 void set_memory_base(int value);
