@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include "ansi.h"
 #include "commands.h"
+#include "cmd_exram.h"
 
 extern int memory_base;
 extern int memory_size;

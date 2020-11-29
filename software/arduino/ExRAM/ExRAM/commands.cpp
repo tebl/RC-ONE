@@ -89,6 +89,19 @@ void do_clear() {
   if (ansi_enabled) echo_command(F("clear"));
 }
 
+void lock_on() {
+  enable();
+  Serial.print(F("ExRAM "));
+  ansi_error_ln(F("locked"));
+}
+
+void lock_off() {
+  disable();
+  Serial.print(F("ExRAM "));
+  ansi_highlight_ln(F("unlocked"));
+  Serial.println();
+}
+
 /*
  * Handle serial commands, mainly just matches the name and if it does the
  * supplied function is run. Recognized commands are echoed back to the user.

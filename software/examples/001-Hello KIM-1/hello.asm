@@ -14,7 +14,7 @@ INH     .EQ     $F9     inputbuffer high
 SCANDS  .EQ     $1F1F
 
         .OR     $0200
-        .TA     $0000
+        .TA     $0200
 
 START   LDA     #$C0
         STA     POINTH

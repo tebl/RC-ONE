@@ -8,6 +8,9 @@
  */
 void enable() {
   digitalWrite(EX_CONTROL, LOW);
+
+  digitalWrite(EX_CS, OUTPUT);
+  pinMode(EX_CS, HIGH);
   
   digitalWrite(EX_RnW, HIGH);
   pinMode(EX_RnW, OUTPUT);
@@ -26,6 +29,7 @@ void disable() {
     pinMode(pin, INPUT);
   }
 
+  pinMode(EX_CS, INPUT);
   pinMode(EX_RnW, INPUT);
   digitalWrite(EX_CONTROL, HIGH);
 
@@ -58,13 +62,15 @@ void set_read() {
  * to perform sequential steps without setting up every
  * time.
  */
-byte read_byte(bool set_direction) {
-  if (set_direction) set_read();
-  
+byte read_byte() {
   byte value = 0;
+
+  digitalWrite(EX_CS, LOW);
   for (int pin = EX_D7; pin >= EX_D0; pin -= 1) {
     value = (value << 1) + digitalRead(pin);
   }
+  digitalWrite(EX_CS, HIGH);
+
   return value;
 }
 
@@ -75,32 +81,29 @@ void set_write() {
   }
 }
 
+/* 
+ * Send a write pulse to the SRAM by temporarily activating /CS with R/W
+ * low. Can be used directly when we don't want to go through configuring
+ * the data pins for each byte with the same value.
+ */
+void write_pulse() {
+  digitalWrite(EX_RnW, LOW);
+  digitalWrite(EX_CS, LOW);
+  delayMicroseconds(1);
+  digitalWrite(EX_CS, HIGH);
+  digitalWrite(EX_RnW, HIGH);
+}
+
 /*
  * Write a byte to the data pins, use set_direction
  * to perform sequential steps without setting up every
  * time.
  */
-void write_byte(byte value, bool set_direction) {
-  if (set_direction) set_write();
-  
+void write_byte(byte value) {
   for (int pin = EX_D0; pin <= EX_D7; pin += 1) {
     digitalWrite(pin, value & 1);
     value = value >> 1;
   }
-  digitalWrite(EX_RnW, LOW);
-  delayMicroseconds(1);
-  digitalWrite(EX_RnW, HIGH);
-}
 
-void lock_on() {
-  enable();
-  Serial.print(F("ExRAM "));
-  ansi_error_ln(F("locked"));
-}
-
-void lock_off() {
-  disable();
-  Serial.print(F("ExRAM "));
-  ansi_highlight_ln(F("unlocked"));
-  Serial.println();
+  write_pulse();
 }

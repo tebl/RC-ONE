@@ -1,12 +1,7 @@
 #include <Arduino.h>
 
-void enable();
-void disable();
-void set_read();
-void set_write();
-void set_address(int address);
-byte read_byte(bool set_direction = false);
-void write_byte(byte value, bool set_direction = false);
+void lock_on();
+void lock_off();
 
 void init_commands();
 void print_status();

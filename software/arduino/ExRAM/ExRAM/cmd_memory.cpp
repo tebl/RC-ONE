@@ -193,13 +193,11 @@ void memory_zero() {
   enable();
   set_write();
 
-  for (int pin = EX_D0; pin <= EX_D7; pin += 1) digitalWrite(pin, 0);
+  for (int pin = EX_D0; pin <= EX_D7; pin += 1) digitalWrite(pin, LOW);
   for (int base = 0; base < memory_size; base += 16) {
     for (int offset = 0; offset <= 15; offset += 1) {
       set_address(base + offset);
-      digitalWrite(EX_RnW, LOW);
-      delayMicroseconds(1);
-      digitalWrite(EX_RnW, HIGH);
+      write_pulse();
   }
 
     Serial.print(".");
@@ -220,7 +218,8 @@ void peek_address(int address) {
 
   enable();
   set_address(address);
-  int value = read_byte(true);
+  set_read();
+  int value = read_byte();
   disable();
 
   Serial.print(' ');
@@ -259,7 +258,8 @@ bool handle_poke(String c) {
 
   enable();
   set_address(address);
-  write_byte(value, true);
+  set_write();
+  write_byte(value);
   set_read();
   disable();
 

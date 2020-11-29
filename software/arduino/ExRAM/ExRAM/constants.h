@@ -15,6 +15,7 @@
 #define EX_A13 14
 #define EX_A14 15
 #define EX_RnW 16
+#define EX_CS 19
 
 #define EX_CONTROL 5
 #define EX_RESET 17

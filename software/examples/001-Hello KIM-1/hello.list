@@ -24,7 +24,7 @@ Pass two
 1F1F-                 14       SCANDS  .EQ     $1F1F
 0000-                 15
 0200-                 16               .OR     $0200
-0200-                 17               .TA     $0000
+0200-                 17               .TA     $0200
 0200-                 18
 0200-A9 C0            19 (  2) START   LDA     #$C0
 0202-85 FB            20 (  2)         STA     POINTH
