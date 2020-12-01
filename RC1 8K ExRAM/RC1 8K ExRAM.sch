@@ -1876,8 +1876,6 @@ Text Notes 11575 875  0    60   ~ 0
 External battery backup
 Text Notes 11625 1100 0    39   ~ 0
 Old school CMOS battery backup, use 3xAA batteries.\nShould utilize system power as long as it is available.\nUse pin 2 as a key indicator if possible.
-Text Label 12700 1575 2    39   ~ 0
-BATTERY
 Text Notes 11825 10575 0    60   ~ 0
 Revision B adds a battery pack that should keep data intact, this should function as long\nas the voltage does not exceed 4.5v.
 $Comp
@@ -1958,8 +1956,6 @@ Wire Wire Line
 	11700 1575 11700 2475
 Connection ~ 11700 1400
 Wire Wire Line
-	6225 3700 6225 3775
-Wire Wire Line
 	6875 4725 6025 4725
 Wire Wire Line
 	6025 4725 6025 4150
@@ -1979,8 +1975,6 @@ Entry Wire Line
 	8575 6150 8675 6250
 Text Label 8550 6150 2    60   ~ 0
 EX_~CS
-Wire Wire Line
-	11600 1400 11700 1400
 Wire Notes Line
 	11325 2425 13375 2425
 Wire Notes Line
@@ -1996,17 +1990,24 @@ Wire Wire Line
 	11000 6650 10625 6650
 Entry Wire Line
 	10625 6650 10525 6750
-$Comp
-L power:VMEM #PWR0101
-U 1 1 60B3EED7
-P 11600 1400
-F 0 "#PWR0101" H 11600 1250 50  0001 C CNN
-F 1 "VMEM" V 11615 1528 50  0000 L CNN
-F 2 "" H 11600 1400 50  0001 C CNN
-F 3 "" H 11600 1400 50  0001 C CNN
-	1    11600 1400
-	0    -1   -1   0   
-$EndComp
+Wire Wire Line
+	11600 1400 11700 1400
+Wire Wire Line
+	6225 3700 6225 3775
+Wire Bus Line
+	8675 2400 8675 8325
+Wire Bus Line
+	10525 4425 10525 7775
+Wire Bus Line
+	12975 4650 12975 8325
+Wire Bus Line
+	12975 2775 12975 4425
+Wire Bus Line
+	10525 2400 10525 4425
+Wire Bus Line
+	825  600  825  2300
+Wire Bus Line
+	14250 600  14250 8675
 $Comp
 L power:VMEM #PWR0102
 U 1 1 60B402ED
@@ -2018,18 +2019,15 @@ F 3 "" H 6225 3700 50  0001 C CNN
 	1    6225 3700
 	1    0    0    -1  
 $EndComp
-Wire Bus Line
-	825  600  825  2300
-Wire Bus Line
-	12975 2775 12975 4425
-Wire Bus Line
-	10525 4425 10525 7775
-Wire Bus Line
-	10525 2400 10525 4425
-Wire Bus Line
-	14250 600  14250 8675
-Wire Bus Line
-	12975 4650 12975 8325
-Wire Bus Line
-	8675 2400 8675 8325
+$Comp
+L power:VMEM #PWR0101
+U 1 1 60B3EED7
+P 11600 1400
+F 0 "#PWR0101" H 11600 1250 50  0001 C CNN
+F 1 "VMEM" V 11615 1528 50  0000 L CNN
+F 2 "" H 11600 1400 50  0001 C CNN
+F 3 "" H 11600 1400 50  0001 C CNN
+	1    11600 1400
+	0    -1   -1   0   
+$EndComp
 $EndSCHEMATC
